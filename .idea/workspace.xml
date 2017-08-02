@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc5f0030-8f9d-4b0c-afb6-2dd9431dd000" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/app_test.dart" afterPath="$PROJECT_DIR$/test/app_test.dart" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/main.dart" afterPath="$PROJECT_DIR$/web/main.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/services/logger_service.dart" afterPath="$PROJECT_DIR$/lib/src/services/logger_service.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/todo_list/todo_list_component.css" afterPath="$PROJECT_DIR$/lib/src/todo_list/todo_list_component.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/todo_list/todo_list_component.dart" afterPath="$PROJECT_DIR$/lib/src/todo_list/todo_list_component.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/todo_list/todo_list_component.html" afterPath="$PROJECT_DIR$/lib/src/todo_list/todo_list_component.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/todo_list/todo_list_service.dart" afterPath="$PROJECT_DIR$/lib/src/todo_list/todo_list_service.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/main_app/main_app.css" afterPath="$PROJECT_DIR$/lib/main_app.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/main_app/main_app.dart" afterPath="$PROJECT_DIR$/lib/main_app.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/main_app/main_app.html" afterPath="$PROJECT_DIR$/lib/main_app.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_list_component/vocab_list_component.css" afterPath="$PROJECT_DIR$/lib/src/views/vocab_list_component/vocab_list_component.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_list_component/vocab_list_component.dart" afterPath="$PROJECT_DIR$/lib/src/views/vocab_list_component/vocab_list_component.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_list_component/vocab_list_component.html" afterPath="$PROJECT_DIR$/lib/src/views/vocab_list_component/vocab_list_component.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_list_component/vocab_list_service.dart" afterPath="$PROJECT_DIR$/lib/src/views/vocab_list_component/vocab_list_service.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css" afterPath="$PROJECT_DIR$/lib/src/views/vocab_view/vocab_view.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.dart" afterPath="$PROJECT_DIR$/lib/src/views/vocab_view/vocab_view.dart" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html" afterPath="$PROJECT_DIR$/lib/src/views/vocab_view/vocab_view.html" />
-    </list>
+    <list default="true" id="bc5f0030-8f9d-4b0c-afb6-2dd9431dd000" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -71,8 +53,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="12" column="26" lean-forward="true" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+            <state relative-caret-position="432">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -179,6 +161,15 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="JavaScript Debug.Chrome">
+    <configuration name="Chrome" type="JavascriptDebugType" factoryName="JavaScript Debug" engineId="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" uri="http://localhost:64125/index.html" />
+    <configuration name="Dartium" type="JavascriptDebugType" factoryName="JavaScript Debug" engineId="bfee1b69-a97d-4338-8ba4-25170adcbaa6" uri="http://localhost:64125/index.html" />
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" engineId="bfee1b69-a97d-4338-8ba4-25170adcbaa6" uri="http://localhost:64125/index.html" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.Dartium" />
+      <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.Chrome" />
+    </list>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -189,12 +180,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1501635509225</updated>
-      <workItem from="1501635510777" duration="479000" />
+      <workItem from="1501635510777" duration="1186000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="479000" />
+    <option name="totallyTimeSpent" value="1186000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="3862" height="2122" extended-state="6" />
@@ -204,20 +195,21 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296119" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Pub Serve" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Dart Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296119" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +247,7 @@
         <state relative-caret-position="297">
           <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
           <folding>
-            <element signature="e#0#60#0" expanded="true" />
+            <element signature="e#0#60#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -273,8 +265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="26" lean-forward="true" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        <state relative-caret-position="432">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
