@@ -1,0 +1,50 @@
+<!--<h2>Add new words below!</h2>-->
+
+<span id="menuButtons">
+    <span>
+        menu button here
+    </span>
+    <span>
+        edit button here
+    </span>
+
+
+</span>
+
+<div id="wordEntry">
+    <!--<span>-->
+        <material-input label="Add new vocab word!"
+                        autoFocus floatingLabel style="width:40%"
+                        [(ngModel)]="newWord">
+        </material-input>
+        <material-input label="Optional definition"
+                        autoFocus floatingLabel style="width:40%"
+                        [(ngModel)]="newDef">
+        </material-input>
+    <!--</span>-->
+    <material-fab mini raised
+                  (trigger)="add(newWord, newDef); newWord = newDef = '';"
+                  [disabled]="newWord.isEmpty">
+        <glyph icon="add"></glyph>
+    </material-fab>
+</div>
+
+<p *ngIf="vocabMap.isEmpty">
+    Add a new vocabulary word!
+</p>
+
+<div *ngIf="vocabMap.isNotEmpty">
+    <ul>
+        <!--<li *ngFor="let word of newWords; let i=index">-->
+        <li *ngFor="let word of vocabMap.keys"> <!--; let i=index"-->
+            <material-checkbox #done materialTooltip="Mark word as memorized"></material-checkbox>
+            <span [class.done]="done.checked">{{word}} : {{vocabMap[word]}}</span>
+            <!--<material-fab mini (trigger)="remove(i)">-->
+            <span *ngIf="editMode">
+                <material-fab mini (trigger)="remove(word)">
+                    <glyph icon="delete"></glyph>
+                </material-fab>
+            </span>
+        </li>
+    </ul>
+</div>

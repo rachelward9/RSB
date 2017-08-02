@@ -7,7 +7,7 @@ import 'package:angular_test/angular_test.dart';
 import 'package:pageloader/objects.dart';
 import 'package:test/test.dart';
 
-import 'package:RSB_170605/views/main_app/main_app.dart';
+import 'package:RSB_170605/main_app.dart';
 
 NgTestFixture<MainApp> fixture;
 AppPO appPO;
