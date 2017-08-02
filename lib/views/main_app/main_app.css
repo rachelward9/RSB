@@ -1,0 +1,10 @@
+:host {
+    /* This is equivalent of the 'body' selector of a page. */
+    /*display: flex;*/
+    justify-content: space-between;
+}
+
+/*#vocab {*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+/*}*/
