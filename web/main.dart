@@ -4,8 +4,8 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/browser.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:RSB_170605/main_app.dart';
-import 'package:RSB_170605/services/logger_service.dart';
+import 'package:RSB/main_app.dart';
+import 'package:RSB/services/logger_service.dart';
 
 const String APP_NAME = "RSB_170605";
 final LoggerService _log = new LoggerService(appName: APP_NAME);

@@ -86,3 +86,27 @@ li span material-fab {
     /*align-self: flex-end;*/
 }
 
+.card {
+    display: flex;
+    border: black double;
+    width: 80%;
+    padding-top: 40%;
+    padding-bottom: 40%;
+    justify-content: center;
+    /*align-content: center;*/
+
+}
+
+.card-button {
+
+}
+
+.card-flow {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.card-flow material-button {
+    /*align-self: center;*/
+}
