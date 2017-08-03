@@ -3,11 +3,9 @@
 
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:angular_components/src/components/material_tab/material_tab_panel.dart';
-import 'package:angular_components/src/components/material_tab/material_tab.dart';
 //import '../../todo_list/todo_list_component.dart';
-import '../vocab_view/vocab_view.dart';
-import '../vocab_list_component/vocab_list_component.dart';
+import 'views/vocab_view/vocab_view.dart';
+import 'views/vocab_list_component/vocab_list_component.dart';
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
 

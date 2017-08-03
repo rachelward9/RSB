@@ -1,50 +1,101 @@
 <!--<h2>Add new words below!</h2>-->
 
-<span id="menuButtons">
-    <span>
-        menu button here
+<div class="menuButtons">
+    <span class="menu-left">
+    <material-dropdown-select iconName="menu" slide="x">
+        <material-select-item (trigger)="changeVocabView(0)">
+                Add Words
+        </material-select-item>
+        <material-select-item (trigger)="changeVocabView(1)">
+                List View
+        </material-select-item>
+        <material-select-item (trigger)="changeVocabView(2)">
+                Flashcards
+        </material-select-item>
+    </material-dropdown-select>
     </span>
-    <span>
-        edit button here
+    <span  class="menu-right">
+        <material-toggle *ngIf="currentView == 'addView'"
+            label="edit list -"
+            (click)="changeEditMode()">
+        </material-toggle>
+        <material-toggle *ngIf="currentView == 'listView'"
+                         label="show definitions -"
+                         (click)="changeListView()">
+        </material-toggle>
+        <material-toggle *ngIf="currentView == 'flashcards'"
+                         label="toggle view order -"
+                         (click)="changeCardView()">
+        </material-toggle>
     </span>
-
-
-</span>
-
-<div id="wordEntry">
-    <!--<span>-->
-        <material-input label="Add new vocab word!"
-                        autoFocus floatingLabel style="width:40%"
-                        [(ngModel)]="newWord">
-        </material-input>
-        <material-input label="Optional definition"
-                        autoFocus floatingLabel style="width:40%"
-                        [(ngModel)]="newDef">
-        </material-input>
-    <!--</span>-->
-    <material-fab mini raised
-                  (trigger)="add(newWord, newDef); newWord = newDef = '';"
-                  [disabled]="newWord.isEmpty">
-        <glyph icon="add"></glyph>
-    </material-fab>
 </div>
 
-<p *ngIf="vocabMap.isEmpty">
-    Add a new vocabulary word!
-</p>
 
-<div *ngIf="vocabMap.isNotEmpty">
-    <ul>
-        <!--<li *ngFor="let word of newWords; let i=index">-->
-        <li *ngFor="let word of vocabMap.keys"> <!--; let i=index"-->
-            <material-checkbox #done materialTooltip="Mark word as memorized"></material-checkbox>
-            <span [class.done]="done.checked">{{word}} : {{vocabMap[word]}}</span>
-            <!--<material-fab mini (trigger)="remove(i)">-->
-            <span *ngIf="editMode">
-                <material-fab mini (trigger)="remove(word)">
-                    <glyph icon="delete"></glyph>
-                </material-fab>
-            </span>
+
+<div *ngIf="currentView == 'addView'">
+    <div>
+        <!--<span>-->
+            <material-input label="Add new vocab word!"
+                            autoFocus floatingLabel style="width:40%"
+                            [(ngModel)]="newWord">
+            </material-input>
+            <material-input label="Optional definition"
+                            autoFocus floatingLabel style="width:40%"
+                            [(ngModel)]="newDef">
+            </material-input>
+        <!--</span>-->
+        <material-fab mini raised
+                      (trigger)="add(newWord, newDef); newWord = newDef = '';"
+                      [disabled]="newWord.isEmpty">
+            <glyph icon="add"></glyph>
+        </material-fab>
+    </div>
+
+    <!--<hr>-->
+    <p *ngIf="vocabMap.isNotEmpty">
+        New Words
+        <glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>
+    </p>
+    <p *ngIf="vocabMap.isEmpty">
+        No words yet!
+    </p>
+
+    <div *ngIf="vocabMap.isNotEmpty">
+        <ul>
+            <!--<li *ngFor="let word of newWords; let i=index">-->
+            <li *ngFor="let word of vocabMap.keys"> <!--; let i=index"-->
+                <material-checkbox #done materialTooltip="Mark word as memorized"></material-checkbox>
+                <span class="wordAndDef">
+                <span [class.done]="done.checked" class="word"> {{word}} </span>
+                    <span></span>
+                <span [class.done]="done.checked" class="def"> {{vocabMap[word]}} </span>
+                <!--<material-fab mini (trigger)="remove(i)">-->
+                </span>
+                <span *ngIf="editMode == false" class="li-remove">
+                    <span></span>
+                </span>
+                <span *ngIf="editMode == true"  class="li-remove">
+                    <material-fab mini (trigger)="remove(word)">
+                        <glyph class="delete-icon" icon="delete"></glyph>
+                    </material-fab>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div *ngIf="currentView == 'listView'">
+    <ol>
+        <li *ngFor="let word of vocabMap.keys">
+            <span class="word">{{word}}</span><span class="def">{{vocabMap[word]}}</span>
         </li>
-    </ul>
+    </ol>
 </div>
+
+<!--<div *ngIf="currentView == 'listView'">-->
+    <!--<span> List view test </span>-->
+    <!--<div>-->
+        <!--Test?-->
+    <!--</div>-->
+<!--</div>-->

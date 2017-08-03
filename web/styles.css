@@ -5,6 +5,7 @@
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 body {
+  /*display: flex;*/
   /*max-width: 600px;*/
   margin: 0 auto;
   padding: 5vw;

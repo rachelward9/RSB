@@ -1,10 +1,18 @@
-
+:host {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: column;
+}
 ul {
     list-style: none;
     padding-left: 0;
 }
 
 li {
+    /*display: flex;*/
+    align-items: center;
+    /*justify-content: space-between;*/
     line-height: 3em;
 }
 
@@ -16,22 +24,65 @@ li material-checkbox {
     vertical-align: middle;
 }
 
-li material-fab {
+li span material-fab {
+    /*display: flex;*/
+    align-self: flex-end;
     float: right;
     vertical-align: middle;
 }
 
-.done {
-    /*text-decoration: dimgrey;*/
+.wordDelete {
     color: dimgrey;
 }
 
-#menuButtons {
+.li-remove {
+    /*display: flex;*/
+    align-self: center;
+    justify-self: flex-end;
+    /*justify-content: flex-end;*/
+}
+
+.delete-icon {
+    color: red;
+}
+
+.done {
+    /*text-decoration: dimgrey;*/
+    color: lightgrey;
+}
+
+.menuButtons {
     display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.menu-left {
+
+}
+.menu-right {
+    /*justify-content: flex-end;*/
+}
+
+.wordAndDef {
+    /*flex-flow: row nowrap;*/
+    /*justify-self: ;*/
     justify-content: space-between;
 }
 
-#wordEntry {
+.word {
     /*display: flex;*/
-    /*justify-content: space-between;*/
+    justify-self: flex-start;
 }
+
+.def {
+    /*display: flex;*/
+    justify-self: flex-end;
+}
+
+#arrow-glyph {
+    display: flex;
+    justify-self: flex-end;
+    padding-left: 8px;
+    /*align-self: flex-end;*/
+}
+
