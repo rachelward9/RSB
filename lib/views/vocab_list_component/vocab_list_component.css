@@ -89,16 +89,20 @@ li span material-fab {
 .card {
     display: flex;
     border: black double;
-    width: 80%;
-    padding-top: 40%;
-    padding-bottom: 40%;
+    /*width: 80%;*/
+    width: 100%;
+    /*padding-top: 40%;*/
+    /*padding-bottom: 40%;*/
+    padding-top: 50%;
+    padding-bottom: 50%;
     justify-content: center;
     /*align-content: center;*/
 
 }
 
 .card-button {
-
+    height: 100%;
+    width: 100%;
 }
 
 .card-flow {
