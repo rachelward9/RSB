@@ -1,7 +1,14 @@
-:host {
+/*:host {*/
     /*display: flex;*/
+    /*!*align-items: stretch;*!*/
+    /*!*width: 100%;*!*/
+    /*flex-flow: column;*/
     /*align-items: stretch;*/
+/*}*/
 
+.wrapper {
+    display: flex;
+    flex-flow: row;
 }
 
 /*#listComponent {*/

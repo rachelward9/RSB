@@ -1,8 +1,16 @@
-:host {
-    /*display: flex;*/
+.wrapper {
+    display: flex;
+    /*flex: 1;*/
+    justify-content: center;
+    flex-flow: column nowrap;
 }
 
-/*#vocab {*/
-    /*display: flex;*/
-    /*justify-content: space-between;*/
-/*}*/
+.mat-tab {
+    /*flex: 1;*/
+}
+
+.voc-view {
+    flex: 1;
+    /*justify-self: center;*/
+    max-width: 700px;
+}

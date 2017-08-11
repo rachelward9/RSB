@@ -1,9 +1,15 @@
-:host {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    flex-direction: column;
-}
+/*:host {*/
+    /*display: flex;*/
+    /*flex-flow: column nowrap;*/
+    /*justify-content: space-around;*/
+    /*!*flex-direction: column;*!*/
+/*}*/
+/*.wrapper {*/
+    /*flex: 1;*/
+    /*!*display: flex;*!*/
+    /*!*justify-content: center;*!*/
+/*}*/
+
 ul {
     list-style: none;
     padding-left: 0;
@@ -57,10 +63,10 @@ li span material-fab {
     justify-content: space-between;
 }
 .menu-left {
-
+    /*justify-self: flex-start;*/
 }
 .menu-right {
-    /*justify-content: flex-end;*/
+    /*justify-self: flex-end;*/
 }
 
 .wordAndDef {
@@ -86,11 +92,19 @@ li span material-fab {
     /*align-self: flex-end;*/
 }
 
-.card {
+.card-flow {
     display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.card {
+    /*display: flex;*/
     border: black double;
     /*width: 80%;*/
     width: 100%;
+    /*min-width: 80%;*/
     /*padding-top: 40%;*/
     /*padding-bottom: 40%;*/
     padding-top: 50%;
@@ -100,17 +114,33 @@ li span material-fab {
 
 }
 
-.card-button {
+.front {
+    display: block;
     height: 100%;
     width: 100%;
 }
 
-.card-flow {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
+.back {
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
-.card-flow material-button {
-    /*align-self: center;*/
+.card-change-btn {
+    display: flex;
+    align-self: center;
 }
+
+.mbtn {
+    display: flex;
+    height: 500px;
+}
+
+/*.card-button material-button {*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+/*}*/
+
+/*.card-flow material-button {*/
+    /*!*align-self: center;*!*/
+/*}*/

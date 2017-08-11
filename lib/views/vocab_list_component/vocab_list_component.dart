@@ -43,6 +43,9 @@ class VocabListComponent implements OnInit {
   bool defVisible = true;
   bool listOrderWordFirst = true;
 
+  /* List */
+
+
   /* Flashcards */
   bool cardOrderWordFirst = true;
   bool showingWord = true;
