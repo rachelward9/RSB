@@ -46,6 +46,7 @@ class NounView implements OnInit {
     //newListWords = await vocabListService.getVocabList();
 //    newSetWords.addAll(newListWords);
     masterMap = await nounService.getNounMap();
+//    masterMap = await
     currentView = views.elementAt(0); // 0th index should be first view.
 
     if (masterMap.isNotEmpty) {
