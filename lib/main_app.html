@@ -1,4 +1,12 @@
-<div class="wrapper">
+<login-view *ngIf="fbService.user == null"></login-view>
+
+<div *ngIf="fbService.user != null" class="wrapper">
+    <section class="flex layout horizontal center end-justified">
+        <img class="icon user-avatar" [src]="fbService.user?.photoURL">
+        <div>{{fbService.user?.displayName}}</div>
+
+        <material-button (click)="fbService.signOut()">Sign Out</material-button>
+    </section>
     <material-tab-panel>
         <material-tab class="mat-tab" label="Nouns">
             <div>
