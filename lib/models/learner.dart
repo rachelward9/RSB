@@ -1,8 +1,13 @@
+import 'package:RSB/services/firebase_service.dart' as firebase;
 
 class Learner {
   final String name;
   final String email;
-//  int numLanguages; // Does this matter? Probably not.
+  final String uid;
+  int numLanguages; // Does this matter? Probably not.
+  bool exists;
+
+
 
   // Custom vocabulary list creatable by the user.
   // Map<LanguageName, Map<word, definition>>
@@ -13,13 +18,13 @@ class Learner {
   Map<String, String> currentVocabList = {};
 
   // Should all arguments be optional? Guest accounts, etc?
-  Learner(this.name, this.email, [this.myVocabLists, this.myLanguages, this.currentLanguage]) {
+  Learner(this.name, this.email, this.uid, [this.exists, this.myVocabLists, this.myLanguages, this.currentLanguage]) {
     if (currentLanguage != "") {
       currentVocabList = myVocabLists[currentLanguage];
     }
   }
 
-  Learner.fromMap(Map map) : this(map["name"], map["email"], map["myVocabLists"], map["myLanguage"], map["currentLanguage"]);
+  Learner.fromMap(Map map) : this(map["name"], map["email"], map["myVocabLists"], map["myLanguages"], map["currentLanguage"]);
 
   Map toMap() => {
     "name": name,
@@ -46,6 +51,14 @@ class Learner {
 
   void removeWord(String oldWord) {
     currentVocabList.remove(oldWord);
+  }
+
+  void addLanguage(String language) {
+
+  }
+
+  void removeLanguage(String language) {
+
   }
 
 }

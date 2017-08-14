@@ -45,17 +45,17 @@ class NounView implements OnInit {
   Future<Null> ngOnInit() async {
     //newListWords = await vocabListService.getVocabList();
 //    newSetWords.addAll(newListWords);
-    masterMap = await nounService.getNounMap();
+//    masterMap = await nounService.getNounMap();
 //    masterMap = await
-    currentView = views.elementAt(0); // 0th index should be first view.
+//    currentView = views.elementAt(0); // 0th index should be first view.
 
-    if (masterMap.isNotEmpty) {
-      masterMap.forEach((String word, List def) {
-        wordList.add(word);
+//    if (masterMap.isNotEmpty) {
+//      masterMap.forEach((String word, List def) {
+//        wordList.add(word);
 //        defList.add(def);
-      });
+//      });
     }
-  } // End ngOnInit()
+//  } // End ngOnInit()
 
 
 
@@ -70,7 +70,7 @@ class NounView implements OnInit {
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
-  String remove(String word) {
+  void remove(String word) {
     int idx = wordList.indexOf(word);
     wordList.removeAt(idx);
     defList.removeAt(idx);

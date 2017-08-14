@@ -1,9 +1,18 @@
 <login-view *ngIf="fbService.user == null"></login-view>
+<div>
+    <hr>
+    TEST
+    <hr>
+    <!--<div>fbService to String: {{fbService.toString()}}</div>-->
+    <!--<div>fbService languages: {{fbService.languages}}</div>-->
+    <!--<div>fbService user: {{fbService.user}}</div>-->
+</div>
+
 
 <div *ngIf="fbService.user != null" class="wrapper">
     <section class="flex layout horizontal center end-justified">
-        <img class="icon user-avatar" [src]="fbService.user?.photoURL">
-        <div>{{fbService.user?.displayName}}</div>
+        <!--<img class="icon user-avatar" [src]="fbService.user?.photoURL">-->
+        <!--<div>{{fbService.user?.email}}</div>-->
 
         <material-button (click)="fbService.signOut()">Sign Out</material-button>
     </section>

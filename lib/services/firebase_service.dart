@@ -18,6 +18,7 @@ class FirebaseService {
   firebase.Storage _fbStorage;
   firebase.DatabaseReference _fbRef; // = database.ref("test");
   firebase.DatabaseReference _fbLangList; // = database.ref("test");
+  firebase.DatabaseReference _fbUserList;
 
   Learner user;
 
@@ -36,14 +37,13 @@ class FirebaseService {
     _fbDatabase = firebase.database();
 //    _fbRef = _fbDatabase.ref(""); // What is my point of reference?
     _fbLangList = _fbDatabase.ref("languagesList");
-
-
+    _fbUserList = _fbDatabase.ref("userdata");
   }
 
-
-
   void _authChanged(firebase.User newUser) {
-    Learner newLearner = new Learner(newUser.displayName, newUser.email);
+    user = new Learner(newUser.displayName, newUser.email, newUser.uid);
+    //    if (_fbUserList.)
+//    Learner newLearner = new Learner(newUser.displayName, newUser.email);
   }
 
 //  firebase.User user;
@@ -68,6 +68,8 @@ class FirebaseService {
 
 //    print(msg.text);
   }
+
+
 
   _registerUser(String email, String password) {
     if (email.isNotEmpty && password.isNotEmpty) {

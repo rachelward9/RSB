@@ -1,4 +1,56 @@
 {
+  "usermeta": {
+    "0": {
+      "name": "name",
+      "email": "email",
+      "myLanguages": "myLanguages",
+      "uid": "placeholder"
+    },
+    "1": {
+      "name": "name",
+      "email": "email",
+      "myLanguages": "myLanguages",
+      "uid": "placeholder"
+    }
+  },
+  "userdata": {
+    "uid0": {
+      "name": "name",
+      "email": "email",
+      "uid": "uid",
+      "myLanguages": "myLanguages",
+      "currentLanguage": "currentLanguage",
+      "myVocabLists": {
+        "russian": {
+
+        },
+        "spanish": {
+
+        },
+        "swedish": {
+
+        }
+      }
+    },
+    "uid1": {
+      "name": "name",
+      "email": "email",
+      "uid": "uid",
+      "myLanguages": "myLanguages",
+      "currentLanguage": "currentLanguage",
+      "myVocabLists": {
+        "russian": {
+
+        },
+        "spanish": {
+
+        },
+        "swedish": {
+
+        }
+      }
+    }
+  },
   "languagesList" : {
     "0": "russian",
     "1": "spanish",
