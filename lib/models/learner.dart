@@ -1,13 +1,11 @@
-import 'package:RSB/services/firebase_service.dart' as firebase;
+//import 'package:RSB/services/firebase_service.dart' as firebase;
 
 class Learner {
-  final String name;
-  final String email;
-  final String uid;
-  int numLanguages; // Does this matter? Probably not.
-  bool exists;
-
-
+  String name = "";
+  String email = "";
+  String uid = "";
+  int numLanguages = 0; // Does this matter? Probably not.
+  bool exists = false;
 
   // Custom vocabulary list creatable by the user.
   // Map<LanguageName, Map<word, definition>>
@@ -18,13 +16,21 @@ class Learner {
   Map<String, String> currentVocabList = {};
 
   // Should all arguments be optional? Guest accounts, etc?
-  Learner(this.name, this.email, this.uid, [this.exists, this.myVocabLists, this.myLanguages, this.currentLanguage]) {
-    if (currentLanguage != "") {
-      currentVocabList = myVocabLists[currentLanguage];
-    }
+//  Learner(this.name, [this.email, this.uid, this.exists, this.myVocabLists, this.myLanguages, this.currentLanguage]) {
+//    if (currentLanguage != "") {
+//      currentVocabList = myVocabLists[currentLanguage];
+//    }
+//  }
+
+  Learner();
+
+  void constructLearner(String newName, String newEmail) {
+    name = newName;
+    email = newEmail;
+    exists = true;
   }
 
-  Learner.fromMap(Map map) : this(map["name"], map["email"], map["myVocabLists"], map["myLanguages"], map["currentLanguage"]);
+//  Learner.fromMap(Map map) : this(map["name"], map["email"], map["myVocabLists"], map["myLanguages"], map["currentLanguage"]);
 
   Map toMap() => {
     "name": name,
@@ -46,6 +52,7 @@ class Learner {
   }
 
   void addWord(String newWord, [String newDef = ""]) {
+
     currentVocabList[newWord] = newDef;
   }
 

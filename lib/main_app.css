@@ -5,12 +5,20 @@
     flex-flow: column nowrap;
 }
 
-.mat-tab {
-    /*flex: 1;*/
+.user-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.voc-view {
-    flex: 1;
-    /*justify-self: center;*/
-    max-width: 700px;
+#user-info {
+    /*flex: 1;*/
+    margin: 1%;
+    /*border: 1px solid black;*/
+}
+
+#logoutBtn {
+    display: flex;
+    align-items: center;
+    /*border: 1px solid black;*/
 }

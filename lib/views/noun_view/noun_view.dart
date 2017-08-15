@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
 //import '../../services/noun_service.dart';
-import 'package:RSB/services/noun_service.dart';
+import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';
 
 @Component(
@@ -16,16 +16,16 @@ import 'package:RSB/services/firebase_service.dart';
   providers: const [
     FirebaseService,
     materialProviders,
-    NounService
+    LoggerService
   ],
   styleUrls: const ['noun_view.css'],
 )
 
-class NounView implements OnInit {
+class NounView {
   final FirebaseService fbService;
-  final NounService nounService;
+  final LoggerService _log;
 
-  Map<String, List<Map<String, dynamic>>> masterMap; // the dynamic is either string or a map.
+//  Map<String, List<Map<String, dynamic>>> masterMap; // the dynamic is either string or a map.
 
   static const List<String> views = const [
     "referenceView",
@@ -39,10 +39,12 @@ class NounView implements OnInit {
   String newWord = "";
   String newDef = "";
 
-  NounView(FirebaseService this.fbService, NounService this.nounService);
+  NounView(FirebaseService this.fbService, LoggerService this._log) {
+    _log.info("$runtimeType");
+  }
 
-  @override
-  Future<Null> ngOnInit() async {
+//  @override
+//  Future<Null> ngOnInit() async {
     //newListWords = await vocabListService.getVocabList();
 //    newSetWords.addAll(newListWords);
 //    masterMap = await nounService.getNounMap();
@@ -54,28 +56,28 @@ class NounView implements OnInit {
 //        wordList.add(word);
 //        defList.add(def);
 //      });
-    }
+//    }
 //  } // End ngOnInit()
 
 
 
 
-  void add(String word, [String definition = ""]) {
-//    vocabMap.putIfAbsent(word, () => word);
-//    vocabMap[word] = definition;
-    // I think this does the above two functions in one line.
-    wordList.add(word);
-    defList.add(definition);
-//    vocabMap[word] = definition;
-    //newSetWords.add(description);
-  }
-//  String remove(int index) => newListWords.removeAt(index);
-  void remove(String word) {
-    int idx = wordList.indexOf(word);
-    wordList.removeAt(idx);
-    defList.removeAt(idx);
-//    vocabMap.remove(word);
-  }
+//  void add(String word, [String definition = ""]) {
+////    vocabMap.putIfAbsent(word, () => word);
+////    vocabMap[word] = definition;
+//    // I think this does the above two functions in one line.
+//    wordList.add(word);
+//    defList.add(definition);
+////    vocabMap[word] = definition;
+//    //newSetWords.add(description);
+//  }
+////  String remove(int index) => newListWords.removeAt(index);
+//  void remove(String word) {
+//    int idx = wordList.indexOf(word);
+//    wordList.removeAt(idx);
+//    defList.removeAt(idx);
+////    vocabMap.remove(word);
+//  }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 }

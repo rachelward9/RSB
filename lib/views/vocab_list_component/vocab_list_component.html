@@ -2,33 +2,38 @@
 <!--<div class="wrapper">-->
     <div class="menuButtons">
         <span class="menu-left">
-        <material-dropdown-select iconName="menu" slide="x">
-            <material-select-item (trigger)="changeVocabView(0)">
-                    Add Words
-            </material-select-item>
-            <material-select-item (trigger)="changeVocabView(1)">
-                    List View
-            </material-select-item>
-            <material-select-item (trigger)="changeVocabView(2)">
-                    Flashcards
-            </material-select-item>
+        <material-dropdown-select iconName="more_vert" slide="x">
+            <div *ngFor="let view of views; let i=index" >
+                <material-select-item (trigger)="changeVocabView(i)">
+                    {{view}}
+                </material-select-item>
+            </div>
+            <!--<material-select-item (trigger)="changeVocabView(0)">-->
+                    <!--Add Words-->
+            <!--</material-select-item>-->
+            <!--<material-select-item (trigger)="changeVocabView(1)">-->
+                    <!--List View-->
+            <!--</material-select-item>-->
+            <!--<material-select-item (trigger)="changeVocabView(2)">-->
+                    <!--Flashcards-->
+            <!--</material-select-item>-->
         </material-dropdown-select>
         </span>
         <span  class="menu-right">
-            <material-toggle *ngIf="currentView == 'addView'"
-                label="edit list -"
+            <material-toggle *ngIf="currentView == 'add words'"
+                label="edit mode -"
                 (click)="changeEditMode()">
             </material-toggle>
-            <material-toggle *ngIf="currentView == 'listView'"
+            <material-toggle *ngIf="currentView == 'list view'"
                              label="word first order -"
                              (click)="changeListWordView()">
             </material-toggle>
-            <material-toggle *ngIf="currentView == 'listView' && defVisible == false"
+            <material-toggle *ngIf="currentView == 'list view' && defVisible == false"
                              label="definitions off -"
                              checked="true"
                              (click)="changeListView()">
             </material-toggle>
-            <material-toggle *ngIf="currentView == 'listView' && defVisible == true"
+            <material-toggle *ngIf="currentView == 'list view' && defVisible == true"
                              label="definitions on  -"
                              checked="false"
                              (click)="changeListView()">
@@ -42,7 +47,7 @@
 
 
 
-    <div *ngIf="currentView == 'addView'">
+    <div *ngIf="currentView == 'add words'">
         <div>
             <!--<span>-->
                 <material-input label="Add new vocab word!"
@@ -95,7 +100,7 @@
 
     </div>
 
-    <div *ngIf="currentView == 'listView'">
+    <div *ngIf="currentView == 'list view'">
         <div *ngIf="listOrderWordFirst == true">
         <ol>
             <li *ngFor="let word of vocabMap.keys">

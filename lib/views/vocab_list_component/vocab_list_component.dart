@@ -27,11 +27,17 @@ import 'package:RSB/services/vocab_list_service.dart';
 class VocabListComponent implements OnInit {
   final VocabListService vocabListService;
 
-  static const List<String> views = const [
-    "addView",
-    "listView",
-    "flashcards"
+  List<String> views = const [
+//    "addView",
+//    "listView",
+//    "flashcards"
+      "add words",
+      "list view",
+      "flashcards"
   ];
+//  "add words",
+//  "list view",
+//  "flashcards"
   String currentView = "";
 
 // There's gotta be a better way to do this.

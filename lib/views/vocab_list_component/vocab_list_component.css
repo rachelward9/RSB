@@ -61,10 +61,19 @@ li span material-fab {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
+    /*border: 1px solid black;*/
 }
 .menu-left {
+    /*display: flex;*/
+    /*align-items: center;*/
     /*justify-self: flex-start;*/
 }
+
+.menu-left material-dropdown-select {
+    /*align-self: flex-start;*/
+}
+
 .menu-right {
     /*justify-self: flex-end;*/
 }
