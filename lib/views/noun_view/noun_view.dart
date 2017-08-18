@@ -7,58 +7,58 @@ import 'package:RSB/services/firebase_service.dart';
 
 @Component(
   selector: 'noun-view',
-  templateUrl: 'noun_view.html',
-  directives: const [
-    CORE_DIRECTIVES,
-    materialDirectives//,
-//    TodoListComponent
-  ],
-  providers: const [
-    FirebaseService,
-    materialProviders,
-    LoggerService
-  ],
   styleUrls: const ['noun_view.css'],
+  templateUrl: 'noun_view.html',
+  directives: const [CORE_DIRECTIVES, materialDirectives],
+  providers: const [materialProviders, LoggerService],
 )
-
-class NounView {
-  final FirebaseService fbService;
+class NounView implements OnInit {
   final LoggerService _log;
+  final FirebaseService fbService;
 
 //  Map<String, List<Map<String, dynamic>>> masterMap; // the dynamic is either string or a map.
+//Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
+//Map<gender, Map<index, Map<type/word, desc/example>>>
 
-  static const List<String> views = const [
+  Map<String, Map<String, Map<String, dynamic>>> nounDataMap;
+  Map<String, String> nounMetaMap;
+
+  List<String> views = const [
     "referenceView",
     "notesView"
   ];
   String currentView = "";
 
-  List<String> wordList = [];
-  List<String> defList = [];
+//  List<String> wordList = [];
+//  List<String> defList = [];
 
-  String newWord = "";
-  String newDef = "";
+//  String newWord = "";
+//  String newDef = "";
 
-  NounView(FirebaseService this.fbService, LoggerService this._log) {
+
+  @override
+  Future<Null> ngOnInit() async {
+    ///todo: Is this right?
+    if (fbService?.learner?.currentLanguage != "") {
+      fbService.changeLang(fbService.learner.currentLanguage);
+      nounDataMap = await fbService.singleLangData;
+      nounMetaMap = await fbService.singleLangMeta;
+    }
+    currentView = views.elementAt(0); // 0th index should be first view.
+  } // End ngOnInit()
+
+  NounView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
   }
 
-//  @override
-//  Future<Null> ngOnInit() async {
-    //newListWords = await vocabListService.getVocabList();
-//    newSetWords.addAll(newListWords);
-//    masterMap = await nounService.getNounMap();
-//    masterMap = await
-//    currentView = views.elementAt(0); // 0th index should be first view.
+  Future<Null> getLanguage(String lang) async {
+//    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
+//    nounMetaMap = await fbService.la[lang]["nouns"];
+    nounDataMap = await fbService.getSingleLangData(lang);
+    nounMetaMap = await fbService.getSingleLangMeta(lang);
+  }
 
-//    if (masterMap.isNotEmpty) {
-//      masterMap.forEach((String word, List def) {
-//        wordList.add(word);
-//        defList.add(def);
-//      });
-//    }
-//  } // End ngOnInit()
-
+} // end class NounView
 
 
 
@@ -80,4 +80,3 @@ class NounView {
 //  }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
-}

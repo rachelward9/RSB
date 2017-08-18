@@ -19,7 +19,7 @@ class LanguageView {
   final LoggerService _log;
   final FirebaseService fbService;
 
-  LanguageView(LoggerService this._log, FirebaseService this.fbService) {
+  LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
   }
 

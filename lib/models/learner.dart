@@ -1,54 +1,105 @@
 //import 'package:RSB/services/firebase_service.dart' as firebase;
+//import 'dart:async';
+import 'package:RSB/services/logger_service.dart';
 
 class Learner {
-  String name = "";
-  String email = "";
-  String uid = "";
-  int numLanguages = 0; // Does this matter? Probably not.
-  bool exists = false;
+  final LoggerService _log;
 
-  // Custom vocabulary list creatable by the user.
-  // Map<LanguageName, Map<word, definition>>
-  Map<String, Map<String, String>> myVocabLists = {};
+  // User info
+  String _name = "";
+  String _email = "";
+  String _uid = "";
+  bool _exists = false;
+  bool hasLanguages = false;
 
+  // Language info
+  int _numLanguages = 0; // Does this matter? Probably not.
+  Map tempLangList = {};
+  Map<String, String> languageMeta = {};
+//  bool hasDec = false;
+//  bool hasConj = false;
+//  bool hasGender = false;
   List<String> myLanguages = [];
   String currentLanguage = "";
   Map<String, String> currentVocabList = {};
 
-  // Should all arguments be optional? Guest accounts, etc?
-//  Learner(this.name, [this.email, this.uid, this.exists, this.myVocabLists, this.myLanguages, this.currentLanguage]) {
-//    if (currentLanguage != "") {
-//      currentVocabList = myVocabLists[currentLanguage];
-//    }
-//  }
+  // Custom vocabulary list creatable by the user.
+  // Map<LanguageName, Map<word, definition>>
+  Map<String, Map<String, String>> _myVocabLists = {};
 
-  Learner();
-
-  void constructLearner(String newName, String newEmail) {
-    name = newName;
-    email = newEmail;
-    exists = true;
+  // Default Constructor
+  Learner(LoggerService this._log) {
+    _log.info("$runtimeType()::defaultConstructor");
   }
 
-//  Learner.fromMap(Map map) : this(map["name"], map["email"], map["myVocabLists"], map["myLanguages"], map["currentLanguage"]);
+  // This should only be called the first time a user logs in after being added to the database.
+  Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [Map langList, Map langMeta, String currentLanguage, Map<String, Map<String, String>> vocabLists]) {
+    _log.info("$runtimeType()::constructNewLearner()");
+    _exists = true;
+    _uid = uid;
+    _name = newName;
+    _email = newEmail;
+    if (langMeta.isNotEmpty) {
+      languageMeta = langMeta;
+    }
+    if (langList.isNotEmpty) {
+      hasLanguages = true;
+      langList.forEach((String idx, String language) {
+        myLanguages.add(language);
+      });
+      if (vocabLists.isNotEmpty) {
+        _myVocabLists = vocabLists;
+      }
+    }
+  }
 
-  Map toMap() => {
-    "name": name,
-    "email": email,
-    "currentLanguage": currentLanguage,
-    "myVocabLists": myVocabLists,
-    "myLanguages": myLanguages
-  };
+  Learner.fromMap(Map map, LoggerService this._log) {
+    _log.info("$runtimeType()::fromMap()${map.toString()}");
+    _name = map["name"];
+    _uid = map["uid"];
+    _email = map["email"];
+    _exists = true;
+    if (map["currentLanguage"].isEmpty) {
+      if (map["myLanguages"].isNotEmpty) {
+        currentLanguage = map["myLanguages"][0];
+      }
+      else {
+        currentLanguage = map["currentLanguage"]; // SHOULD be ""
+      }
+    }
+    if (map["myLanguages"].isNotEmpty) {
+      hasLanguages = true;
+      map["myLanguages"].forEach((String idx, String language) {
+        myLanguages.add(language);
+      });
+    }
+    if (map["myVocabLists"].isNotEmpty) {
+      _myVocabLists = map["myVocabLists"];
+    }
+  } // End Learner.fromMap()
+
+  Map toMap() {
+    _log.info("$runtimeType()::toMap()");
+    return {
+      "uid": _uid,
+      "name": _name,
+      "email": _email,
+      "exists": _exists,
+      "currentLanguage": currentLanguage,
+      "myVocabLists": _myVocabLists,
+      "myLanguages": myLanguages.asMap()
+    };
+  }
 
   void changeLang(String newLang) {
     currentVocabList.forEach((String word, String def) {
 //      vocabLists[currentLanguage].putIfAbsent(word, () => def);
-      myVocabLists[currentLanguage][word] = def; // Same?
+      _myVocabLists[currentLanguage][word] = def; // Same?
     });
 //    // Does this do the above?
 //    vocabLists[currentLanguage] = currentVocabList;
     currentLanguage = newLang;
-    currentVocabList = myVocabLists[newLang];
+    currentVocabList = _myVocabLists[newLang];
   }
 
   void addWord(String newWord, [String newDef = ""]) {
@@ -61,11 +112,33 @@ class Learner {
   }
 
   void addLanguage(String language) {
-
+    myLanguages.add(language);
+    currentLanguage = language;
+    hasLanguages = true;
   }
 
   void removeLanguage(String language) {
-
+    myLanguages.remove(language);
+    if (myLanguages.isEmpty) {
+      currentLanguage = "";
+      hasLanguages = false;
+    }
   }
+
+  String get  name => _name;
+  String get email => _email;
+  String get uid => _uid;
+//  int get numLanguages => myLanguages.
+  Map<String, Map<String, String>> get vocabLists => _myVocabLists;
+
+//
+//  // Custom vocabulary list creatable by the user.
+//  // Map<LanguageName, Map<word, definition>>
+//  Map<String, Map<String, String>> _myVocabLists = {};
+//
+//  Map tempLangList = {};
+//  List<String> myLanguages = [];
+//  String currentLanguage = "";
+//  Map<String, String> currentVocabList = {};
 
 }

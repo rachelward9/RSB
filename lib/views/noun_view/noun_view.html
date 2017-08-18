@@ -1,11 +1,47 @@
-<!--Map<String, List<Map<String, dynamic>>> masterMap;-->
+<div>
+    Noun View
+</div>
 
-<!--<div *ngIf=""-->
-<!--<div *ngFor="let list of masterMap.keys; let i = index">-->
-    <!--<div>-->
-        <!--<span>list</span><span>masterMap[i]</span>-->
-    <!--</div>-->
-    <!--<div>-->
-
-    <!--</div>-->
-<!--</div>-->
+<!--<table *ngIf=" == true">-->
+<div *ngIf="fbService?.learner?.languageMeta['hasDeclensions'] == true" class="declensions">
+    HAS DECLENSIONS!
+    <span>
+        <table>
+            <tr>
+                <th>Case</th>
+            </tr>
+            <tr>
+                <th>Acc</th>
+                <td>Word</td>
+            </tr>
+        </table>
+    </span>
+    <span>
+        <table>
+            <tr>
+                <th>Case</th>
+            </tr>
+            <tr>
+                <th>Acc</th>
+                <td>Word</td>
+            </tr>
+        </table>
+    </span>
+    <span>
+        <table>
+            <tr>
+                <th>Case</th>
+            </tr>
+            <tr>
+                <th>Acc</th>
+                <td>Word</td>
+            </tr>
+        </table>
+    </span>
+</div>
+<!--<table *ngIf=" == false">-->
+    <!--DECLENSIONS!-->
+    <!--<tr>-->
+        <!--<th></th>-->
+    <!--</tr>-->
+<!--</table>-->

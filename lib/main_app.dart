@@ -21,7 +21,7 @@ import 'views/language_view/language_view.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives, LoginView, MenuView, LanguageView],
   providers: const [materialProviders],
 )
-class MainApp {
+class MainApp implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -32,9 +32,15 @@ class MainApp {
 
   String currentView;
 
-  MainApp(LoggerService this._log, FirebaseService this.fbService) {
+  @override
+  void ngOnInit() {
+
+  }
+
+  MainApp(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
-    currentView = views[1];
+//    _log.info("$runtimeType()::fbService.selectedLanguage::${fbService.selectedLanguage}");
+    currentView = views[0];
   }
 
   void changeMenu(int idx) {

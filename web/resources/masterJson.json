@@ -20,6 +20,8 @@
   "userdata": {
     "i8TSwVSuzSaJYs4gAm6eeqfqwEa2": {
       "name": "Logan Barnes",
+      "currentLanguage": "russian",
+      "exists": "true",
       "email": "mr.logan.barnes@gmail.com",
       "uid": "i8TSwVSuzSaJYs4gAm6eeqfqwEa2",
       "myLanguages": {
@@ -27,9 +29,9 @@
         "1": "spanish",
         "2": "swedish"
       },
-      "currentLanguage": "currentLanguage",
       "myVocabLists": {
         "russian": {
+          "новый": "new"
         },
         "spanish": {
         },

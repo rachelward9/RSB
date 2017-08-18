@@ -22,7 +22,7 @@ class MenuView {
   final LoggerService _log;
   final FirebaseService fbService;
 
-  MenuView(LoggerService this._log, FirebaseService this.fbService) {
+  MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
   }
 

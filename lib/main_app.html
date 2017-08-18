@@ -2,38 +2,21 @@
 
 
 <div *ngIf="fbService.fbUser != null" class="wrapper">
-    <div class="menuButtons">
-        <span class="menu-left">
+    <div class="topMenu">
+        <span>
             <material-dropdown-select iconName="menu" slide="x">
                 <div *ngFor="let view of views; let i=index">
                     <material-select-item (trigger)="changeMenu(i)">
                         {{view}}
                     </material-select-item>
                 </div>
-                <!--<material-select-item (trigger)="showMenu()">-->
-                        <!--Main Menu-->
-                <!--</material-select-item>-->
-                <!--<material-select-item (trigger)="showKnowledge()">-->
-                        <!--Learn-->
-                <!--</material-select-item>-->
             </material-dropdown-select>
         </span>
+        <span *ngIf="fbService?.selectedLanguage == ''" class="nowViewingLang">No language selected.</span>
+        <span *ngIf="fbService?.selectedLanguage != ''" class="nowViewingLang">Now viewing: {{fbService?.selectedLanguage}}</span>
     </div>
-    <!--<section>-->
-        <!--<span>-->
-            <!--<material-fab (trigger)="toggleMenu()" icon>-->
-                <!--<glyph icon="menu"></glyph>-->
-            <!--</material-fab>-->
-        <!--</span>-->
-        <!--<span>-->
-            <!--<div>-->
-                <!--Logout-->
-            <!--</div>-->
-            <!--<material-fab (trigger)="fbService.signOut()" icon>-->
-                <!--<glyph icon="exit_to_app"></glyph>-->
-            <!--</material-fab>-->
-        <!--</span>-->
-    <!--</section>-->
+
+
     <menu-view *ngIf="currentView == 'menuView'"></menu-view>
     <language-view *ngIf="currentView == 'languageView'"></language-view>
     <div>

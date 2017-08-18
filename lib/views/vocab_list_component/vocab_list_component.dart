@@ -1,9 +1,11 @@
 
-import 'dart:async';
+//import 'dart:async';
 //import 'dart:collection'; // In case I use a SplayTreeMap
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:RSB/services/vocab_list_service.dart';
+//import 'package:RSB/services/vocab_list_service.dart';
+import 'package:RSB/services/firebase_service.dart';
+import 'package:RSB/services/logger_service.dart';
 //import '../flashcard_component/flashcard.dart';
 
 //import 'package:angular_components/src/components/material_tab/material_tab_panel.dart';
@@ -13,19 +15,12 @@ import 'package:RSB/services/vocab_list_service.dart';
   selector: 'vocab-list',
   styleUrls: const ['vocab_list_component.css'],
   templateUrl: 'vocab_list_component.html',
-  directives: const [
-    CORE_DIRECTIVES,
-    materialDirectives//,
-//    TodoListComponent
-  ],
-  providers: const [
-    materialProviders,
-    VocabListService
-  ],
+  directives: const [CORE_DIRECTIVES, materialDirectives],
+  providers: const [materialProviders, LoggerService],
 )
-
-class VocabListComponent implements OnInit {
-  final VocabListService vocabListService;
+class VocabListComponent { //implements OnInit {
+  final LoggerService _log;
+  final FirebaseService fbService;
 
   List<String> views = const [
 //    "addView",
@@ -35,12 +30,13 @@ class VocabListComponent implements OnInit {
       "list view",
       "flashcards"
   ];
-//  "add words",
-//  "list view",
-//  "flashcards"
+
   String currentView = "";
 
+//  bool hasLanguage = false;
+
 // There's gotta be a better way to do this.
+  Map<String, String> vocabList = {};
   List<String> wordList = [];
   List<String> defList = [];
 
@@ -48,9 +44,6 @@ class VocabListComponent implements OnInit {
   bool menuVisible = false;
   bool defVisible = true;
   bool listOrderWordFirst = true;
-
-  /* List */
-
 
   /* Flashcards */
   bool cardOrderWordFirst = true;
@@ -64,23 +57,32 @@ class VocabListComponent implements OnInit {
   String newWord = "";
   String newDef = "";
 
-  VocabListComponent(this.vocabListService);
+  VocabListComponent(LoggerService this._log, this.fbService) {
+    _log.info("$runtimeType()");
+    currentView = views[0];
+  }
 
-  @override
-  Future<Null> ngOnInit() async {
-    //newListWords = await vocabListService.getVocabList();
-//    newSetWords.addAll(newListWords);
-    Map<String, String> otherMap = await vocabListService.getVocabMap();
-    vocabMap.addAll(otherMap);
-    currentView = views.elementAt(0); // 0th index should be first view.
-
-    if (vocabMap.isNotEmpty) {
-      vocabMap.forEach((String word, String def) {
-        wordList.add(word);
-        defList.add(def);
-      });
-    }
-  } // End ngOnInit()
+//  @override
+//  Future<Null> ngOnInit() async {
+//    if (fbService.learner.currentLanguage != "") { ///todo: Need more checks?
+//      hasLanguage = true;
+//    }
+//    // Should I just do this? Doesn't matter if it's empty,
+//    vocabList = fbService.learner.currentVocabList;
+//    //    if ()
+//    //newListWords = await vocabListService.getVocabList();
+////    newSetWords.addAll(newListWords);
+////    Map<String, String> otherMap = await vocabListService.getVocabMap();
+////    vocabMap.addAll(otherMap);
+//    currentView = views.elementAt(0); // 0th index should be first view.
+//
+//    if (vocabMap.isNotEmpty) {
+//      vocabMap.forEach((String word, String def) {
+//        wordList.add(word);
+//        defList.add(def);
+//      });
+//    }
+//  } // End ngOnInit()
 
 
 
@@ -122,12 +124,11 @@ class VocabListComponent implements OnInit {
   }
 
   void changeVocabView(int newIndex) {
+//    currentView = views[newIndex];
     currentView = views.elementAt(newIndex);
   }
 
   void add(String word, [String definition = ""]) {
-//    vocabMap.putIfAbsent(word, () => word);
-//    vocabMap[word] = definition;
   // I think this does the above two functions in one line.
     wordList.add(word);
     defList.add(definition);
@@ -135,7 +136,7 @@ class VocabListComponent implements OnInit {
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
-  String remove(String word) {
+  void remove(String word) {
     int idx = wordList.indexOf(word);
     wordList.removeAt(idx);
     defList.removeAt(idx);
