@@ -1,6 +1,7 @@
 
 //import 'dart:async';
 //import 'dart:collection'; // In case I use a SplayTreeMap
+import 'dart:async';
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
 //import 'package:RSB/services/vocab_list_service.dart';
@@ -16,9 +17,9 @@ import 'package:RSB/services/logger_service.dart';
   styleUrls: const ['vocab_list_component.css'],
   templateUrl: 'vocab_list_component.html',
   directives: const [CORE_DIRECTIVES, materialDirectives],
-  providers: const [materialProviders, LoggerService],
+  providers: const [materialProviders], //, LoggerService],
 )
-class VocabListComponent { //implements OnInit {
+class VocabListComponent implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -56,6 +57,15 @@ class VocabListComponent { //implements OnInit {
 //  SplayTreeMap<String, String> sortedVocab;
   String newWord = "";
   String newDef = "";
+
+  Future<Null> ngOnInit() async {
+    if (vocabList.isEmpty) {
+      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+        fbService.changeLang(fbService.learner.currentLanguage);
+//        vocabList = await fbService.getUserStorage(fbService.learner.uid).
+      }
+    }
+  }
 
   VocabListComponent(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");

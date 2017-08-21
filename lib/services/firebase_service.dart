@@ -21,6 +21,7 @@ class FirebaseService {
   firebase.DatabaseReference fbLangList; // = database.ref("test");
   firebase.DatabaseReference fbLangData;
   firebase.DatabaseReference fbLangMeta;
+  firebase.StorageReference userStorage; // Unnecessary?
 
   firebase.User fbUser;
   Learner learner;
@@ -31,14 +32,13 @@ class FirebaseService {
 
   /* Languages info */
   String selectedLanguage = "";
-
+  Map<String, Map<String, String>> storedVocabList = {};
 //  bool hasLanguage = false;
   Map tempData = {};
   Map allLangMeta = {};
   Map singleLangMeta = {};
   List<String> languages = [];
-  Map<String,
-      Map<String, Map<String, Map<String, dynamic>>>> fullLanguageData = {};
+  Map<String,Map<String, Map<String, Map<String, dynamic>>>> fullLanguageData = {};
   Map<String, Map<String, Map<String, dynamic>>> singleLangData = {};
 
   FirebaseService(LoggerService this._log) {
@@ -59,6 +59,7 @@ class FirebaseService {
     fbLangList = _fbDatabase.ref("languagesList");
     fbLangData = _fbDatabase.ref("languagesData");
     fbLangMeta = _fbDatabase.ref("languagesMeta");
+//    fbStorageRoot = _fbStorage.ref("/");  // Unnecessary?
   }
 
   /*** Try to simplify initialization, write functions to get all da shits. ***/
@@ -98,7 +99,7 @@ class FirebaseService {
 
   Future<Map<String, String>> getSingleLangMeta(String lang) async {
     _log.info("$runtimeType()::getSingleLangMeta($lang)");
-    if (allLangMeta?.isNotEmpty) {
+    if (allLangMeta != null && allLangMeta.isNotEmpty) {
       singleLangMeta = allLangMeta[lang];
     }
     else {
@@ -107,8 +108,8 @@ class FirebaseService {
         allLangMeta = await e.snapshot.exportVal();
         singleLangMeta = allLangMeta[lang];
       });
-      return singleLangMeta;
     }
+    return singleLangMeta;
   }
 
   Future<Map<String,Map<String, Map<String, Map<String, dynamic>>>>> getAllLangData() async {
@@ -122,7 +123,7 @@ class FirebaseService {
 
   Future<Map<String, Map<String, Map<String, dynamic>>>> getSingleLangData(String lang) async {
     _log.info("$runtimeType()::getSingleLangData($lang)");
-    if (fullLanguageData?.isNotEmpty) {
+    if (fullLanguageData != null && fullLanguageData.isNotEmpty) {
       singleLangData = fullLanguageData[lang];
     }
     else {
@@ -136,7 +137,7 @@ class FirebaseService {
 
 
   Future<List> getLangList() async {
-    if (languages?.isNotEmpty) {
+    if (languages != null && languages.isNotEmpty) {
       return languages;
     }
     else {
@@ -153,8 +154,21 @@ class FirebaseService {
     }
   }
 
+  // I think this will not be used.
+  Future<firebase.StorageReference> getUserStorage(String userID) async {
+    if (_userMetaMap.containsKey(userID) ) {
+      _log.info("$userID exists as user storage!");
+    }
+    else {
+      _log.info("$userID does not already exist in storage. Will this create a new bucket?"); ///todo: Will this create a new storage bucket for user if not present?
+    }
+    userStorage = await _fbStorage.ref("/$userID");
+
+    return userStorage;
+  }
+
   /*** } // end FirebaseService() constructor. ***/
-///todo: should all if() statements that get firebase data use the Elvis operator?
+
   _authChanged(firebase.User newUser) {
     _log.info("$runtimeType()::_authChanged()");
 //    _log.info("$runtimeType()::newUser.runtimeType:${newUser.runtimeType}");
@@ -163,12 +177,11 @@ class FirebaseService {
 //    _log.info("$runtimeType()::newUser::${newUser.toString()}");
     if (newUser != null) {
 //      _log.info("$runtimeType()::newUser.uid::${newUser.uid}");
-      _log.info(
-          "$runtimeType()::newUser.displayName::${newUser.displayName}");
+      _log.info("$runtimeType()::newUser.displayName::${newUser.displayName}");
 //      _log.info("$runtimeType()::newUser.email::${newUser.email}");
-      if (_userMetaMap?.containsKey(newUser.uid)) {
+      if (_userMetaMap != null && _userMetaMap.containsKey(newUser.uid)) {
         _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
-        learner = new Learner.fromMap(_userDataMap, _log);
+        learner = new Learner.fromMap(_log, _userDataMap);
       }
       else {
         learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
@@ -236,7 +249,7 @@ class FirebaseService {
   }
 
   Future<Null> changeLang(String lang) async {
-    if (selectedLanguage?.isEmpty) { // First time picking; easy.
+    if (selectedLanguage != null && selectedLanguage.isEmpty) { // First time picking; easy.
       // Set current language to the selected language.
       selectedLanguage = lang;
       // Get language metadata
@@ -244,9 +257,9 @@ class FirebaseService {
 
       // Get the language data for the selected language.
       singleLangData = await getSingleLangData(lang);
-    }
-    else {
-      learner.changeLang(lang);
+//    }
+//    else {
+      learner.changeLang(lang); // This should handle all cases I care about...
     }
   }
 

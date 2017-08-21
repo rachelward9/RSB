@@ -10,7 +10,7 @@ import 'package:RSB/services/firebase_service.dart';
   styleUrls: const ['noun_view.css'],
   templateUrl: 'noun_view.html',
   directives: const [CORE_DIRECTIVES, materialDirectives],
-  providers: const [materialProviders, LoggerService],
+  providers: const [materialProviders],//, LoggerService],
 )
 class NounView implements OnInit {
   final LoggerService _log;
@@ -20,8 +20,8 @@ class NounView implements OnInit {
 //Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
-  Map<String, Map<String, Map<String, dynamic>>> nounDataMap;
-  Map<String, String> nounMetaMap;
+  Map<String, Map<String, Map<String, dynamic>>> nounDataMap = {};
+  Map<String, String> nounMetaMap = {};
 
   List<String> views = const [
     "referenceView",
@@ -36,15 +36,21 @@ class NounView implements OnInit {
 //  String newDef = "";
 
 
-  @override
+//  @override
   Future<Null> ngOnInit() async {
     ///todo: Is this right?
-    if (fbService?.learner?.currentLanguage != "") {
-      fbService.changeLang(fbService.learner.currentLanguage);
-      nounDataMap = await fbService.singleLangData;
-      nounMetaMap = await fbService.singleLangMeta;
+    if (nounDataMap.isEmpty) {
+      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+        fbService.changeLang(fbService.learner.currentLanguage);
+        nounDataMap = await fbService.singleLangData;
+        nounMetaMap = await fbService.singleLangMeta;
+      }
     }
     currentView = views.elementAt(0); // 0th index should be first view.
+//
+//    if (fbService.learner.checkComplete() == false) {
+//
+//    }
   } // End ngOnInit()
 
   NounView(LoggerService this._log, this.fbService) {

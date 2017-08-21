@@ -9,11 +9,12 @@ class Learner {
   String _name = "";
   String _email = "";
   String _uid = "";
-  bool _exists = false;
+  bool _exists = false; // Exists in database
   bool hasLanguages = false;
+  bool isComplete = false;
 
   // Language info
-  int _numLanguages = 0; // Does this matter? Probably not.
+//  int _numLanguages = 0; // Does this matter? Probably not.
   Map tempLangList = {};
   Map<String, String> languageMeta = {};
 //  bool hasDec = false;
@@ -21,15 +22,16 @@ class Learner {
 //  bool hasGender = false;
   List<String> myLanguages = [];
   String currentLanguage = "";
-  Map<String, String> currentVocabList = {};
+  Map<String, String> currentVocabList = {}; // Local.
 
   // Custom vocabulary list creatable by the user.
   // Map<LanguageName, Map<word, definition>>
-  Map<String, Map<String, String>> _myVocabLists = {};
+  Map<String, Map<String, String>> _myVocabLists = {}; // This should go in a storage bucket!
 
   // Default Constructor
   Learner(LoggerService this._log) {
     _log.info("$runtimeType()::defaultConstructor");
+    checkComplete();
   }
 
   // This should only be called the first time a user logs in after being added to the database.
@@ -41,6 +43,7 @@ class Learner {
     _email = newEmail;
     if (langMeta.isNotEmpty) {
       languageMeta = langMeta;
+      hasLanguages = true;
     }
     if (langList.isNotEmpty) {
       hasLanguages = true;
@@ -51,9 +54,10 @@ class Learner {
         _myVocabLists = vocabLists;
       }
     }
+    checkComplete();
   }
 
-  Learner.fromMap(Map map, LoggerService this._log) {
+  Learner.fromMap(LoggerService this._log, Map map) {
     _log.info("$runtimeType()::fromMap()${map.toString()}");
     _name = map["name"];
     _uid = map["uid"];
@@ -76,6 +80,7 @@ class Learner {
     if (map["myVocabLists"].isNotEmpty) {
       _myVocabLists = map["myVocabLists"];
     }
+    checkComplete();
   } // End Learner.fromMap()
 
   Map toMap() {
@@ -89,6 +94,16 @@ class Learner {
       "myVocabLists": _myVocabLists,
       "myLanguages": myLanguages.asMap()
     };
+  }
+
+  bool checkComplete() {
+    if (myLanguages.isNotEmpty) {
+      isComplete = true;
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   void changeLang(String newLang) {
