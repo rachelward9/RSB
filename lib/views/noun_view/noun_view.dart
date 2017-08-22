@@ -41,7 +41,8 @@ class NounView implements OnInit {
     ///todo: Is this right?
     if (nounDataMap.isEmpty) {
       if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-        fbService.changeLang(fbService.learner.currentLanguage);
+        fbService.changeLang(fbService.selectedLanguage);
+//        fbService.changeLang(fbService.learner.currentLanguage);
         nounDataMap = await fbService.singleLangData;
         nounMetaMap = await fbService.singleLangMeta;
       }

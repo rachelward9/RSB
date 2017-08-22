@@ -67,23 +67,23 @@
         </div>
 
         <!--<hr>-->
-        <p *ngIf="vocabMap?.isNotEmpty">
+        <p *ngIf="vocabList.isNotEmpty">
             New Words
             <glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>
         </p>
-        <p *ngIf="vocabMap.isEmpty">
+        <p *ngIf="vocabList.isEmpty">
             No words yet!
         </p>
 
-        <div *ngIf="vocabMap?.isNotEmpty">
+        <div *ngIf="vocabList.isNotEmpty">
             <ul>
                 <!--<li *ngFor="let word of newWords; let i=index">-->
-                <li *ngFor="let word of vocabMap.keys"> <!--; let i=index"-->
+                <li *ngFor="let word of vocabList.keys"> <!--; let i=index"-->
                     <material-checkbox #done materialTooltip="Mark word as memorized"></material-checkbox>
                     <span class="wordAndDef">
                     <span [class.done]="done.checked" class="word"> {{word}} </span>
                         <span></span>
-                    <span [class.done]="done.checked" class="def"> {{vocabMap[word]}} </span>
+                    <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
                     <!--<material-fab mini (trigger)="remove(i)">-->
                     </span>
                     <span *ngIf="editMode == false" class="li-remove">
@@ -103,12 +103,12 @@
     <div *ngIf="currentView == 'list view'">
         <div *ngIf="listOrderWordFirst == true">
         <ol>
-            <li *ngFor="let word of vocabMap.keys">
+            <li *ngFor="let word of vocabList.keys">
                 <span class="word">
                     {{word}}
                 </span>
                 <span *ngIf="defVisible == true" class="def">
-                    {{vocabMap[word]}}
+                    {{vocabList[word]}}
                 </span>
             </li>
         </ol>
@@ -116,9 +116,9 @@
 
         <div *ngIf="listOrderWordFirst == false">
             <ol>
-                <li *ngFor="let word of vocabMap.keys">
+                <li *ngFor="let word of vocabList.keys">
                     <span class="word">
-                        {{vocabMap[word]}}
+                        {{vocabList[word]}}
                     </span>
                         <span *ngIf="defVisible == true" class="def">
                         {{word}}

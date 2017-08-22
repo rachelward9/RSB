@@ -12,8 +12,8 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <span *ngIf="fbService?.selectedLanguage == ''" class="nowViewingLang">No language selected.</span>
-        <span *ngIf="fbService?.selectedLanguage != ''" class="nowViewingLang">Now viewing: {{fbService?.selectedLanguage}}</span>
+        <span *ngIf="fbService.learner.currentLanguage == ''" class="nowViewingLang">No language selected.</span>
+        <span *ngIf="fbService.learner.currentLanguage != ''" class="nowViewingLang">Now viewing: {{fbService.learner.currentLanguage}}</span>
     </div>
 
 
@@ -24,7 +24,7 @@
     </div>
     <section class="user-bar">
         <!--<img class="icon user-avatar" [src]="fbService.fbUser?.photoURL">-->
-        <span id="user-info">Signed in as: {{fbService.fbUser?.displayName}}</span>
+        <span id="user-info">Signed in as: {{fbService.fbUser.displayName}}</span>
         <span id="logoutBtn">
             <div>
                 Logout

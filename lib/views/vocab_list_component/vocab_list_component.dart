@@ -38,6 +38,7 @@ class VocabListComponent implements OnInit {
 
 // There's gotta be a better way to do this.
   Map<String, String> vocabList = {};
+  Map<String, Map<String, String>> tempVocabMap = {};
   List<String> wordList = [];
   List<String> defList = [];
 
@@ -53,7 +54,7 @@ class VocabListComponent implements OnInit {
 
 //  List<String> newListWords = [];
 //  Set<String> newSetWords = new Set(); // It's a vocab list, so each entry should be unique.
-  Map<String, String> vocabMap = {};
+
 //  SplayTreeMap<String, String> sortedVocab;
   String newWord = "";
   String newDef = "";
@@ -62,7 +63,8 @@ class VocabListComponent implements OnInit {
     if (vocabList.isEmpty) {
       if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
         fbService.changeLang(fbService.learner.currentLanguage);
-//        vocabList = await fbService.getUserStorage(fbService.learner.uid).
+        tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
+        vocabList = tempVocabMap[fbService.learner.currentLanguage];
       }
     }
   }
@@ -142,7 +144,7 @@ class VocabListComponent implements OnInit {
   // I think this does the above two functions in one line.
     wordList.add(word);
     defList.add(definition);
-    vocabMap[word] = definition;
+    vocabList[word] = definition;
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
@@ -150,7 +152,7 @@ class VocabListComponent implements OnInit {
     int idx = wordList.indexOf(word);
     wordList.removeAt(idx);
     defList.removeAt(idx);
-    vocabMap.remove(word);
+    vocabList.remove(word);
   }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
