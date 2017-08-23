@@ -8,7 +8,7 @@ import'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-import '../../models/learner.dart';
+//import '../../models/learner.dart';
 import 'package:angular2/core.dart';
 
 
@@ -27,7 +27,7 @@ class MenuView implements OnInit {
   Map testFullLangData = {};
   List langList = [];
 
-//  @override
+  @override
   Future<Null> ngOnInit() async {
     testFullLangData = await fbService.getAllLangData();
     testFullLangMeta = await fbService.getAllLangMeta();

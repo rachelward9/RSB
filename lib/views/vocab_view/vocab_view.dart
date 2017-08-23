@@ -18,9 +18,7 @@ import '../vocab_list_component/vocab_list_component.dart';
     VocabListComponent,
     materialDirectives
   ],
-  providers: const [
-    materialProviders
-  ],
+  providers: const [materialProviders],
 )
 
 class VocabView {

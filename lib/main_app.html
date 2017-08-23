@@ -1,7 +1,7 @@
-<login-view *ngIf="fbService.fbUser == null"></login-view>
+<login-view *ngIf="fbService?.fbUser == null"></login-view>
 
 
-<div *ngIf="fbService.fbUser != null" class="wrapper">
+<div *ngIf="fbService?.fbUser != null" class="wrapper">
     <div class="topMenu">
         <span>
             <material-dropdown-select iconName="menu" slide="x">
@@ -12,13 +12,14 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <span *ngIf="fbService.learner.currentLanguage == null || fbService.learner.currentLanguage == ''" class="nowViewingLang">No language selected.</span>
-        <span *ngIf="fbService.learner.currentLanguage != null && fbService.learner.currentLanguage != ''" class="nowViewingLang">Now viewing: {{fbService.learner.currentLanguage}}</span>
+        <span>{{langMsg}}</span>
+        <!--<span *ngIf="language == null || language == '' " class="nowViewingLang">No language selected.</span>-->
+        <!--<span *ngIf="language != null && language != '' " class="nowViewingLang">Now viewing: {{language}}</span>-->
     </div>
 
 
     <menu-view *ngIf="currentView == 'menuView'"></menu-view>
-    <language-view *ngIf="currentView == 'languageView'"></language-view>
+    <language-view *ngIf="currentView == 'languageView'" [lang]="language"></language-view>
     <div>
         <hr>
     </div>
