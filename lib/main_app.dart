@@ -25,6 +25,9 @@ class MainApp implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
+  String language = "";
+  String langMsg = "";
+
   List<String> views = const [
     "menuView",
     "languageView"
@@ -33,8 +36,16 @@ class MainApp implements OnInit {
   String currentView;
 
   @override
-  ngOnInit() {
-    fbService.completeLearner();
+  ngOnInit() async {
+    await fbService.completeLearner();
+    if (fbService?.learner?.currentLanguage != null && fbService.learner.currentLanguage.isNotEmpty) {
+      language = fbService.learner.currentLanguage;
+      langMsg = "Now viewing ${language}";
+    }
+    else {
+      language = "";
+      langMsg = "No language selected.";
+    }
   }
 
   MainApp(LoggerService this._log, this.fbService) {
