@@ -33,6 +33,7 @@ class LanguageView {
 
   Map vocab;
 
+  @override
   ngOnInit() async {
     _log.info("$runtimeType()::ngOnInit()");
     langData = await fbService.getSingleLangData(lang);
@@ -43,9 +44,14 @@ class LanguageView {
     _log.info("$runtimeType()::ngOnInit()");
     nounMeta = langMeta[lang];
     _log.info("$runtimeType()::ngOnInit()");
-    if ()
-    vocab = await fbService.getVocabLists(fbService.learner.uid);
-    _log.info("$runtimeType()::ngOnInit()");
+
+    if (fbService.vocabMeta != null && fbService.vocabMeta.isNotEmpty) { // There may not be vocab lists.
+      if (fbService.vocabMeta.containsKey(fbService.learner.uid)) {
+        vocab = await fbService.getVocabLists(fbService.learner.uid);
+        _log.info("$runtimeType()::ngOnInit()::getVocab");
+      }
+    }
+
 //    verbData = langData["verbs"];
   }
 

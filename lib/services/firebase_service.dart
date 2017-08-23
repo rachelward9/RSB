@@ -1,3 +1,5 @@
+///todo:: currentLanguage is being called on null somewhere...
+
 import 'dart:html';
 import 'dart:async';
 
@@ -8,8 +10,8 @@ import 'package:firebase/firebase.dart' as firebase;
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/models/learner.dart';
 
-@Injectable()
-class FirebaseService {
+@Injectable() ///todo: added OnInit to FirebaseService. --is it right?
+class FirebaseService implements OnInit {
   ///todo: check this once errors are resolved.
   static const String USER_META = "usermeta";
   static const String USER_DATA = "userdata";
@@ -27,7 +29,8 @@ class FirebaseService {
   firebase.DatabaseReference fbLangList; // = database.ref("test");
   firebase.DatabaseReference fbLangData;
   firebase.DatabaseReference fbLangMeta;
-  firebase.DatabaseReference fbVocabList;
+  firebase.DatabaseReference fbVocabListData;
+  firebase.DatabaseReference fbVocabListMeta;
   firebase.StorageReference userStorage; // Unnecessary?
 
   firebase.User fbUser;
@@ -43,7 +46,7 @@ class FirebaseService {
 
   /* Languages info */
   String selectedLanguage = "";
-
+  Map<String, String> vocabMeta = {};
   Map<String, Map<String, Map<String, String>>> allUsersVocabLists = {};
   Map<String, Map<String, String>> singleUsersVocabLists = {};
 //  bool hasLanguage = false;
@@ -72,8 +75,18 @@ class FirebaseService {
     fbLangList = _fbDatabase.ref("languagesList");
     fbLangData = _fbDatabase.ref("languagesData");
     fbLangMeta = _fbDatabase.ref("languagesMeta");
-    fbVocabList = _fbDatabase.ref("vocabLists");
+    fbVocabListData = _fbDatabase.ref("vocabLists");
+    fbVocabListMeta = _fbDatabase.ref("vocabMeta");
 //    fbStorageRoot = _fbStorage.ref("/");  // Unnecessary?
+  }
+
+  @override
+  ngOnInit() {
+    getUserMeta();
+    getAllLangMeta();
+    getLangList();
+    getVocabMeta();
+    getAllLangData(); // Necessary?
   }
 
   /*** Try to simplify initialization, write functions to get all da shits. ***/
@@ -250,10 +263,18 @@ class FirebaseService {
     return userStorage;
   }
 
+  Future<Map<String, String>> getVocabMeta() async {
+    if (vocabMeta == null || vocabMeta.isEmpty) {
+      fbVocabListMeta.onValue.listen((firebase.QueryEvent e) async {
+        vocabMeta = await e.snapshot.exportVal();
+      });
+    }
+    return vocabMeta;
+  }
 
   Future<Map<String,Map<String,String>>> getVocabLists(String userID) async {
     if (allUsersVocabLists == null || allUsersVocabLists.isEmpty) {
-      fbVocabList.onValue.listen((firebase.QueryEvent e) async {
+      fbVocabListData.onValue.listen((firebase.QueryEvent e) async {
         _log.info("$runtimeType()::vocabList.onValue.listen::${e.snapshot.exportVal().toString()}");
         allUsersVocabLists = await e.snapshot.exportVal();
         _log.info("$runtimeType():: storedVocabLists:: ${singleUsersVocabLists.toString()}");
@@ -270,24 +291,27 @@ class FirebaseService {
 
   Future<Null> completeLearner() async {
 //    Map<String, Map<String,
+    if (learner == null) {
 
-    try {
-      _singleUserMeta = await getSingleUserMeta(learner.uid);
     }
-    catch (er) {
-      _log.info("$runtimeType()::completeLearner()::userMeta::--$er");
-    }
-    try {
-      _singleUserMeta = await getSingleUserData(learner.uid);
-    }
-    catch (er) {
-      _log.info("$runtimeType()::completeLearner()::userData::--$er");
-    }
+    else {
+      try {
+        _singleUserMeta = await getSingleUserMeta(learner.uid);
+      }
+      catch (er) {
+        _log.info("$runtimeType()::completeLearner()::userMeta::--$er");
+      }
+      try {
+        _singleUserMeta = await getSingleUserData(learner.uid);
+      }
+      catch (er) {
+        _log.info("$runtimeType()::completeLearner()::userData::--$er");
+      }
 
-    if (_singleUserMeta["myLanguages"] != null && _singleUserMeta["myLanguages"].isNotEmpty) {
-      learner.myLanguages = _singleUserMeta["myLanguages"].values();
+      if (_singleUserMeta["myLanguages"] != null && _singleUserMeta["myLanguages"].isNotEmpty) {
+        learner.myLanguages = _singleUserMeta["myLanguages"].values();
+      }
     }
-
     ///todo: finish this.
     ///todo: pass in values to all components, like <noun-view [someData]="passed-in-data"></noun-view>
 //    learner.allLanguagesMeta

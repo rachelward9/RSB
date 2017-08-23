@@ -33,8 +33,8 @@ class MainApp implements OnInit {
   String currentView;
 
   @override
-  void ngOnInit() {
-
+  ngOnInit() {
+    fbService.completeLearner();
   }
 
   MainApp(LoggerService this._log, this.fbService) {

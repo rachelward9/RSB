@@ -12,8 +12,8 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <span *ngIf="fbService.learner.currentLanguage == ''" class="nowViewingLang">No language selected.</span>
-        <span *ngIf="fbService.learner.currentLanguage != ''" class="nowViewingLang">Now viewing: {{fbService.learner.currentLanguage}}</span>
+        <span *ngIf="fbService.learner.currentLanguage == null || fbService.learner.currentLanguage == ''" class="nowViewingLang">No language selected.</span>
+        <span *ngIf="fbService.learner.currentLanguage != null && fbService.learner.currentLanguage != ''" class="nowViewingLang">Now viewing: {{fbService.learner.currentLanguage}}</span>
     </div>
 
 
