@@ -20,8 +20,27 @@ class NounView implements OnInit {
 //Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
-  Map<String, Map<String, Map<String, dynamic>>> nounDataMap = {};
-  Map<String, String> nounMetaMap = {};
+  Map<String, Map<String, Map<String, dynamic>>> _nounDataMap;
+  @Input()
+  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> ndm) {
+    if (_nounDataMap != ndm) {
+      _nounDataMap = {};
+      initializeMe();
+    }
+  }
+
+  Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
+
+  Map<String, String> _nounMetaMap;
+  @Input()
+  void set nounMetaMap(Map<String, String> nmm) {
+    if (_nounMetaMap != nmm) {
+      _nounMetaMap = {};
+      initializeMe();
+    }
+  }
+
+  Map<String, String> get nounMetaMap => _nounMetaMap;
 
   List<String> views = const [
     "referenceView",
@@ -39,20 +58,31 @@ class NounView implements OnInit {
 //  @override
   Future<Null> ngOnInit() async {
     ///todo: Is this right?
-    if (nounDataMap.isEmpty) {
-      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-        fbService.changeLang(fbService.selectedLanguage);
-//        fbService.changeLang(fbService.learner.currentLanguage);
-        nounDataMap = await fbService.singleLangData;
-        nounMetaMap = await fbService.singleLangMeta;
-      }
-    }
+    initializeMe();
+//    if (_nounDataMap.isEmpty) {
+//      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+//        fbService.changeLang(fbService.selectedLanguage);
+////        fbService.changeLang(fbService.learner.currentLanguage);
+//        _nounDataMap = await fbService.singleLangData;
+//        _nounMetaMap = await fbService.singleLangMeta;
+//      }
+//    }
     currentView = views.elementAt(0); // 0th index should be first view.
 //
 //    if (fbService.learner.checkComplete() == false) {
 //
 //    }
   } // End ngOnInit()
+
+  void initializeMe() {
+    if (_nounDataMap == null || _nounMetaMap == null) {
+      return;
+      _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
+    }
+    else {
+      _log.info("$runtimeType()::initializeMe()::--success!");
+    }
+  }
 
   NounView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
@@ -61,8 +91,8 @@ class NounView implements OnInit {
   Future<Null> getLanguage(String lang) async {
 //    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
 //    nounMetaMap = await fbService.la[lang]["nouns"];
-    nounDataMap = await fbService.getSingleLangData(lang);
-    nounMetaMap = await fbService.getSingleLangMeta(lang);
+    _nounDataMap = await fbService.getSingleLangData(lang);
+    _nounMetaMap = await fbService.getSingleLangMeta(lang);
   }
 
 } // end class NounView

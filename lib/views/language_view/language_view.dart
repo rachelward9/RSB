@@ -19,6 +19,36 @@ class LanguageView {
   final LoggerService _log;
   final FirebaseService fbService;
 
+  @Input()
+  String lang;
+
+  Map langData;
+  Map langMeta;
+
+  Map nounData;
+  Map nounMeta;
+
+  Map verbData;
+  Map verbMeta;
+
+  Map vocab;
+
+  ngOnInit() async {
+    _log.info("$runtimeType()::ngOnInit()");
+    langData = await fbService.getSingleLangData(lang);
+    _log.info("$runtimeType()::ngOnInit()");
+    langMeta = await fbService.getSingleLangMeta(lang);
+    _log.info("$runtimeType()::ngOnInit()");
+    nounData = langData["nouns"];
+    _log.info("$runtimeType()::ngOnInit()");
+    nounMeta = langMeta[lang];
+    _log.info("$runtimeType()::ngOnInit()");
+    if ()
+    vocab = await fbService.getVocabLists(fbService.learner.uid);
+    _log.info("$runtimeType()::ngOnInit()");
+//    verbData = langData["verbs"];
+  }
+
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
   }

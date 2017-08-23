@@ -1,6 +1,6 @@
 <material-tab-panel>
     <material-tab class="mat-tab" label="Nouns">
-        <noun-view></noun-view>
+        <noun-view [_nounDataMap]="nounData" [_nounMetaMap]="nounMeta"></noun-view>
             <!--Tab 1!-->
     </material-tab>
 
@@ -12,6 +12,6 @@
     </material-tab>
 
     <material-tab class="mat-tab" label="Vocab">
-        <vocab-view class="voc-view"></vocab-view>
+        <vocab-view [vocabList]="vocab" class="voc-view"></vocab-view>
     </material-tab>
 </material-tab-panel>

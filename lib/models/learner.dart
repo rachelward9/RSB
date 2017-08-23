@@ -12,6 +12,7 @@ class Learner {
   bool _exists = false; // Exists in database
   bool hasLanguages = false;
   bool isComplete = false;
+  bool hasVocab = false; // May just be using app for reference!
 
   // Language info
 //  int _numLanguages = 0; // Does this matter? Probably not.

@@ -10,14 +10,20 @@ import 'package:RSB/models/learner.dart';
 
 @Injectable()
 class FirebaseService {
+  ///todo: check this once errors are resolved.
+  static const String USER_META = "usermeta";
+  static const String USER_DATA = "userdata";
+
   final LoggerService _log;
 
   firebase.Auth _fbAuth;
   firebase.GoogleAuthProvider _fbGoogleAuthProvider;
   firebase.Database _fbDatabase; // = firebase.database();
   firebase.Storage _fbStorage;
-  firebase.DatabaseReference fbUserMeta; // = database.ref("test");
   firebase.DatabaseReference fbUserData;
+  firebase.DatabaseReference fbUserMeta; // = database.ref("test");
+  firebase.DatabaseReference fbSingUserMeta; // = database.ref("test");
+  firebase.DatabaseReference fbSingUserData;
   firebase.DatabaseReference fbLangList; // = database.ref("test");
   firebase.DatabaseReference fbLangData;
   firebase.DatabaseReference fbLangMeta;
@@ -37,8 +43,9 @@ class FirebaseService {
 
   /* Languages info */
   String selectedLanguage = "";
-  Map<String, Map<String, Map<String, String>>> tempVocabLists = {};
-  Map<String, Map<String, String>> storedVocabList = {};
+
+  Map<String, Map<String, Map<String, String>>> allUsersVocabLists = {};
+  Map<String, Map<String, String>> singleUsersVocabLists = {};
 //  bool hasLanguage = false;
   Map tempData = {};
   Map allLangMeta = {};
@@ -71,36 +78,100 @@ class FirebaseService {
 
   /*** Try to simplify initialization, write functions to get all da shits. ***/
 
+  Future<bool> isUserInDatabase(String userID) async {
+    bool isUserInDB = false;
+    if (_userMetaMap == null || _userMetaMap.isEmpty) {
+      fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
+        if (e.snapshot.exists()) {
+          _userMetaMap = await e.snapshot.exportVal();
+          _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+        }
+      });
+    }
+    if (_userMetaMap.containsKey(userID)) {
+      isUserInDB = true;
+    }
+    return isUserInDB;
+  }
+
   Future<Map> getUserMeta() async {
     _log.info("$runtimeType()::getUserMeta()");
-    ///todo: Are two async calls necessary?
-    fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
-      if (e.snapshot.exists()) {
-        _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
-        _userMetaMap = await e.snapshot.exportVal();
-      }
-    });
+    if (_userMetaMap == null || _userMetaMap.isEmpty) {
+      ///todo: Are two async calls necessary?
+      fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
+        if (e.snapshot.exists()) {
+          _userMetaMap = await e.snapshot.exportVal();
+          _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+        }
+      });
+    }
     return _userMetaMap;
   }
 
-  Future<Map> getUserData() async {
-    _log.info("$runtimeType()::getUserData()");
-    fbUserData.onValue.listen((firebase.QueryEvent e) async {
-      if (e.snapshot.exists()) {
-        _log.info("$runtimeType()::_userDataMap.onValue.listen::${e.snapshot.exportVal().toString()}");
-        _userDataMap = await e.snapshot.exportVal();
-      }
-    });
+  Future<Map> _getAllUserData() async {
+    _log.info("$runtimeType()::_getAllUserData()");
+    if (_userDataMap == null || _userDataMap.isEmpty) {
+      fbUserData.onValue.listen((firebase.QueryEvent e) async {
+        if (e.snapshot.exists()) {
+          _userDataMap = await e.snapshot.exportVal();
+          _log.info("$runtimeType()::_userDataMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+        }
+      });
+    }
     return _userDataMap;
+  }
+
+  Future<Map> getSingleUserData(String userID) async {
+    _log.info("$runtimeType()::getSingleUserData()");
+//    String dbRefPath = USER_DATA + userID;
+//    if (_userDataMap == null || _userDataMap.isEmpty) {
+//      fbUserData.onValue.listen((firebase.QueryEvent e) async {
+//        if (e.snapshot.exists()) {
+//          _userDataMap = await e.snapshot.exportVal();
+//          _log.info("$runtimeType()::_userDataMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+//        }
+//      });
+//    }
+    try {
+      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
+      fbSingUserData.onValue.listen((firebase.QueryEvent e) async {
+        _singleUserData = await e.snapshot.exportVal();
+      });
+    }
+    catch (er) {
+      _log.info("$runtimeType()::getSingleUserData()::error -- $er");
+      _log.info("$runtimeType()::getSingleUserData()::userData not present in database!");
+      _singleUserData = {};
+    }
+
+    return _singleUserData;
+  }
+
+  Future<Map> getSingleUserMeta(String userID) async {
+    _log.info("$runtimeType()::getSingleUserMeta()");
+    try {
+      fbSingUserMeta = _fbDatabase.ref("$USER_META/$userID");
+      fbSingUserMeta.onValue.listen((firebase.QueryEvent e) async {
+        _singleUserMeta = await e.snapshot.exportVal();
+      });
+    }
+    catch (er) {
+      _log.info("$runtimeType()::getSingleUserMeta()::error -- $er");
+      _log.info("$runtimeType()::getSingleUserMeta()::userMeta not present in database!");
+      _singleUserMeta = {};
+    }
+
+    return _singleUserData;
   }
 
   Future<Map<String, Map<String, String>>> getAllLangMeta() async {
     _log.info("$runtimeType()::getAllLangMeta()");
-    fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
-      _log.info("$runtimeType()::languageMeta.onValue.listen::${e.snapshot.exportVal().toString()}");
-      allLangMeta = await e.snapshot.exportVal();
-      _log.info("$runtimeType():: tempLangMeta :: ${allLangMeta.toString()}");
-    });
+    if (allLangMeta == null || allLangMeta.isEmpty) {
+      fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
+        allLangMeta = await e.snapshot.exportVal();
+        _log.info("$runtimeType()::languageMeta.onValue.listen::${e.snapshot.exportVal().toString()}");
+      });
+    }
     return allLangMeta;
   }
 
@@ -120,11 +191,13 @@ class FirebaseService {
   }
 
   Future<Map<String,Map<String, Map<String, Map<String, dynamic>>>>> getAllLangData() async {
-    fbLangData.onValue.listen((firebase.QueryEvent e) async {
-      _log.info("$runtimeType()::languageData.onValue.listen::${e.snapshot.exportVal().toString()}");
-      fullLanguageData = await e.snapshot.exportVal();
-      _log.info("$runtimeType():: fullLanguageData:: ${fullLanguageData.toString()}");
-    });
+    if (fullLanguageData == null || fullLanguageData.isEmpty) {
+      fbLangData.onValue.listen((firebase.QueryEvent e) async {
+        _log.info("$runtimeType()::languageData.onValue.listen::${e.snapshot.exportVal().toString()}");
+        fullLanguageData = await e.snapshot.exportVal();
+        _log.info("$runtimeType()::fullLanguageData::${fullLanguageData.toString()}");
+      });
+    }
     return fullLanguageData;
   }
 
@@ -163,12 +236,15 @@ class FirebaseService {
 
   // I think this will not be used.
   Future<firebase.StorageReference> getUserStorage(String userID) async {
-    if (_userMetaMap.containsKey(userID) ) {
+//    if (_userMetaMap.containsKey(userID) ) {
+    bool isThere = await isUserInDatabase(userID);
+    if (isThere == true)  {
       _log.info("$userID exists as user storage!");
     }
     else {
-      _log.info("$userID does not already exist in storage. Will this create a new bucket?"); ///todo: Will this create a new storage bucket for user if not present?
+      _log.info("$userID does not already exist in storage. Will this create a new bucket?");
     }
+    ///todo: Will this create a new storage bucket for user if not present?
     userStorage = await _fbStorage.ref("/$userID");
 
     return userStorage;
@@ -176,15 +252,17 @@ class FirebaseService {
 
 
   Future<Map<String,Map<String,String>>> getVocabLists(String userID) async {
-    fbVocabList.onValue.listen((firebase.QueryEvent e) async {
-      _log.info("$runtimeType()::vocabList.onValue.listen::${e.snapshot.exportVal().toString()}");
-      tempVocabLists = await e.snapshot.exportVal();
-      if (tempVocabLists.containsKey(userID)) {
-        storedVocabList = tempVocabLists[userID];
-      }
-      _log.info("$runtimeType():: storedVocabLists:: ${storedVocabList.toString()}");
-    });
-    return storedVocabList;
+    if (allUsersVocabLists == null || allUsersVocabLists.isEmpty) {
+      fbVocabList.onValue.listen((firebase.QueryEvent e) async {
+        _log.info("$runtimeType()::vocabList.onValue.listen::${e.snapshot.exportVal().toString()}");
+        allUsersVocabLists = await e.snapshot.exportVal();
+        _log.info("$runtimeType():: storedVocabLists:: ${singleUsersVocabLists.toString()}");
+      });
+    }
+    if (allUsersVocabLists.containsKey(userID)) {
+      singleUsersVocabLists = allUsersVocabLists[userID];
+    }
+    return singleUsersVocabLists;
   }
 
   /*** } // end FirebaseService() constructor. ***/
@@ -193,22 +271,27 @@ class FirebaseService {
   Future<Null> completeLearner() async {
 //    Map<String, Map<String,
 
-    _userMetaMap = await getUserMeta();
-    _userDataMap = await getUserData();
-
-    _singleUserMeta = _userMetaMap[learner.uid];
-    _singleUserData = _userDataMap[learner.uid];
+    try {
+      _singleUserMeta = await getSingleUserMeta(learner.uid);
+    }
+    catch (er) {
+      _log.info("$runtimeType()::completeLearner()::userMeta::--$er");
+    }
+    try {
+      _singleUserMeta = await getSingleUserData(learner.uid);
+    }
+    catch (er) {
+      _log.info("$runtimeType()::completeLearner()::userData::--$er");
+    }
 
     if (_singleUserMeta["myLanguages"] != null && _singleUserMeta["myLanguages"].isNotEmpty) {
       learner.myLanguages = _singleUserMeta["myLanguages"].values();
     }
-    if (_singleUserMeta["myLanguages"] != null && _userMetaMap[learner.uid]["myLanguages"].isNotEmpty) {
 
-    }
     ///todo: finish this.
     ///todo: pass in values to all components, like <noun-view [someData]="passed-in-data"></noun-view>
-    learner.allLanguagesMeta
-    learner.allLanguagesData
+//    learner.allLanguagesMeta
+//    learner.allLanguagesData
   }
 
   _authChanged(firebase.User newUser) async {
@@ -221,12 +304,22 @@ class FirebaseService {
 //      _log.info("$runtimeType()::newUser.uid::${newUser.uid}");
       _log.info("$runtimeType()::newUser.displayName::${newUser.displayName}");
 //      _log.info("$runtimeType()::newUser.email::${newUser.email}");
-      if (_userMetaMap != null && _userMetaMap.containsKey(newUser.uid)) {
+      if (_userMetaMap != null) {
         _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
-        learner = new Learner.fromMap(_log, _userDataMap);
+//        learner = new Learner.fromMap(_log, _userDataMap);
+        if (_userMetaMap.containsKey(newUser.uid)) {
+          completeLearner();
+        }
       }
       else {
         learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
+        await getUserMeta();
+        if (_userMetaMap.containsKey(newUser.uid)) { // They exist in the database.
+          completeLearner();
+        }
+        else {
+
+        }
       }
 
     }

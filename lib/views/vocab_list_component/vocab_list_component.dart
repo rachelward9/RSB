@@ -61,10 +61,13 @@ class VocabListComponent implements OnInit {
 
   Future<Null> ngOnInit() async {
     if (vocabList.isEmpty) {
-      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-        fbService.changeLang(fbService.learner.currentLanguage);
-        tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
-        vocabList = tempVocabMap[fbService.learner.currentLanguage];
+      if (fbService.learner.checkComplete() == false) {
+        await fbService.completeLearner();
+        if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+          fbService.changeLang(fbService.learner.currentLanguage);
+          tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
+          vocabList = tempVocabMap[fbService.learner.currentLanguage];
+        }
       }
     }
   }
