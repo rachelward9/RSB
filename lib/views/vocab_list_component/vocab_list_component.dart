@@ -19,7 +19,7 @@ import 'package:RSB/services/logger_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders], //, LoggerService],
 )
-class VocabListComponent implements OnInit {
+class VocabListComponent { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -37,10 +37,26 @@ class VocabListComponent implements OnInit {
 //  bool hasLanguage = false;
 
 // There's gotta be a better way to do this.
-  Map<String, String> vocabList = {};
-  Map<String, Map<String, String>> tempVocabMap = {};
-  List<String> wordList = [];
-  List<String> defList = [];
+  Map<String, String> _vocabList = {};
+
+  @Input()
+  void set vocabList(Map vl) {
+    if (_vocabList != vl) {
+      _vocabList = vl;
+      _initMe();
+    }
+  }
+
+  void _initMe() {
+    if (_vocabList == null) {
+      return;
+    }
+    _log.info("$runtimeType()::vocabList: ${_vocabList.toString()}");
+  }
+
+//  Map<String, Map<String, String>> tempVocabMap = {};
+//  List<String> wordList = [];
+//  List<String> defList = [];
 
   bool editMode = false;
   bool menuVisible = false;
@@ -59,18 +75,19 @@ class VocabListComponent implements OnInit {
   String newWord = "";
   String newDef = "";
 
-  Future<Null> ngOnInit() async {
-    if (vocabList.isEmpty) {
-      if (fbService.learner.checkComplete() == false) {
-        await fbService.completeLearner();
-        if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-          fbService.changeLang(fbService.learner.currentLanguage);
-          tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
-          vocabList = tempVocabMap[fbService.learner.currentLanguage];
-        }
-      }
-    }
-  }
+//  @override
+//  Future<Null> ngOnInit() async {
+//    if (vocabList.isEmpty) {
+//      if (fbService.learner.checkComplete() == false) {
+//        await fbService.completeLearner();
+//        if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+//          fbService.changeLang(fbService.learner.currentLanguage);
+//          tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
+//          vocabList = tempVocabMap[fbService.learner.currentLanguage];
+//        }
+//      }
+//    }
+//  }
 
   VocabListComponent(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
@@ -128,7 +145,7 @@ class VocabListComponent implements OnInit {
     }
   }
   void nextCard() {
-    if (cardIndex < (wordList.length - 1)) { // Already on first card.
+    if (cardIndex < (_vocabList.length - 1)) { // Already on first card.
       showingWord = true;
       cardIndex++;
     }
@@ -145,17 +162,17 @@ class VocabListComponent implements OnInit {
 
   void add(String word, [String definition = ""]) {
   // I think this does the above two functions in one line.
-    wordList.add(word);
-    defList.add(definition);
-    vocabList[word] = definition;
+//    wordList.add(word);
+//    defList.add(definition);
+    _vocabList[word] = definition;
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
   void remove(String word) {
-    int idx = wordList.indexOf(word);
-    wordList.removeAt(idx);
-    defList.removeAt(idx);
-    vocabList.remove(word);
+//    int idx = wordList.indexOf(word);
+//    wordList.removeAt(idx);
+//    defList.removeAt(idx);
+    _vocabList.remove(word);
   }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));

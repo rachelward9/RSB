@@ -16,62 +16,99 @@ import 'package:RSB/views/noun_view/noun_view.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives, VocabListComponent, VocabView, NounView],
   providers: const [materialProviders],
 )
-class LanguageView implements OnInit {
+class LanguageView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
+
+
+  String _lang = "";
+
+  Map _langData = {};
+  Map _langMeta = {};
+
+  Map _nounData = {};
+  Map _nounMeta = {};
+
+//  Map _verbData = {};
+//  Map _verbMeta = {};
+
+  Map _vocab = {};
 
   @Input()
   void set lang(String l) {
     if (_lang != l) {
-      _lang = "";
-      initMe();
+      _lang = l;
+      _initMe();
     }
 
   }
+  String get lang => _lang;
 
-  void initMe() {
-    if (_lang == null) {
+  @Input()
+  void set langData(Map ld) {
+    if (_langData != ld) {
+      _langData = ld;
+      _initMe();
+    }
+  }
+  Map get langData => _langData;
+
+  @Input()
+  void set nounData(Map nd) {
+    if (_nounData != nd) {
+      _nounData = nd;
+      _initMe();
+    }
+  }
+  Map get nounData => _nounData;
+
+  @Input()
+  void set nounMeta(Map nm) {
+    if (_nounMeta != nm) {
+      _nounMeta = nm;
+      _initMe();
+    }
+  }
+  Map get nounMeta => _nounMeta;
+
+  @Input()
+  void set vocab(Map voc) {
+    if (voc == null || voc.isEmpty) {
+     _vocab = {};
+    }
+  }
+  Map get vocab => _vocab;
+
+  void _initMe() {
+    if (_lang == null || _langData == null || _langMeta == null || _nounData == null || _nounMeta == null || _vocab == null) {
       return;
     }
-    else {
+//    else {
       _log.info("$runtimeType()::initMe()::--success!");
-    }
+//    }
   }
 
-  String _lang = "";
-
-  Map langData = {};
-  Map langMeta = {};
-
-  Map nounData = {};
-  Map nounMeta = {};
-
-  Map verbData = {};
-  Map verbMeta = {};
-
-  Map vocab = {};
-
-  @override
-  Future<Null> ngOnInit() async {
-    _log.info("$runtimeType()::ngOnInit()");
-    langData = await fbService.getSingleLangData(_lang);
-    _log.info("$runtimeType()::ngOnInit()::langData::${langData.toString()}");
-    langMeta = await fbService.getSingleLangMeta(_lang);
-    _log.info("$runtimeType()::ngOnInit()::langMeta::${langMeta.toString()}");
-    nounData = langData["nouns"];
-    _log.info("$runtimeType()::ngOnInit()::nounData::${nounData.toString()}");
-    nounMeta = langMeta[_lang];
-    _log.info("$runtimeType()::ngOnInit()::nounMeta::${nounMeta.toString()}");
-
-    if (fbService.vocabMeta != null && fbService.vocabMeta.isNotEmpty) { // There may not be vocab lists.
-      if (fbService.vocabMeta.containsKey(fbService.learner.uid)) {
-        vocab = await fbService.getVocabLists(fbService.learner.uid);
-        _log.info("$runtimeType()::ngOnInit()::getVocab");
-      }
-    }
-
-//    verbData = langData["verbs"];
-  }
+//  @override
+//  Future<Null> ngOnInit() async {
+//    _log.info("$runtimeType()::ngOnInit()");
+//    langData = await fbService.getSingleLangData(_lang);
+//    _log.info("$runtimeType()::ngOnInit()::langData::${_langData.toString()}");
+//    _langMeta = await fbService.getSingleLangMeta(_lang);
+//    _log.info("$runtimeType()::ngOnInit()::langMeta::${_langMeta.toString()}");
+//    nounData = _langData["nouns"];
+//    _log.info("$runtimeType()::ngOnInit()::nounData::${_nounData.toString()}");
+//    nounMeta = _langMeta[_lang];
+//    _log.info("$runtimeType()::ngOnInit()::nounMeta::${_nounMeta.toString()}");
+//
+//    if (fbService.vocabMeta != null && fbService.vocabMeta.isNotEmpty) { // There may not be vocab lists.
+//      if (fbService.vocabMeta.containsKey(fbService.learner.uid)) {
+//        vocab = await fbService.getVocabLists(fbService.learner.uid);
+//        _log.info("$runtimeType()::ngOnInit()::getVocab");
+//      }
+//    }
+//
+////    verbData = langData["verbs"];
+//  }
 
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");

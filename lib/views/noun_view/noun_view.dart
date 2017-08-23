@@ -12,7 +12,7 @@ import 'package:RSB/services/firebase_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],//, LoggerService],
 )
-class NounView implements OnInit {
+class NounView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -24,22 +24,20 @@ class NounView implements OnInit {
   @Input()
   void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> ndm) {
     if (_nounDataMap != ndm) {
-      _nounDataMap = {};
+      _nounDataMap = ndm;
       initializeMe();
     }
   }
-
   Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
 
   Map<String, String> _nounMetaMap;
   @Input()
   void set nounMetaMap(Map<String, String> nmm) {
     if (_nounMetaMap != nmm) {
-      _nounMetaMap = {};
+      _nounMetaMap = nmm;
       initializeMe();
     }
   }
-
   Map<String, String> get nounMetaMap => _nounMetaMap;
 
   List<String> views = const [
@@ -56,23 +54,23 @@ class NounView implements OnInit {
 
 
 //  @override
-  Future<Null> ngOnInit() async {
-    ///todo: Is this right?
-    initializeMe();
-//    if (_nounDataMap.isEmpty) {
-//      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-//        fbService.changeLang(fbService.selectedLanguage);
-////        fbService.changeLang(fbService.learner.currentLanguage);
-//        _nounDataMap = await fbService.singleLangData;
-//        _nounMetaMap = await fbService.singleLangMeta;
-//      }
-//    }
-    currentView = views.elementAt(0); // 0th index should be first view.
+//  Future<Null> ngOnInit() async {
+//    ///todo: Is this right?
+//    initializeMe();
+////    if (_nounDataMap.isEmpty) {
+////      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
+////        fbService.changeLang(fbService.selectedLanguage);
+//////        fbService.changeLang(fbService.learner.currentLanguage);
+////        _nounDataMap = await fbService.singleLangData;
+////        _nounMetaMap = await fbService.singleLangMeta;
+////      }
+////    }
 //
-//    if (fbService.learner.checkComplete() == false) {
-//
-//    }
-  } // End ngOnInit()
+////
+////    if (fbService.learner.checkComplete() == false) {
+////
+////    }
+//  } // End ngOnInit()
 
   void initializeMe() {
     if (_nounDataMap == null || _nounMetaMap == null) {
@@ -86,6 +84,7 @@ class NounView implements OnInit {
 
   NounView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
+    currentView = views.elementAt(0); // 0th index should be first view.
   }
 
   Future<Null> getLanguage(String lang) async {

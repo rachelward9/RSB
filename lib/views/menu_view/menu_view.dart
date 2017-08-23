@@ -23,6 +23,11 @@ class MenuView implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
+  @Input()
+  void set langMeta(Map lm) {
+
+  }
+
   Map testFullLangMeta = {};
   Map testFullLangData = {};
   List langList = [];
