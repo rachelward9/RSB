@@ -19,31 +19,50 @@ import 'package:angular2/core.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],
 )
-class MenuView implements OnInit {
+class MenuView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
+  List _langList = [];
   @Input()
-  void set langMeta(Map lm) {
-
+  void set langList(List lm) {
+    if (_langList != lm) {
+      _langList = lm;
+      _initMe();
+    }
   }
+  List get langList => _langList;
 
   Map testFullLangMeta = {};
   Map testFullLangData = {};
-  List langList = [];
 
-  @override
-  Future<Null> ngOnInit() async {
-    testFullLangData = await fbService.getAllLangData();
-    testFullLangMeta = await fbService.getAllLangMeta();
-    langList = await fbService.getLangList();
+  void _initMe() {
+    if (langList == null) {
+      return;
+    }
+    _log.info("$runtimeType()::_initMe()");
   }
+
+//  @override
+//  Future<Null> ngOnInit() async {
+//    testFullLangData = await fbService.getAllLangData();
+//    testFullLangMeta = await fbService.getAllLangMeta();
+//    langList = await fbService.getLangList();
+//  }
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
   }
 
+  void addLanguage(String lang) {
+    _log.info("$runtimeType()::addLanguage($lang)");
+    if (fbService?.learner != null) {
+      fbService.learner.addLanguage(lang);
+    }
+  }
 
-
+  void joinGroup(String id) {
+    _log.info("$runtimeType()joinGroup($id)");
+  }
 
 }

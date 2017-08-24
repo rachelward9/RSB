@@ -113,8 +113,13 @@ class FirebaseService implements OnInit {
       ///todo: Are two async calls necessary?
       fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
         if (e.snapshot.exists()) {
+          _log.info("$runtimeType()::getUserMeta()::e.snapshot.exists() == true!");
           _userMetaMap = await e.snapshot.exportVal();
+          _log.info("$runtimeType()::getUserMeta()::e.snapshot.exportVal(): ${e.snapshot.exportVal()}");
           _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+        }
+        else {
+          _log.info("$runtimeType()::getUserMeta()::e.snapshot.exists() == false!");
         }
       });
     }
@@ -290,63 +295,84 @@ class FirebaseService implements OnInit {
 
 
   Future<Null> completeLearner() async {
-//    Map<String, Map<String,
     if (learner == null) {
-
+      _log.info("$runtimeType()::completeLearner()::learner is null!");
+      await getSingleUserData(fbUser.uid);
+      learner = new Learner.fromMap(_log, _singleUserData);
     }
     else {
       try {
         _singleUserMeta = await getSingleUserMeta(learner.uid);
+        _log.info("$runtimeType()::completeLearner()::_singleUserMeta: ${_singleUserMeta}");
       }
       catch (er) {
-        _log.info("$runtimeType()::completeLearner()::userMeta::--$er");
+        _log.info("$runtimeType()::completeLearner()::userMeta::error::--$er");
       }
       try {
-        _singleUserMeta = await getSingleUserData(learner.uid);
+        _singleUserData = await getSingleUserData(learner.uid);
+        _log.info("$runtimeType()::completeLearner()::_singleUserData: ${_singleUserData}");
       }
       catch (er) {
-        _log.info("$runtimeType()::completeLearner()::userData::--$er");
+        _log.info("$runtimeType()::completeLearner()::userData::error::--$er");
       }
-
-      if (_singleUserMeta["myLanguages"] != null && _singleUserMeta["myLanguages"].isNotEmpty) {
+      if (_singleUserMeta["myLanguages"] == null || _singleUserMeta["myLanguages"].isEmpty) {
+        _log.info('$runtimeType()::completeLearner()::_singleUserMeta["myLanguages"] is null or empty!');
+        _singleUserMeta = await getSingleUserMeta(fbUser.uid);
+        _singleUserData = await getSingleUserData(fbUser.uid);
+      }
         learner.myLanguages = _singleUserMeta["myLanguages"].values();
-      }
+        if (selectedLanguage == null || selectedLanguage.isEmpty) {
+          if (learner.currentLanguage == null || learner.currentLanguage.isEmpty) {
+            learner.currentLanguage = learner.myLanguages[0];
+          }
+          selectedLanguage = learner.currentLanguage;
+        }
+        _log.info("$runtimeType()::myLanguages: ${learner.myLanguages}");
+//      }
     }
     ///todo: finish this.
     ///todo: pass in values to all components, like <noun-view [someData]="passed-in-data"></noun-view>
-//    learner.allLanguagesMeta
-//    learner.allLanguagesData
   }
 
   _authChanged(firebase.User newUser) async {
     _log.info("$runtimeType()::_authChanged()");
-//    _log.info("$runtimeType()::newUser.runtimeType:${newUser.runtimeType}");
     fbUser = newUser;
+    learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
+    _log.info("$runtimeType()::_authChanged()::learner uid: ${learner.uid}");
+    _userMetaMap = await getUserMeta();
+    _log.info("$runtimeType()::_authChanged()::after await getUserMeta(): ${_userMetaMap.toString()}");
+    if (_userMetaMap.containsKey(newUser.uid)) {
+      _log.info("$runtimeType()::_authChanged()::_userMetaMap: ${_userMetaMap.toString()}");
+      await completeLearner();
+    }
+    else {
+      _log.info("$runtimeType()::_authChanged()::_userMetaMap does not contain key ${newUser.uid}!");
+    }
 //    _log.info("$runtimeType()::fbUser.runtimeType:${fbUser.runtimeType}");
 //    _log.info("$runtimeType()::newUser::${newUser.toString()}");
-    if (newUser != null) {
-//      _log.info("$runtimeType()::newUser.uid::${newUser.uid}");
-      _log.info("$runtimeType()::newUser.displayName::${newUser.displayName}");
-//      _log.info("$runtimeType()::newUser.email::${newUser.email}");
-      if (_userMetaMap != null) {
-        _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
-//        learner = new Learner.fromMap(_log, _userDataMap);
-        if (_userMetaMap.containsKey(newUser.uid)) {
-          completeLearner();
-        }
-      }
-      else {
-        learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
-        await getUserMeta();
-        if (_userMetaMap.containsKey(newUser.uid)) { // They exist in the database.
-          completeLearner();
-        }
-        else {
-
-        }
-      }
-
-    }
+//    if (newUser != null) {
+////      _log.info("$runtimeType()::newUser.uid::${newUser.uid}");
+//      _log.info("$runtimeType()::newUser.displayName::${newUser.displayName}");
+////      _log.info("$runtimeType()::newUser.email::${newUser.email}");
+//      if (_userMetaMap != null) {
+//        _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
+////        learner = new Learner.fromMap(_log, _userDataMap);
+//        if (_userMetaMap.containsKey(newUser.uid)) {
+//          completeLearner();
+//        }
+//      }
+//      else {
+////        learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
+//        await getUserMeta();
+//        if (_userMetaMap.containsKey(newUser.uid)) { // They exist in the database.
+//          completeLearner();
+//        }
+//        else {
+//
+//        }
+//      }
+//
+//    }
   } // end _authChanged
 
   Future signIn() async {

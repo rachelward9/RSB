@@ -61,17 +61,18 @@
             <!--</span>-->
             <material-fab mini raised
                           (trigger)="add(newWord, newDef); newWord = newDef = '';"
-                          [disabled]="newWord.isEmpty || newDef.isEmpty">
+                          [disabled]="newWord == null || newWord.isEmpty">
+                <!--|| newDef.isEmpty">-->
                 <glyph icon="add"></glyph>
             </material-fab>
         </div>
 
         <!--<hr>-->
-        <p *ngIf="vocabList.isNotEmpty">
+        <p *ngIf="vocabList != null && vocabList.isNotEmpty">
             New Words
             <glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>
         </p>
-        <p *ngIf="vocabList.isEmpty">
+        <p *ngIf="vocabList != null || vocabList.isEmpty">
             No words yet!
         </p>
 

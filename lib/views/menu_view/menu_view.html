@@ -1,3 +1,13 @@
 <div>
     Menu View
 </div>
+
+<div *ngFor="let language of langList">
+    <div>
+        <material-button class="lang-btn" icon (trigger)="addLanguage(language)">
+            <glyph icon="add"></glyph>
+            {{language}}
+        </material-button>
+
+    </div>
+</div>

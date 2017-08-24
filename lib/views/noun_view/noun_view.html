@@ -2,12 +2,12 @@
     Noun View
 </div>
 
-<div *ngIf="nounDataMap.isEmpty" class="declensions">
+<div *ngIf="nounDataMap == null || nounDataMap.isEmpty" class="declensions">
     No Declensions! [empty?]
 </div>
 
 <!--<div *ngIf="fbService.learner.languageMeta['hasDeclensions'] != null && fbService.fbService.learner.languageMeta['hasDeclensions'] != null && fbService.learner.languageMeta['hasDeclensions'] == true" class="declensions">-->
-<div *ngIf="nounDataMap.isNotEmpty" class="declensions">
+<div *ngIf="nounDataMap != null && nounDataMap.isNotEmpty" class="declensions">
     HAS DECLENSIONS!
     <span>
         <table>

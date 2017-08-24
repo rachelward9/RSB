@@ -83,9 +83,7 @@ class LanguageView { //implements OnInit {
     if (_lang == null || _langData == null || _langMeta == null || _nounData == null || _nounMeta == null || _vocab == null) {
       return;
     }
-//    else {
-      _log.info("$runtimeType()::initMe()::--success!");
-//    }
+    _log.info("$runtimeType()::initMe()::--success!");
   }
 
 //  @override

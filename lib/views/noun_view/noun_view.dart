@@ -20,7 +20,7 @@ class NounView { //implements OnInit {
 //Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
-  Map<String, Map<String, Map<String, dynamic>>> _nounDataMap;
+  Map<String, Map<String, Map<String, dynamic>>> _nounDataMap = {};
   @Input()
   void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> ndm) {
     if (_nounDataMap != ndm) {
@@ -30,7 +30,7 @@ class NounView { //implements OnInit {
   }
   Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
 
-  Map<String, String> _nounMetaMap;
+  Map<String, String> _nounMetaMap = {};
   @Input()
   void set nounMetaMap(Map<String, String> nmm) {
     if (_nounMetaMap != nmm) {

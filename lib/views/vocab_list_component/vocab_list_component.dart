@@ -43,9 +43,16 @@ class VocabListComponent { //implements OnInit {
   void set vocabList(Map vl) {
     if (_vocabList != vl) {
       _vocabList = vl;
+      if (_vocabList.isNotEmpty) {
+        _vocabList.forEach((String word, String def) {
+          wordList.add(word);
+          defList.add(def);
+        });
+      }
       _initMe();
     }
   }
+  Map<String, String> get vocabList => _vocabList;
 
   void _initMe() {
     if (_vocabList == null) {
@@ -55,8 +62,8 @@ class VocabListComponent { //implements OnInit {
   }
 
 //  Map<String, Map<String, String>> tempVocabMap = {};
-//  List<String> wordList = [];
-//  List<String> defList = [];
+  List<String> wordList = [];
+  List<String> defList = [];
 
   bool editMode = false;
   bool menuVisible = false;
@@ -162,16 +169,16 @@ class VocabListComponent { //implements OnInit {
 
   void add(String word, [String definition = ""]) {
   // I think this does the above two functions in one line.
-//    wordList.add(word);
-//    defList.add(definition);
+    wordList.add(word);
+    defList.add(definition);
     _vocabList[word] = definition;
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
   void remove(String word) {
-//    int idx = wordList.indexOf(word);
-//    wordList.removeAt(idx);
-//    defList.removeAt(idx);
+    int idx = wordList.indexOf(word);
+    wordList.removeAt(idx);
+    defList.removeAt(idx);
     _vocabList.remove(word);
   }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
