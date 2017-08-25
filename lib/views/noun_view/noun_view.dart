@@ -74,8 +74,8 @@ class NounView { //implements OnInit {
 
   void initializeMe() {
     if (_nounDataMap == null || _nounMetaMap == null) {
-      return;
       _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
+      return;
     }
     else {
       _log.info("$runtimeType()::initializeMe()::--success!");
@@ -87,11 +87,12 @@ class NounView { //implements OnInit {
     currentView = views.elementAt(0); // 0th index should be first view.
   }
 
-  Future<Null> getLanguage(String lang) async {
+//  Future<Null>
+  void getLanguage(String lang) {
 //    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
 //    nounMetaMap = await fbService.la[lang]["nouns"];
-    _nounDataMap = await fbService.getSingleLangData(lang);
-    _nounMetaMap = await fbService.getSingleLangMeta(lang);
+    _nounDataMap = fbService.getSingleLangData(lang);
+    _nounMetaMap = fbService.getSingleLangMeta(lang);
   }
 
 } // end class NounView

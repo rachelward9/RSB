@@ -66,33 +66,45 @@ class Learner {
     checkComplete();
   }
 
+//  this(
+//  map["name"],
+//  map["uid"],
+//  map["email"],
+//  );
+
+
+
+
   Learner.fromMap(LoggerService this._log, Map map) {
-    _log.info("$runtimeType()::fromMap()${map.toString()}");
+    _log.info("$runtimeType()::fromMap()${map}");
     _name = map["name"];
     _uid = map["uid"];
     _email = map["email"];
     _exists = true;
+    myLanguages = map["myLanguages"] ?? []; //== null ? {} : map["myLanguages"];
+    currentLanguage = map["currentLanguage"] ?? "";
+
     ///todo: works, but should be restructured. Redundant.
-    if (map["currentLanguage"].isEmpty) {
-      if (map["myLanguages"].isNotEmpty) {
-        currentLanguage = map["myLanguages"][0];
-      }
-      else {
-        currentLanguage = map["currentLanguage"]; // SHOULD be ""
-      }
-    }
-    else {
-      currentLanguage = map["currentLanguage"];
-    }
-    if (map["myLanguages"].isNotEmpty) {
-      hasLanguages = true;
-      map["myLanguages"].forEach((String idx, String language) {
-        myLanguages.add(language);
-      });
-    }
-    if (map["myVocabLists"].isNotEmpty) {
-      _myVocabLists = map["myVocabLists"];
-    }
+//    if (map["currentLanguage"].isEmpty) {
+//      if (map["myLanguages"].isNotEmpty) {
+//        currentLanguage = map["myLanguages"][0];
+//      }
+//      else {
+//        currentLanguage = map["currentLanguage"]; // SHOULD be ""
+//      }
+//    }
+//    else {
+//      currentLanguage = map["currentLanguage"];
+//    }
+//    if (map["myLanguages"].isNotEmpty) {
+//      hasLanguages = true;
+//      map["myLanguages"].forEach((String idx, String language) {
+//        myLanguages.add(language);
+//      });
+//    }
+//    if (map["myVocabLists"].isNotEmpty) {
+//      _myVocabLists = map["myVocabLists"];
+//    }
     checkComplete();
   } // End Learner.fromMap()
 
@@ -111,7 +123,7 @@ class Learner {
 
 
   bool checkComplete() {
-    if (myLanguages.isNotEmpty) {
+    if (myLanguages != null && myLanguages.isNotEmpty) {
       isComplete = true;
       return true;
     }

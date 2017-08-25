@@ -1,6 +1,6 @@
 <material-tab-panel>
     <material-tab class="mat-tab" label="Nouns">
-        <noun-view [_nounDataMap]="nounData" [_nounMetaMap]="nounMeta"></noun-view>
+        <noun-view [_nounDataMap]="fbService.getSingleLangData(lang)" [_nounMetaMap]="fbService.getSingleLangMeta(lang)"></noun-view>
             <!--Tab 1!-->
     </material-tab>
 

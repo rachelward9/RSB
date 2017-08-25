@@ -40,7 +40,6 @@ class LanguageView { //implements OnInit {
       _lang = l;
       _initMe();
     }
-
   }
   String get lang => _lang;
 

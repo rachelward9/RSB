@@ -52,11 +52,12 @@ class MenuView { //implements OnInit {
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
+    _langList = fbService.getLangList();
   }
 
   void addLanguage(String lang) {
     _log.info("$runtimeType()::addLanguage($lang)");
-    if (fbService?.learner != null) {
+    if (fbService.learner != null) {
       fbService.learner.addLanguage(lang);
     }
   }
