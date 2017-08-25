@@ -80,7 +80,14 @@ class LanguageView { //implements OnInit {
   Map get vocab => _vocab;
 
   void _initMe() {
+    _log.info("$runtimeType()::_initMe()");
     if (_lang == null || _langData == null || _langMeta == null || _nounData == null || _nounMeta == null || _vocab == null) {
+      _log.info("$runtimeType()::_initMe()::_lang is $_lang");
+      _log.info("$runtimeType()::_initMe()::_langData is ${_lang == null ? 'null' : _lang}");
+      _log.info("$runtimeType()::_initMe()::_langMeta is ${_langMeta == null ? 'null' : _langData}");
+      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounData == null ? 'null' : _nounData}");
+      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounMeta == null ? 'null' : _nounMeta}");
+      _log.info("$runtimeType()::_initMe()::_vocab is ${_vocab == null ? 'null' : _vocab}");
       return;
     }
     _log.info("$runtimeType()::initMe()::--success!");

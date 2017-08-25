@@ -42,7 +42,8 @@ class MainApp implements OnInit {
   ngOnInit() async {
     _log.info("$runtimeType()::ngOnInit()");
 //    await fbService.completeLearner();
-    languageList = await fbService.getLangList();
+//    languageList = await fbService.getLangList();
+    languageList = await fbService.languages;
 //    if (fbService?.learner?.currentLanguage != null && fbService.learner.currentLanguage.isNotEmpty) {
     if (fbService?.learner != null) {
       _log.info("$runtimeType()::ngOnInit():: learner is not null!");

@@ -58,13 +58,14 @@ class FirebaseService implements OnInit {
   Map<String, Map<String, Map<String, dynamic>>> singleLangData = {};
 
   FirebaseService(LoggerService this._log) {
+    //    learner = new Learner(_log);
     _log.info("$runtimeType()");
-//    learner = new Learner(_log);
     firebase.initializeApp(
         apiKey: "AIzaSyDSWfGxdhpUUIkDQiIkb0xtK-IFfIYrMFQ",
         authDomain: "langstudbud.firebaseapp.com",
         databaseURL: "https://langstudbud.firebaseio.com",
-        storageBucket: "gs://langstudbud.appspot.com/");
+        storageBucket: "gs://langstudbud.appspot.com/"
+    );
 
     _fbGoogleAuthProvider = new firebase.GoogleAuthProvider();
     _fbAuth = firebase.auth();
@@ -82,11 +83,29 @@ class FirebaseService implements OnInit {
 
   @override
   ngOnInit() {
-    getUserMeta();
-    getAllLangMeta();
-    getLangList();
-    getVocabMeta();
-    getAllLangData(); // Necessary?
+
+    fbLangList.onValue.listen((firebase.QueryEvent lList) {
+      Map<String, String> tempMap = lList.snapshot.val();
+      languages = tempMap.values;
+      _log.info("$runtimeType()::ngOnInit()::language list: ${languages.toString()}");
+    });
+
+    fbUserMeta.onValue.listen((firebase.QueryEvent uMeta) {
+      _userMetaMap = uMeta.snapshot.val();
+      _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
+    });
+
+    fbLangMeta.onValue.listen((firebase.QueryEvent lMeta) {
+      allLangMeta = lMeta.snapshot.val();
+      _log.info("$runtimeType()::allLangMeta: ${allLangMeta.toString()}");
+    });
+
+
+//    await getUserMeta();
+//    await getAllLangMeta();
+//    await getLangList();
+//    await getVocabMeta();
+//    await getAllLangData(); // Necessary?
   }
 
   /*** Try to simplify initialization, write functions to get all da shits. ***/
@@ -337,16 +356,23 @@ class FirebaseService implements OnInit {
   _authChanged(firebase.User newUser) async {
     _log.info("$runtimeType()::_authChanged()");
     fbUser = newUser;
-    learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
-    _log.info("$runtimeType()::_authChanged()::learner uid: ${learner.uid}");
-    _userMetaMap = await getUserMeta();
-    _log.info("$runtimeType()::_authChanged()::after await getUserMeta(): ${_userMetaMap.toString()}");
-    if (_userMetaMap.containsKey(newUser.uid)) {
-      _log.info("$runtimeType()::_authChanged()::_userMetaMap: ${_userMetaMap.toString()}");
-      await completeLearner();
-    }
-    else {
-      _log.info("$runtimeType()::_authChanged()::_userMetaMap does not contain key ${newUser.uid}!");
+    _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
+    if (newUser != null) { // newUser will be null on a logout()
+      learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
+      _log.info("$runtimeType()::_authChanged()::learner uid: ${learner.uid}");
+      _userMetaMap = await getUserMeta();
+      getUserMeta().then((Map newMap) {
+        _userMetaMap = newMap;
+        _log.info("$runtimeType()::_authChanged()::getUserMeta().then():: ${_userMetaMap}");
+      });
+      _log.info("$runtimeType()::_authChanged()::after await getUserMeta(): ${_userMetaMap.toString()}");
+      if (_userMetaMap.containsKey(newUser.uid)) {
+        _log.info("$runtimeType()::_authChanged()::_userMetaMap: ${_userMetaMap.toString()}");
+        await completeLearner();
+      }
+      else {
+        _log.info("$runtimeType()::_authChanged()::_userMetaMap does not contain key ${newUser.uid}!");
+      }
     }
 //    _log.info("$runtimeType()::fbUser.runtimeType:${fbUser.runtimeType}");
 //    _log.info("$runtimeType()::newUser::${newUser.toString()}");
