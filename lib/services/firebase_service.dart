@@ -182,8 +182,10 @@ class FirebaseService {// implements OnInit {
     _log.info("$runtimeType()::getSingleUserData()");
     try {
       fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
-      fbSingUserData.onValue.listen((firebase.QueryEvent e) async {
+      fbSingUserData.onChildAdded.listen((firebase.QueryEvent e) async {
         _singleUserData = await e.snapshot.val();
+        _log.info("$runtimeType()::getSingleUserData() --e.snapshot.val().runtimeType = ${e.snapshot.val().runtimeType}");
+        _log.info("$runtimeType()::getSingleUserData() --e.snapshot.exportVal().runtimeType = ${e.snapshot.exportVal().runtimeType}");
       });
     }
     catch (er) {
@@ -410,10 +412,12 @@ class FirebaseService {// implements OnInit {
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
     if (newUser != null) { // newUser will be null on a logout()
 //      learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
-//      _log.info("$runtimeType()::_authChanged()::learner uid: ${learner.uid}");
+//      _log.info("$runtimeType()::_authChanged()::");
       _userMetaMap = getUserMeta();
       _log.info("$runtimeType()::_authChanged()::attempting to complete learner!");
-      completeLearner();
+//      completeLearner();
+      _log.info("$runtimeType()::_authChanged()::new Learner.fromMap(getSingleUserData(${newUser.uid})");
+      learner = new Learner.fromMap(_log, getSingleUserData(newUser.uid));
 //      _userMetaMap = await getUserMeta();
 //      getUserMeta().then((Map newMap) {
 //        _userMetaMap = newMap;

@@ -116,6 +116,9 @@ class LanguageView { //implements OnInit {
 
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
+    _lang = fbService.learner.currentLanguage ?? "nolang!";
+    _langMeta = fbService.getSingleLangMeta(lang);
+    _langData = fbService.getSingleLangData(lang);
   }
 
 }

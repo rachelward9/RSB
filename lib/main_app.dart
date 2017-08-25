@@ -28,6 +28,7 @@ class MainApp { // implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
+  List<String> languageList;
   String language;
 //  @Input()
 //  void set language(String lang) {
@@ -46,8 +47,6 @@ class MainApp { // implements OnInit {
 //    _log.info("$runtimeType()::initMe()::--success!");
 //  }
 //  String langMsg;
-
-  List<String> languageList;
 
   List<String> views = const [
     "menuView",
@@ -86,12 +85,11 @@ class MainApp { // implements OnInit {
     _log.info("$runtimeType()");
 //    _log.info("$runtimeType()::fbService.selectedLanguage::${fbService.selectedLanguage}");
     currentView = views[0];
-    language = "russian";
-    ///todo: put all constructor stuff here! NOT in ngOnInit!!!
+    language = "russian"; ///todo: Manually setting language is for debug purposes only.
     _log.info("$runtimeType()::defaultContructor()::fbService.getLangList()");
 //    fbService.getLangList();
-    fbService.fbLangList.onValue.listen((firebase.QueryEvent e) {
-      fbService.languages = e.snapshot.val();
+    fbService.fbLangList.onValue.listen((firebase.QueryEvent e) async {
+      fbService.languages = await e.snapshot.val();
     });
     _log.info("$runtimeType()::defaultContructor()::languages = ${fbService.languages}");
 
@@ -99,6 +97,9 @@ class MainApp { // implements OnInit {
     _log.info("$runtimeType()::defaultContructor()::fbService.getUserMeta()");
     fbService.getUserMeta();
     _log.info("$runtimeType()::defaultContructor()::userMeta = ${fbService.umm}");
+    fbService.fbUserMeta.onChildAdded.listen((firebase.QueryEvent e) {
+      _log.info("$runtimeType()::fbUserMeta.onChildAdded.listen(): ${e.snapshot.val()}");
+    });
 
 
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangMeta()");

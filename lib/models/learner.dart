@@ -11,7 +11,7 @@ class Learner {
   String _uid = "";
   bool _exists = false; // Exists in database
   bool hasLanguages = false;
-  bool isComplete = false;
+//  bool isComplete = false; // Has at least one language added to their ref sheet.
   bool hasVocab = false; // May just be using app for reference!
 
   // Language info
@@ -19,22 +19,22 @@ class Learner {
   Map tempLangList = {};
   Map<String, Map<String, String>> allLanguagesMeta = {};
   Map<String, String> singleLanguageMeta = {};
-//  bool hasDec = false;
-//  bool hasConj = false;
-//  bool hasGender = false;
   List<String> myLanguages = [];
   String currentLanguage = "";
   Map<String, String> currentVocabList = {}; // Local.
 
   // Custom vocabulary list creatable by the user.
   // Map<LanguageName, Map<word, definition>>
-  Map<String, Map<String, String>> _myVocabLists = {}; // This should go in a storage bucket!
+  Map<String, Map<String, String>> _myVocabLists = {};
 
   // Default Constructor
-  Learner(LoggerService this._log) {
+  Learner(LoggerService this._log, String uid, String newName, String newEmail, [List<String> langList, String newCurrentLang, Map<String, Map<String, String>> vocabLists]) {
     _log.info("$runtimeType()::defaultConstructor");
     checkComplete();
   }
+
+
+  Learner.fromMap(_log, Map map) : this(map["uid"], map["name"], map["email"], map["langList"], map["currentLang"], map["vocabLists"]);
 
   // This should only be called the first time a user logs in after being added to the database.
   Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [Map langList, Map langMeta, String newCurrentLang, Map<String, Map<String, String>> vocabLists]) {
@@ -73,40 +73,38 @@ class Learner {
 //  );
 
 
-
-
-  Learner.fromMap(LoggerService this._log, Map map) {
-    _log.info("$runtimeType()::fromMap()${map}");
-    _name = map["name"];
-    _uid = map["uid"];
-    _email = map["email"];
-    _exists = true;
-    myLanguages = map["myLanguages"] ?? []; //== null ? {} : map["myLanguages"];
-    currentLanguage = map["currentLanguage"] ?? "";
-
-    ///todo: works, but should be restructured. Redundant.
-//    if (map["currentLanguage"].isEmpty) {
-//      if (map["myLanguages"].isNotEmpty) {
-//        currentLanguage = map["myLanguages"][0];
-//      }
-//      else {
-//        currentLanguage = map["currentLanguage"]; // SHOULD be ""
-//      }
-//    }
-//    else {
-//      currentLanguage = map["currentLanguage"];
-//    }
-//    if (map["myLanguages"].isNotEmpty) {
-//      hasLanguages = true;
-//      map["myLanguages"].forEach((String idx, String language) {
-//        myLanguages.add(language);
-//      });
-//    }
-//    if (map["myVocabLists"].isNotEmpty) {
-//      _myVocabLists = map["myVocabLists"];
-//    }
-    checkComplete();
-  } // End Learner.fromMap()
+//  Learner.fromMap(LoggerService this._log, Map map) {
+//    _log.info("$runtimeType()::fromMap()${map}");
+//    _name = map["name"];
+//    _uid = map["uid"];
+//    _email = map["email"];
+//    _exists = true;
+//    myLanguages = map["myLanguages"] ?? []; //== null ? {} : map["myLanguages"];
+//    currentLanguage = map["currentLanguage"] ?? "";
+//
+//    ///todo: works, but should be restructured. Redundant.
+////    if (map["currentLanguage"].isEmpty) {
+////      if (map["myLanguages"].isNotEmpty) {
+////        currentLanguage = map["myLanguages"][0];
+////      }
+////      else {
+////        currentLanguage = map["currentLanguage"]; // SHOULD be ""
+////      }
+////    }
+////    else {
+////      currentLanguage = map["currentLanguage"];
+////    }
+////    if (map["myLanguages"].isNotEmpty) {
+////      hasLanguages = true;
+////      map["myLanguages"].forEach((String idx, String language) {
+////        myLanguages.add(language);
+////      });
+////    }
+////    if (map["myVocabLists"].isNotEmpty) {
+////      _myVocabLists = map["myVocabLists"];
+////    }
+//    checkComplete();
+//  } // End Learner.fromMap()
 
   Map toMap() {
     _log.info("$runtimeType()::toMap()");
@@ -114,7 +112,6 @@ class Learner {
       "uid": _uid,
       "name": _name,
       "email": _email,
-      "exists": _exists,
       "currentLanguage": currentLanguage,
       "myVocabLists": _myVocabLists,
       "myLanguages": myLanguages.asMap()
@@ -123,20 +120,22 @@ class Learner {
 
 
   bool checkComplete() {
-    if (myLanguages != null && myLanguages.isNotEmpty) {
-      isComplete = true;
-      return true;
+    if (myLanguages == null || myLanguages.isEmpty || _name.isEmpty || _uid.isEmpty) {
+//      isComplete = true;
+      return false;
     }
     else {
-      return false;
+      return true;
     }
   }
 
   void changeLang(String newLang) {
-    currentVocabList.forEach((String word, String def) {
-//      vocabLists[currentLanguage].putIfAbsent(word, () => def);
-      _myVocabLists[currentLanguage][word] = def; // Same?
-    });
+    if (currentVocabList != null && currentVocabList.isNotEmpty) {
+      currentVocabList.forEach((String word, String def) {
+  //      vocabLists[currentLanguage].putIfAbsent(word, () => def);
+        _myVocabLists[currentLanguage][word] = def; // Same?
+      });
+    }
 //    // Does this do the above?
 //    vocabLists[currentLanguage] = currentVocabList;
     currentLanguage = newLang;
