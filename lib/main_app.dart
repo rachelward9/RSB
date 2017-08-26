@@ -85,11 +85,14 @@ class MainApp { // implements OnInit {
     _log.info("$runtimeType()");
 //    _log.info("$runtimeType()::fbService.selectedLanguage::${fbService.selectedLanguage}");
     currentView = views[0];
-    language = "russian"; ///todo: Manually setting language is for debug purposes only.
+//    language = "russian"; ///todo: Manually setting language is for debug purposes only.
     _log.info("$runtimeType()::defaultContructor()::fbService.getLangList()");
 //    fbService.getLangList();
     fbService.fbLangList.onValue.listen((firebase.QueryEvent e) async {
       fbService.languages = await e.snapshot.val();
+      _log.info("$runtimeType()::defaultConstructor():: languages ${fbService.languages}");
+      _log.info("$runtimeType()::defaultConstructor():: e.snapshot.val() ${e.snapshot.val()}");
+      _log.info("$runtimeType()::defaultConstructor():: e.snapshot.val().runtimeType ${e.snapshot.val().runtimeType}");
     });
     _log.info("$runtimeType()::defaultContructor()::languages = ${fbService.languages}");
 

@@ -18,7 +18,7 @@ class FirebaseService {// implements OnInit {
   firebase.Auth _fbAuth;
   firebase.GoogleAuthProvider _fbGoogleAuthProvider;
   firebase.Database _fbDatabase; // = firebase.database();
-  firebase.Storage _fbStorage;
+//  firebase.Storage _fbStorage;
   firebase.DatabaseReference fbUserData;
   firebase.DatabaseReference fbUserMeta; // = database.ref("test");
   firebase.DatabaseReference fbSingUserMeta; // = database.ref("test");
@@ -180,8 +180,10 @@ class FirebaseService {// implements OnInit {
   //  Future<Map>
   Map getSingleUserData(String userID) { // async {
     _log.info("$runtimeType()::getSingleUserData()");
+    String userDataPath = "$USER_DATA/$userID";
     try {
-      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
+//      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
+      fbSingUserData = _fbDatabase.ref(userDataPath);
       fbSingUserData.onChildAdded.listen((firebase.QueryEvent e) async {
         _singleUserData = await e.snapshot.val();
         _log.info("$runtimeType()::getSingleUserData() --e.snapshot.val().runtimeType = ${e.snapshot.val().runtimeType}");
