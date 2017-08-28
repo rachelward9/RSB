@@ -43,11 +43,14 @@ class VocabListComponent { //implements OnInit {
   void set vocabList(Map vl) {
     if (_vocabList != vl) {
       _vocabList = vl;
-      if (_vocabList.isNotEmpty) {
+      if (_vocabList != null && _vocabList.isNotEmpty) {
         _vocabList.forEach((String word, String def) {
           wordList.add(word);
           defList.add(def);
         });
+      }
+      else {
+        // Do nothing. Remove this else?
       }
       _initMe();
     }

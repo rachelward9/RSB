@@ -12,15 +12,15 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <lang-msg [language]="language"></lang-msg>
+        <lang-msg [language]="fbService?.selectedLanguage"></lang-msg>
         <!--<span>{{langMsg}}</span>-->
         <!--<span *ngIf="language == null || language == '' " class="nowViewingLang">No language selected.</span>-->
         <!--<span *ngIf="language != null && language != '' " class="nowViewingLang">Now viewing: {{language}}</span>-->
     </div>
 
 
-    <menu-view *ngIf="currentView == 'menuView'" [langList]="languageList"></menu-view>
-    <language-view *ngIf="currentView == 'languageView'" [lang]="language"></language-view>
+    <menu-view *ngIf="currentView == 'menuView'" [langList]="fbService?.languages"></menu-view>
+    <language-view *ngIf="currentView == 'languageView'" [lang]="fbService?.selectedLanguage"></language-view>
     <div>
         <hr>
     </div>

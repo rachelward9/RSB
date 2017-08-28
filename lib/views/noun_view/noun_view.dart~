@@ -21,28 +21,20 @@ class NounView { //implements OnInit {
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
   Map<String, Map<String, Map<String, dynamic>>> _nounDataMap = {};
-
-  @Input('nounData')
-  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
-//    if (_nounDataMap != null) {
-    if (_nounDataMap != singleLangData["nouns"]) {
-      _nounDataMap = singleLangData["nouns"];
+  @Input()
+  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> ndm) {
+    if (_nounDataMap != ndm) {
+      _nounDataMap = ndm;
       initializeMe();
     }
-//    else {
-//        _nounDataMap = null;
-//        initializeMe();
-//      }
-//    }
   }
   Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
 
   Map<String, bool> _nounMetaMap = {};
-
-  @Input('nounMeta')
-  void set nounMetaMap(Map<String, bool> singleLangMeta) {
-    if (_nounMetaMap != singleLangMeta) {
-      _nounMetaMap = singleLangMeta;
+  @Input()
+  void set nounMetaMap(Map<String, bool> nmm) {
+    if (_nounMetaMap != nmm) {
+      _nounMetaMap = nmm;
       initializeMe();
     }
   }
@@ -96,12 +88,12 @@ class NounView { //implements OnInit {
   }
 
 //  Future<Null>
-//  void getLanguage(String lang) {
-////    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
-////    nounMetaMap = await fbService.la[lang]["nouns"];
-//    _nounDataMap = fbService?.getSingleLangData(lang);
-//    _nounMetaMap = fbService?.getSingleLangMeta(lang);
-//  }
+  void getLanguage(String lang) {
+//    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
+//    nounMetaMap = await fbService.la[lang]["nouns"];
+    _nounDataMap = fbService.getSingleLangData(lang);
+    _nounMetaMap = fbService.getSingleLangMeta(lang);
+  }
 
 } // end class NounView
 

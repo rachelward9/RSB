@@ -28,37 +28,41 @@ class Learner {
   Map<String, Map<String, String>> _myVocabLists = {};
 
   // Default Constructor
-  Learner(LoggerService this._log, String uid, String newName, String newEmail, [List<String> langList, String newCurrentLang, Map<String, Map<String, String>> vocabLists]) {
+  Learner(LoggerService this._log, String uid, String newName, String newEmail, [bool hasLang, List<String> langList, String newCurrentLang, bool hasVoc, Map<String, Map<String, String>> vocabLists]) {
     _log.info("$runtimeType()::defaultConstructor");
     checkComplete();
   }
 
 
-  Learner.fromMap(_log, Map map) : this(map["uid"], map["name"], map["email"], map["langList"], map["currentLang"], map["vocabLists"]);
+  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
 
   // This should only be called the first time a user logs in after being added to the database.
-  Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [Map langList, Map langMeta, String newCurrentLang, Map<String, Map<String, String>> vocabLists]) {
+  Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [bool hasLang, Map langList, Map langMeta, String newCurrentLang, bool hasVoc, Map<String, Map<String, String>> vocabLists]) {
     _log.info("$runtimeType()::constructNewLearner()");
     _exists = true;
     _uid = uid;
     _name = newName;
     _email = newEmail;
-    if (langMeta != null && langMeta.isNotEmpty) {
-      allLanguagesMeta = langMeta;
-      hasLanguages = true;
+    if (hasLang == true) {
+      if (langMeta != null && langMeta.isNotEmpty) {
+        allLanguagesMeta = langMeta;
+        hasLanguages = true;
+      }
+      if (langList != null && langList.isNotEmpty) {
+        hasLanguages = true;
+        langList.forEach((String idx, String language) {
+          myLanguages.add(language);
+        });
+        if (newCurrentLang != null && newCurrentLang.isNotEmpty) {
+          currentLanguage = newCurrentLang;
+        }
+        else {
+          currentLanguage = myLanguages[0];
+        }
+        singleLanguageMeta = allLanguagesMeta[currentLanguage];
+      }
     }
-    if (langList != null && langList.isNotEmpty) {
-      hasLanguages = true;
-      langList.forEach((String idx, String language) {
-        myLanguages.add(language);
-      });
-      if (newCurrentLang != null && newCurrentLang.isNotEmpty) {
-        currentLanguage = newCurrentLang;
-      }
-      else {
-        currentLanguage = myLanguages[0];
-      }
-      singleLanguageMeta = allLanguagesMeta[currentLanguage];
+    if (hasVoc == true) {
       if (vocabLists != null && vocabLists.isNotEmpty) {
         _myVocabLists = vocabLists;
       }
@@ -113,6 +117,8 @@ class Learner {
       "name": _name,
       "email": _email,
       "currentLanguage": currentLanguage,
+      "hasVocab": hasVocab,
+      "hasLanguages": hasLanguages,
       "myVocabLists": _myVocabLists,
       "myLanguages": myLanguages.asMap()
     };

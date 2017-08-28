@@ -20,5 +20,4 @@ main() {
     provide(LoggerService, useValue: _log),
     provide(FirebaseService)
   ]);
-
 }

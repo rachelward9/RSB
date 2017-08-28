@@ -226,22 +226,33 @@ class FirebaseService {// implements OnInit {
   }
 
 //  Future<Map<String, String>>
-  Map<String, String> getSingleLangMeta(String lang) { // async {
+  Map<String, bool> getSingleLangMeta([String lang = ""]) {
+    // async {
     _log.info("$runtimeType()::getSingleLangMeta($lang)");
-    if (allLangMeta != null && allLangMeta.isNotEmpty) {
-      singleLangMeta = allLangMeta[lang];
-    }
-    else {
-      fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
-        allLangMeta = await e.snapshot.val();
-        _log.info("$runtimeType()::getSingleLangMeta():: allLangMeta = ${allLangMeta}");
+    if (lang != "") {
+      if (allLangMeta != null && allLangMeta.isNotEmpty) {
         singleLangMeta = allLangMeta[lang];
-        _log.info("$runtimeType()::getSingleLangMeta()::singLangMeta = ${singleLangMeta}");
-      });
+      }
+      else {
+        fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
+          allLangMeta = await e.snapshot.val();
+          _log.info(
+              "$runtimeType()::getSingleLangMeta():: allLangMeta = ${allLangMeta}");
+          singleLangMeta = allLangMeta[lang];
+          _log.info(
+              "$runtimeType()::getSingleLangMeta()::singLangMeta = ${singleLangMeta}");
+        });
+      }
+      return singleLangMeta;
     }
-    return singleLangMeta;
+    else { // No language was passed in, what the fuck.
+      return {
+        "hasDeclensions": false,
+        "hasConjugations":false,
+        "hasGender": false
+      };
+    }
   }
-
 //  Future<Map<String,Map<String, Map<String, Map<String, dynamic>>>>>
   Map<String,Map<String, Map<String, Map<String, dynamic>>>> getAllLangData() { // async {
     _log.info("$runtimeType()::getAllLangData()");
@@ -255,21 +266,27 @@ class FirebaseService {// implements OnInit {
   }
 
 //  Future<Map<String, Map<String, Map<String, dynamic>>>>
-  Map<String, Map<String, Map<String, dynamic>>> getSingleLangData(String lang) { // async {
+  Map<String, Map<String, Map<String, dynamic>>> getSingleLangData([String lang = ""]) {
+    // async {
     _log.info("$runtimeType()::getSingleLangData($lang)");
-    if (fullLanguageData != null && fullLanguageData.isNotEmpty) {
-      singleLangData = fullLanguageData[lang];
+    if (lang != "") {
+      if (fullLanguageData != null && fullLanguageData.isNotEmpty) {
+        singleLangData = fullLanguageData[lang];
+      }
+      else {
+        fbLangData.onValue.listen((firebase.QueryEvent e) async {
+          fullLanguageData = await e.snapshot.val();
+          singleLangData = fullLanguageData[lang];
+          _log.info("$runtimeType()::getSingleLangData()::singleLangData = ${singleLangData}");
+        });
+      }
+      return singleLangData;
     }
     else {
-      fbLangData.onValue.listen((firebase.QueryEvent e) async {
-        fullLanguageData = await e.snapshot.val();
-        singleLangData = fullLanguageData[lang];
-        _log.info("$runtimeType()::getSingleLangData()::singleLangData = ${singleLangData}");
-      });
+      _log.info("$runtimeType()::getSingleLangData():: -- it's fuckin' empty!!!");
+      return {};
     }
-    return singleLangData;
   }
-
 
 //  Future<List>
   List<String> getLangList() { //async {
@@ -330,6 +347,45 @@ class FirebaseService {// implements OnInit {
       _log.info("$runtimeType()::getVocabLists():: singleUsersVocabLists = ${singleUsersVocabLists}");
     }
     return singleUsersVocabLists;
+  }
+
+
+
+  Map<String, String> getSingleVocabList([String userID, String lang]) {
+    _log.info("$runtimeType()::getSingleVocabList($userID, $lang)");
+    if (userID == null) {
+      return {"no_user": "provided"};
+    }
+    if (lang == null || lang.isEmpty) {
+      return {"no_language": "provided"};
+    }
+    if (learner.hasVocab == true) { // They have vocab. Do they have it for THIS language though?
+      if (singleUsersVocabLists == null || singleUsersVocabLists.isEmpty) { // User's vocab lists haven't been built yet.
+        if (allUsersVocabLists == null || allUsersVocabLists.isEmpty) { // Data hasn't been brought in from database.
+          getVocabLists(userID);
+        }
+        if (allUsersVocabLists.containsKey(userID)) {
+          singleUsersVocabLists = allUsersVocabLists[userID]; // Set it.
+          if (allUsersVocabLists[userID].containsKey(lang)) { // Does the user have vocab for THIS language?
+            return allUsersVocabLists[userID][lang];
+          }
+          else {
+            return {"no_vocab": "for_this_language" };
+          }
+        }
+        else { // Something somewhere fucked up. :(
+          return {"something_somewhere": "fucked_up"};
+        }
+      }
+      else { // singleUsersVocabLists exists.
+        return singleUsersVocabLists.containsKey(lang) ? singleUsersVocabLists[lang] : {"": ""};
+//        if (singleUsersVocabLists.containsKey(lang)) => singleUsersVocabLists[lang];
+//        return singleUsersVocabLists[lang];
+      }
+    }
+    else { // User does not have vocab lists.
+      return {"you_have_no": "vocab_lists!"};
+    }
   }
 
   /*** } // end FirebaseService() constructor. ***/

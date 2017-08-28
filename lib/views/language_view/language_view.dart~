@@ -13,7 +13,7 @@ import 'package:RSB/views/noun_view/noun_view.dart';
   selector: 'language-view',
   styleUrls: const ['language_view.css'],
   templateUrl: 'language_view.html',
-  directives: const [CORE_DIRECTIVES, materialDirectives, NounView, VocabListComponent, VocabView],
+  directives: const [CORE_DIRECTIVES, materialDirectives, VocabListComponent, VocabView, NounView],
   providers: const [materialProviders],
 )
 class LanguageView { //implements OnInit {
@@ -23,16 +23,16 @@ class LanguageView { //implements OnInit {
 
   String _lang = "";
 
-//  Map _langData = {};
-//  Map _langMeta = {};
-//
-//  Map _nounData = {};
-//  Map _nounMeta = {};
+  Map _langData = {};
+  Map _langMeta = {};
+
+  Map _nounData = {};
+  Map _nounMeta = {};
 
 //  Map _verbData = {};
 //  Map _verbMeta = {};
 
-//  Map _vocab = {};
+  Map _vocab = {};
 
   @Input()
   void set lang(String l) {
@@ -43,51 +43,50 @@ class LanguageView { //implements OnInit {
   }
   String get lang => _lang;
 
-//  @Input()
-//  void set langData(Map ld) {
-//    if (_langData != ld) {
-//      _langData = ld;
-//      _initMe();
-//    }
-//  }
-//  Map get langData => _langData;
-//
-//  @Input()
-//  void set nounData(Map nd) {
-//    if (_nounData != nd) {
-//      _nounData = nd;
-//      _initMe();
-//    }
-//  }
-//  Map get nounData => _nounData;
-//
-//  @Input()
-//  void set nounMeta(Map nm) {
-//    if (_nounMeta != nm) {
-//      _nounMeta = nm;
-//      _initMe();
-//    }
-//  }
-//  Map get nounMeta => _nounMeta;
-//
-//  @Input()
-//  void set vocab(Map voc) {
-//    if (voc == null || voc.isEmpty) {
-//     _vocab = {};
-//    }
-//  }
-//  Map get vocab => _vocab;
+  @Input()
+  void set langData(Map ld) {
+    if (_langData != ld) {
+      _langData = ld;
+      _initMe();
+    }
+  }
+  Map get langData => _langData;
+
+  @Input()
+  void set nounData(Map nd) {
+    if (_nounData != nd) {
+      _nounData = nd;
+      _initMe();
+    }
+  }
+  Map get nounData => _nounData;
+
+  @Input()
+  void set nounMeta(Map nm) {
+    if (_nounMeta != nm) {
+      _nounMeta = nm;
+      _initMe();
+    }
+  }
+  Map get nounMeta => _nounMeta;
+
+  @Input()
+  void set vocab(Map voc) {
+    if (voc == null || voc.isEmpty) {
+     _vocab = {};
+    }
+  }
+  Map get vocab => _vocab;
 
   void _initMe() {
     _log.info("$runtimeType()::_initMe()");
-//    if (_lang == null || _langData == null || _langMeta == null || _nounData == null || _nounMeta == null || _vocab == null) {
-    if (_lang == null) {
+    if (_lang == null || _langData == null || _langMeta == null || _nounData == null || _nounMeta == null || _vocab == null) {
       _log.info("$runtimeType()::_initMe()::_lang is $_lang");
       _log.info("$runtimeType()::_initMe()::_langData is ${_lang == null ? 'null' : _lang}");
-//      _log.info("$runtimeType()::_initMe()::_langMeta is ${_langMeta == null ? 'null' : _langData}");
-//      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounData == null ? 'null' : _nounData}");
-//      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounMeta == null ? 'null' : _nounMeta}");
-//      _log.info("$runtimeType()::_initMe()::_vocab is ${_vocab == null ? 'null' : _vocab}");
+      _log.info("$runtimeType()::_initMe()::_langMeta is ${_langMeta == null ? 'null' : _langData}");
+      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounData == null ? 'null' : _nounData}");
+      _log.info("$runtimeType()::_initMe()::_nounData is ${_nounMeta == null ? 'null' : _nounMeta}");
+      _log.info("$runtimeType()::_initMe()::_vocab is ${_vocab == null ? 'null' : _vocab}");
       return;
     }
     _log.info("$runtimeType()::initMe()::--success!");
@@ -117,9 +116,9 @@ class LanguageView { //implements OnInit {
 
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
-//    _lang = fbService.learner.currentLanguage ?? "nolang!";
-//    _langMeta = fbService?.getSingleLangMeta(lang);
-//    _langData = fbService?.getSingleLangData(lang);
+    _lang = fbService.learner.currentLanguage ?? "nolang!";
+    _langMeta = fbService.getSingleLangMeta(lang);
+    _langData = fbService.getSingleLangData(lang);
   }
 
 }
