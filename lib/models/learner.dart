@@ -34,7 +34,11 @@ class Learner {
   }
 
 
+<<<<<<< HEAD
   Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
+=======
+  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["langList"], map["currentLang"], map["vocabLists"]);
+>>>>>>> 8534a412ca09ea4891a342946db1e60bfbcb72b3
 
   // This should only be called the first time a user logs in after being added to the database.
   Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [bool hasLang, Map langList, Map langMeta, String newCurrentLang, bool hasVoc, Map<String, Map<String, String>> vocabLists]) {
