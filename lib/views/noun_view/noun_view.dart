@@ -15,91 +15,67 @@ import 'package:RSB/services/firebase_service.dart';
 class NounView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
-
-//  Map<String, List<Map<String, dynamic>>> masterMap; // the dynamic is either string or a map.
-//Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
-//Map<gender, Map<index, Map<type/word, desc/example>>>
-
-  Map<String, Map<String, Map<String, dynamic>>> _nounDataMap = {};
-  Map<String, Map<String, dynamic>> mascSingMap = {};
-  Map<String, Map<String, dynamic>> mascPlMap = {};
-  Map<String, Map<String, dynamic>> femSingMap = {};
-  Map<String, Map<String, dynamic>> femPlMap = {};
-  Map<String, Map<String, dynamic>> neutSingMap = {};
-  Map<String, Map<String, dynamic>> neutPlMap = {};
-  List<String> declensionTypes = [];
-
-
-  @Input('nounData')
-  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
-//  void set nounDataMap(Map singleLangData) {
-//    if (_nounDataMap != null) {
-    if (_nounDataMap != singleLangData["nouns"]) {
-      _nounDataMap = singleLangData["nouns"];
-      initializeMe();
-    }
-//    else {
-//        _nounDataMap = null;
-//        initializeMe();
-//      }
-//    }
-  }
-  Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
-
-  Map<String, bool> _nounMetaMap = {};
-
-  @Input('nounMeta')
-  void set nounMetaMap(Map<String, bool> singleLangMeta) {
-    if (_nounMetaMap != singleLangMeta) {
-      _nounMetaMap = singleLangMeta;
-      initializeMe();
-    }
-  }
-  Map<String, bool> get nounMetaMap => _nounMetaMap;
-
+  
   List<String> views = const [
     "referenceView",
     "notesView"
   ];
   String currentView = "";
 
-//  List<String> wordList = [];
-//  List<String> defList = [];
+  NounView(LoggerService this._log, this.fbService) {
+    _log.info("$runtimeType");
+    currentView = views.elementAt(0); // 0th index should be first view.
+  }
 
-//  String newWord = "";
-//  String newDef = "";
+//  Map<String, List<Map<String, dynamic>>> masterMap; // the dynamic is either string or a map.
+//Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
+//Map<gender, Map<index, Map<type/word, desc/example>>>
+
+  Map<String, Map<String, Map<String, dynamic>>> _nounDataMap = {};
+//  Map<String, Map<String, dynamic>> mascSingMap = {};
+//  Map<String, Map<String, dynamic>> mascPlMap = {};
+//  Map<String, Map<String, dynamic>> femSingMap = {};
+//  Map<String, Map<String, dynamic>> femPlMap = {};
+//  Map<String, Map<String, dynamic>> neutSingMap = {};
+//  Map<String, Map<String, dynamic>> neutPlMap = {};
+//  List<String> declensionTypes = [];
 
 
-//  @override
-//  Future<Null> ngOnInit() async {
-//    ///todo: Is this right?
-//    initializeMe();
-////    if (_nounDataMap.isEmpty) {
-////      if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-////        fbService.changeLang(fbService.selectedLanguage);
-//////        fbService.changeLang(fbService.learner.currentLanguage);
-////        _nounDataMap = await fbService.singleLangData;
-////        _nounMetaMap = await fbService.singleLangMeta;
-////      }
-////    }
-//
-////
-////    if (fbService.learner.checkComplete() == false) {
-////
-////    }
-//  } // End ngOnInit()
+  @Input()
+  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
+//  void set nounDataMap(Map singleLangData) {
+//    if (_nounDataMap != singleLangData["nouns"]) {
+//      _nounDataMap = singleLangData["nouns"];
+//      initializeMe();
+//    }
+  }
+  Map<String, Map<String, Map<String, dynamic>>> get nounDataMap => _nounDataMap;
+
+  Map<String, bool> _nounMetaMap = {};
+  @Input()
+  void set nounMetaMap(Map<String, bool> singleLangMeta) {
+//    if (_nounMetaMap != singleLangMeta) {
+//      _nounMetaMap = singleLangMeta;
+//      initializeMe();
+//    }
+  }
+  Map<String, bool> get nounMetaMap => _nounMetaMap;
 
   void initializeMe() {
-    if (_nounDataMap == null || _nounMetaMap == null) {
-      _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
-      return;
-    }
-    else {
-      if (_nounMetaMap['hasDeclensions'] == true) {
-        _nounDataMap['masculine'][0].forEach((String decType, Map other) {
-          declensionTypes.add(decType);
-          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
-        });
+//    if (_nounDataMap == null || _nounMetaMap == null) {
+//      _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
+//      return;
+//    }
+//    else {
+//      if (_nounMetaMap['hasDeclensions'] == true) {
+//        _log.info("$runtimeType()::initMe()::nounDataMap = ${_nounDataMap}");
+//        _log.info("$runtimeType()::initMe()::nounDataMap['masculine'] = ${_nounDataMap['masculine']}");
+//        _log.info("$runtimeType()::initMe()::nounDataMap['feminine'] = ${_nounDataMap['feminine']}");
+//        _log.info("$runtimeType()::initMe()::nounDataMap['neuter'] = ${_nounDataMap['neuter']}");
+//        _nounDataMap['masculine'][0].forEach((String decType, Map other) {
+//          declensionTypes.add(decType);
+//          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
+//        });
 //        Map<String, Map<String, dynamic>> mascSingMap = {};
 //        Map<String, Map<String, dynamic>> mascPlMap = {};
 //        Map<String, Map<String, dynamic>> femSingMap = {};
@@ -107,43 +83,13 @@ class NounView { //implements OnInit {
 //        Map<String, Map<String, dynamic>> neutSingMap = {};
 //        Map<String, Map<String, dynamic>> neutPlMap = {};
 //        List<String> declensionTypes = [];
-      }
-      _log.info("$runtimeType()::initializeMe()::--success!");
-    }
+//      }
+//      else {
+//        _log.info("$runtimeType()::initMe():: --No declensions for this language!");  
+//      }
+//      _log.info("$runtimeType()::initializeMe()::--success!");
+//    }
   }
 
-  NounView(LoggerService this._log, this.fbService) {
-    _log.info("$runtimeType");
-    currentView = views.elementAt(0); // 0th index should be first view.
-  }
-
-//  Future<Null>
-//  void getLanguage(String lang) {
-////    nounDataMap = await fbService.fullLanguageData[lang]["nouns"];
-////    nounMetaMap = await fbService.la[lang]["nouns"];
-//    _nounDataMap = fbService?.getSingleLangData(lang);
-//    _nounMetaMap = fbService?.getSingleLangMeta(lang);
-//  }
 
 } // end class NounView
-
-
-
-//  void add(String word, [String definition = ""]) {
-////    vocabMap.putIfAbsent(word, () => word);
-////    vocabMap[word] = definition;
-//    // I think this does the above two functions in one line.
-//    wordList.add(word);
-//    defList.add(definition);
-////    vocabMap[word] = definition;
-//    //newSetWords.add(description);
-//  }
-////  String remove(int index) => newListWords.removeAt(index);
-//  void remove(String word) {
-//    int idx = wordList.indexOf(word);
-//    wordList.removeAt(idx);
-//    defList.removeAt(idx);
-////    vocabMap.remove(word);
-//  }
-//  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
-//      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));

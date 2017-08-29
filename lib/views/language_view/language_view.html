@@ -1,15 +1,15 @@
 <material-tab-panel>
     <material-tab class="mat-tab" label="Nouns">
-        <noun-view [nounData]="fbService?.getSingleLangData(fbService?.selectedLanguage)" [nounMeta]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)" >
-
+        <noun-view
+                [nounDataMap]="fbService?.getSingleLangData(fbService?.selectedLanguage)"
+                [nounMetaMap]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)">
         </noun-view>
     </material-tab>
 
     <material-tab class="mat-tab" label="Verbs">
         <div>
-            This is tab 2!
+            Verb view coming soonish!
         </div>
-
     </material-tab>
 
     <material-tab class="mat-tab" label="Vocab">

@@ -10,9 +10,7 @@
     HAS DECLENSIONS!
     <div *ngIf="nounMetaMap['hasDeclensions'] == 'true' ">
       <span *ngFor="let gender of nounDataMap.keys">
-          <!--{{gender}}-->
           <span *ngFor="let nounMap of nounDataMap[gender]; let i of index">
-              NOUN MAP of String, dynamic -> (Map of String, String)! {{nounMap}}
               <table class="declension-table"> <!-- Buh... -->
                   <tr>
                       <div class="dec-tab-header">
@@ -22,7 +20,6 @@
                       </div>
                   </tr>
                   <tr>
-
                       <!--<div *ngFor="let smallerMap of nounMap">-->
                           <!--<div *ngFor="let smallestMap of smallerMap">-->
                               <!---->

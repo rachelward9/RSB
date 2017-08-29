@@ -34,10 +34,10 @@ class LanguageView { //implements OnInit {
   void _initMe() {
     _log.info("$runtimeType()::_initMe()");
     if (_lang == null) {
-      _log.info("$runtimeType()::_initMe()::_lang is $_lang");
-      _log.info("$runtimeType()::_initMe()::_langData is ${_lang == null ? 'null' : _lang}");
+      _log.info("$runtimeType()::_initMe()::_lang is null!");
       return;
     }
+    _log.info("$runtimeType()::_initMe()::_lang is $_lang");
     _log.info("$runtimeType()::initMe()::--success!");
   }
 

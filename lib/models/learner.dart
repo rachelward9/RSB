@@ -32,84 +32,15 @@ class Learner {
     _log.info("$runtimeType()::defaultConstructor");
     checkComplete();
   }
-
-
-  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
-
-
-  // This should only be called the first time a user logs in after being added to the database.
-  Learner.constructNewLearner(this._log, String uid, String newName, String newEmail, [bool hasLang, Map langList, Map langMeta, String newCurrentLang, bool hasVoc, Map<String, Map<String, String>> vocabLists]) {
-    _log.info("$runtimeType()::constructNewLearner()");
-    _exists = true;
-    _uid = uid;
-    _name = newName;
-    _email = newEmail;
-    if (hasLang == true) {
-      if (langMeta != null && langMeta.isNotEmpty) {
-        allLanguagesMeta = langMeta;
-        hasLanguages = true;
-      }
-      if (langList != null && langList.isNotEmpty) {
-        hasLanguages = true;
-        langList.forEach((String idx, String language) {
-          myLanguages.add(language);
-        });
-        if (newCurrentLang != null && newCurrentLang.isNotEmpty) {
-          currentLanguage = newCurrentLang;
-        }
-        else {
-          currentLanguage = myLanguages[0];
-        }
-        singleLanguageMeta = allLanguagesMeta[currentLanguage];
-      }
-    }
-    if (hasVoc == true) {
-      if (vocabLists != null && vocabLists.isNotEmpty) {
-        _myVocabLists = vocabLists;
-      }
-    }
-    checkComplete();
-  }
-
-//  this(
-//  map["name"],
-//  map["uid"],
-//  map["email"],
-//  );
-
-
-//  Learner.fromMap(LoggerService this._log, Map map) {
-//    _log.info("$runtimeType()::fromMap()${map}");
-//    _name = map["name"];
-//    _uid = map["uid"];
-//    _email = map["email"];
-//    _exists = true;
-//    myLanguages = map["myLanguages"] ?? []; //== null ? {} : map["myLanguages"];
-//    currentLanguage = map["currentLanguage"] ?? "";
-//
-//    ///todo: works, but should be restructured. Redundant.
-////    if (map["currentLanguage"].isEmpty) {
-////      if (map["myLanguages"].isNotEmpty) {
-////        currentLanguage = map["myLanguages"][0];
-////      }
-////      else {
-////        currentLanguage = map["currentLanguage"]; // SHOULD be ""
-////      }
-////    }
-////    else {
-////      currentLanguage = map["currentLanguage"];
-////    }
-////    if (map["myLanguages"].isNotEmpty) {
-////      hasLanguages = true;
-////      map["myLanguages"].forEach((String idx, String language) {
-////        myLanguages.add(language);
-////      });
-////    }
-////    if (map["myVocabLists"].isNotEmpty) {
-////      _myVocabLists = map["myVocabLists"];
-////    }
+//  // Default Constructor
+//  Learner(LoggerService this._log, [Map map]) {
+//    _log.info("$runtimeType()::defaultConstructor");
 //    checkComplete();
-//  } // End Learner.fromMap()
+//  }
+
+  // Old .fromMap constructor.
+  Learner.fromMap(LoggerService log, Map map) : this(log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
+
 
   Map toMap() {
     _log.info("$runtimeType()::toMap()");
@@ -117,14 +48,13 @@ class Learner {
       "uid": _uid,
       "name": _name,
       "email": _email,
+      "hasLanguages": hasLanguages,
+      "myLanguages": myLanguages.asMap(),
       "currentLanguage": currentLanguage,
       "hasVocab": hasVocab,
-      "hasLanguages": hasLanguages,
-      "myVocabLists": _myVocabLists,
-      "myLanguages": myLanguages.asMap()
+      "myVocabLists": _myVocabLists
     };
   }
-
 
   bool checkComplete() {
     if (myLanguages == null || myLanguages.isEmpty || _name.isEmpty || _uid.isEmpty) {
@@ -182,6 +112,15 @@ class Learner {
   Map<String, Map<String, String>> get vocabLists => _myVocabLists;
   void set vocabLists(Map<String, Map<String, String>> allVocabLists) {
     _myVocabLists = allVocabLists;
+  }
+
+  void addVocabListForLang(Map newVocabList, String lang) {
+    if (_myVocabLists.containsKey(lang)) {
+      _myVocabLists[lang].addAll(newVocabList);
+    }
+    else {
+      _myVocabLists[lang] = newVocabList;
+    }
   }
 //
 //  // Custom vocabulary list creatable by the user.
