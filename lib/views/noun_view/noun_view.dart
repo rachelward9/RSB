@@ -21,9 +21,18 @@ class NounView { //implements OnInit {
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
   Map<String, Map<String, Map<String, dynamic>>> _nounDataMap = {};
+  Map<String, Map<String, dynamic>> mascSingMap = {};
+  Map<String, Map<String, dynamic>> mascPlMap = {};
+  Map<String, Map<String, dynamic>> femSingMap = {};
+  Map<String, Map<String, dynamic>> femPlMap = {};
+  Map<String, Map<String, dynamic>> neutSingMap = {};
+  Map<String, Map<String, dynamic>> neutPlMap = {};
+  List<String> declensionTypes = [];
+
 
   @Input('nounData')
   void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
+//  void set nounDataMap(Map singleLangData) {
 //    if (_nounDataMap != null) {
     if (_nounDataMap != singleLangData["nouns"]) {
       _nounDataMap = singleLangData["nouns"];
@@ -86,6 +95,19 @@ class NounView { //implements OnInit {
       return;
     }
     else {
+      if (_nounMetaMap['hasDeclensions'] == true) {
+        _nounDataMap['masculine'][0].forEach((String decType, Map other) {
+          declensionTypes.add(decType);
+          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
+        });
+//        Map<String, Map<String, dynamic>> mascSingMap = {};
+//        Map<String, Map<String, dynamic>> mascPlMap = {};
+//        Map<String, Map<String, dynamic>> femSingMap = {};
+//        Map<String, Map<String, dynamic>> femPlMap = {};
+//        Map<String, Map<String, dynamic>> neutSingMap = {};
+//        Map<String, Map<String, dynamic>> neutPlMap = {};
+//        List<String> declensionTypes = [];
+      }
       _log.info("$runtimeType()::initializeMe()::--success!");
     }
   }

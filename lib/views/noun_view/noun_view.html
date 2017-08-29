@@ -2,51 +2,38 @@
     Noun View
 </div>
 
-<!--<div *ngIf="nounDataMap == null || nounDataMap.isEmpty" class="declensions">-->
-    <!--No Declensions! [empty?]-->
-<!--</div>-->
+<div *ngIf="nounDataMap == null || nounDataMap.isEmpty" class="declensions">
+    No Declensions! [empty?]
+</div>
 
-<!--<div *ngIf="fbService.learner.languageMeta['hasDeclensions'] != null && fbService.fbService.learner.languageMeta['hasDeclensions'] != null && fbService.learner.languageMeta['hasDeclensions'] == true" class="declensions">-->
-<!--<div *ngIf="nounDataMap != null && nounDataMap.isNotEmpty" class="declensions">-->
-    <!--HAS DECLENSIONS!-->
-    <!--<div *ngIf="nounMetaMap['hasDeclensions'] == true">-->
-      <!--<span>-->
-          <!--<table>-->
-              <!--<tr>-->
-                  <!--<th>Case</th>-->
-              <!--</tr>-->
-              <!--&lt;!&ndash; tr *ngFor="let" &ndash;&gt;-->
-                <!--<td>-->
+<div *ngIf="nounDataMap != null && nounDataMap.isNotEmpty" class="declensions">
+    HAS DECLENSIONS!
+    <div *ngIf="nounMetaMap['hasDeclensions'] == 'true' ">
+      <span *ngFor="let gender of nounDataMap.keys">
+          <!--{{gender}}-->
+          <span *ngFor="let nounMap of nounDataMap[gender]; let i of index">
+              NOUN MAP of String, dynamic -> (Map of String, String)! {{nounMap}}
+              <table class="declension-table"> <!-- Buh... -->
+                  <tr>
+                      <div class="dec-tab-header">
+                      <td>case</td>
+                      <td>singular</td>
+                      <td>plural</td>
+                      </div>
+                  </tr>
+                  <tr>
 
-                <!--</td>-->
-              <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-              <!--<tr>-->
-                 <!--<th>Acc</th>-->
-                 <!--<td>Word</td>-->
-              <!--</tr>-->
-         <!--</table>-->
-      <!--</span>-->
-      <!--<span>-->
-            <!--<table>-->
-               <!--<tr>-->
-                  <!--<th>Case</th>-->
-               <!--</tr>-->
-                <!--<tr>-->
-                   <!--<th>Acc</th>-->
-                   <!--<td>Word</td>-->
-              <!--</tr>-->
-           <!--</table>-->
-        <!--</span>-->
-      <!--<span>-->
-         <!--<table>-->
-              <!--<tr>-->
-                  <!--<th>Case</th>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                  <!--<th>Acc</th>-->
-                  <!--<td>Word</td>-->
-              <!--</tr>-->
-          <!--</table>-->
-      <!--</span>-->
-    <!--</div>-->
-<!--</div>-->
+                      <!--<div *ngFor="let smallerMap of nounMap">-->
+                          <!--<div *ngFor="let smallestMap of smallerMap">-->
+                              <!---->
+                          <!--</div>-->
+                          <!--&lt;!&ndash;<span>{{map[case]['word']}}</span>&ndash;&gt;-->
+                          <!--&lt;!&ndash;{{map[case]['singular']}}&ndash;&gt;-->
+                          <!--&lt;!&ndash;{{map[case]['plural']}}&ndash;&gt;-->
+                      <!--</div>-->
+                  </tr>
+             </table>
+          </span>
+      </span>
+    </div>
+</div>
