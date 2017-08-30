@@ -44,6 +44,8 @@ class MenuView { //implements OnInit {
       return;
     }
     displayList.addAll(langList.reversed);
+    _log.info("$runtimeType()::initMe():: fbService.learner = ${fbService.learner}");
+    _log.info("$runtimeType()::initMe():: fbService.learner.hasLanguages = ${fbService.learner.hasLanguages}");
     if (fbService?.learner != null && fbService.learner.hasLanguages == true) {
       displayList.forEach((String lang) {
         if (fbService.learner.myLanguages.contains(lang)) {
