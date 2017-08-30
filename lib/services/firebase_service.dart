@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 import 'dart:async';
 
 import 'package:angular2/core.dart';
@@ -164,18 +164,18 @@ class FirebaseService {// implements OnInit {
   }
 
 //  Future<Map>
-  Map _getAllUserData() { // async {
-    _log.info("$runtimeType()::_getAllUserData()");
-    if (_userDataMap == null || _userDataMap.isEmpty) {
-      fbUserData.onValue.listen((firebase.QueryEvent e) async {
-//        if (e.snapshot.exists()) {
-          _userDataMap = await e.snapshot.val();
-          _log.info("$runtimeType()::_getAllUserData()::_userDataMap.onValue.listen::${e.snapshot.val()}");
-//        }
-      });
-    }
-    return _userDataMap;
-  }
+//  Map _getAllUserData() { // async {
+//    _log.info("$runtimeType()::_getAllUserData()");
+//    if (_userDataMap == null || _userDataMap.isEmpty) {
+//      fbUserData.onValue.listen((firebase.QueryEvent e) async {
+////        if (e.snapshot.exists()) {
+//          _userDataMap = await e.snapshot.val();
+//          _log.info("$runtimeType()::_getAllUserData()::_userDataMap.onValue.listen::${e.snapshot.val()}");
+////        }
+//      });
+//    }
+//    return _userDataMap;
+//  }
 
   //  Future<Map>
   Map getSingleUserData(String userID) { // async {

@@ -1,7 +1,7 @@
 
 //import 'dart:html';
 //import 'dart:async';
-import 'dart:async';
+//import 'dart:async';
 import'package:angular2/angular2.dart';
 //import 'package:firebase/firebase.dart' as firebase;
 //import 'package:firebase/src/assets/assets.dart';

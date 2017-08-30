@@ -1,5 +1,5 @@
 //import 'package:RSB/services/firebase_service.dart' as firebase;
-import 'dart:async';
+//import 'dart:async';
 import 'package:RSB/services/logger_service.dart';
 
 class Learner {
@@ -9,7 +9,7 @@ class Learner {
   String _name = "";
   String _email = "";
   String _uid = "";
-  bool _exists = false; // Exists in database
+//  bool _exists = false; // Exists in database
   bool hasLanguages = false;
 //  bool isComplete = false; // Has at least one language added to their ref sheet.
   bool hasVocab = false; // May just be using app for reference!
@@ -39,7 +39,7 @@ class Learner {
 //  }
 
   // Old .fromMap constructor.
-  Learner.fromMap(LoggerService log, Map map) : this(log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
+  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
 
 
   Map toMap() {

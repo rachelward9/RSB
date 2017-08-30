@@ -7,7 +7,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/browser.dart';
 //import 'dart:html';
 //import 'dart:convert';
-import 'package:angular_components/angular_components.dart';
+//import 'package:angular_components/angular_components.dart';
 import 'package:RSB/main_app.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';

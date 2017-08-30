@@ -1,9 +1,9 @@
-import 'dart:async';
+//import 'dart:async';
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-import '../../models/learner.dart';
+//import '../../models/learner.dart';
 import 'package:RSB/views/vocab_list_component/vocab_list_component.dart';
 import 'package:RSB/views/vocab_view/vocab_view.dart';
 import 'package:RSB/views/noun_view/noun_view.dart';
