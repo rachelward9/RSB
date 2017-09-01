@@ -574,3 +574,5 @@ class FirebaseService {// implements OnInit {
 ////    }
 //  }
 //}
+
+///todo: add functions to update vocab lists and notes.
