@@ -10,7 +10,7 @@
     <!--Noun Data Map not empty!-->
     <div *ngIf="nounMetaMap['hasDeclensions'] == 'true' " class="declensions">
         <!--It has declensions!-->
-      <span *ngFor="let gender of nounDataMap.keys" class="span-by-gender">
+        <span *ngFor="let gender of nounDataMap.keys" class="span-by-gender">
           <!--@@listsByGender@@ {{nounDataMap[gender]}}-->
           <span>
               <hr>
@@ -18,7 +18,7 @@
               <hr>
           </span>
 
-          <!--<span *ngFor="let nounMap of nounDataMap[gender]; let i of index">-->
+            <!--<span *ngFor="let nounMap of nounDataMap[gender]; let i of index">-->
           <span *ngFor="let listItemMap of nounDataMap[gender]">
               <!--@@listItemMap@@ {{listItemMap}}-->
               <table class="declension-table"> <!-- Buh... -->
@@ -50,12 +50,12 @@
                   </tr>
                   <tr>
                       <!--<div *ngFor="let smallerMap of nounMap">-->
-                          <!--<div *ngFor="let smallestMap of smallerMap">-->
-                              <!---->
-                          <!--</div>-->
-                          <!--&lt;!&ndash;<span>{{map[case]['word']}}</span>&ndash;&gt;-->
-                          <!--&lt;!&ndash;{{map[case]['singular']}}&ndash;&gt;-->
-                          <!--&lt;!&ndash;{{map[case]['plural']}}&ndash;&gt;-->
+                      <!--<div *ngFor="let smallestMap of smallerMap">-->
+                      <!---->
+                      <!--</div>-->
+                      <!--&lt;!&ndash;<span>{{map[case]['word']}}</span>&ndash;&gt;-->
+                      <!--&lt;!&ndash;{{map[case]['singular']}}&ndash;&gt;-->
+                      <!--&lt;!&ndash;{{map[case]['plural']}}&ndash;&gt;-->
                       <!--</div>-->
                   </tr>
              </table>

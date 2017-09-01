@@ -7,13 +7,14 @@ import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/views/vocab_list_component/vocab_list_component.dart';
 import 'package:RSB/views/vocab_view/vocab_view.dart';
 import 'package:RSB/views/noun_view/noun_view.dart';
-//import 'package:RSB/views/verb_view/verb_view.dart';
+import 'package:RSB/views/verb_view/verb_view.dart';
+import 'package:RSB/views/adjective_view/adjective_view.dart';
 
 @Component(
   selector: 'language-view',
   styleUrls: const ['language_view.css'],
   templateUrl: 'language_view.html',
-  directives: const [CORE_DIRECTIVES, materialDirectives, NounView, VocabListComponent, VocabView],
+  directives: const [CORE_DIRECTIVES, materialDirectives, NounView, AdjectiveView, VerbView, VocabListComponent, VocabView],
   providers: const [materialProviders],
 )
 class LanguageView { //implements OnInit {

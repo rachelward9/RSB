@@ -356,18 +356,25 @@ class FirebaseService {// implements OnInit {
   Map<String, String> getSingleVocabList([String userID, String lang]) {
     _log.info("$runtimeType()::getSingleVocabList($userID, $lang)");
     if (userID == null) {
+      _log.info("$runtimeType()::getSingleVocabList()::userID == $userID");
       return {"no_user": "provided"};
     }
     if (lang == null || lang.isEmpty) {
+      _log.info("$runtimeType()::getSingleVocabList()::lang == $lang");
       return {"no_language": "provided"};
     }
     if (learner.hasVocab == true) { // They have vocab. Do they have it for THIS language though?
+      _log.info("$runtimeType()::getSingleVocabList()::learner.hasVocab == ${learner.hasVocab}");
       if (singleUsersVocabLists == null || singleUsersVocabLists.isEmpty) { // User's vocab lists haven't been built yet.
+        _log.info("$runtimeType()::getSingleVocabList()::my vocab lists = ${learner.vocabLists}");
         if (allUsersVocabLists == null || allUsersVocabLists.isEmpty) { // Data hasn't been brought in from database.
           getVocabLists(userID);
         }
         if (allUsersVocabLists.containsKey(userID)) {
+          _log.info("$runtimeType()::getSingleVocabList()::all users vocab lists: ${allUsersVocabLists}");
           singleUsersVocabLists = allUsersVocabLists[userID]; // Set it.
+          _log.info("$runtimeType()::getSingleVocabList()::single user vocab lists: ${singleUsersVocabLists}");
+          _log.info("$runtimeType()::getSingleVocabList()::my vocab lists: ${learner.vocabLists}");
           if (allUsersVocabLists[userID].containsKey(lang)) { // Does the user have vocab for THIS language?
             return allUsersVocabLists[userID][lang];
           }
@@ -380,6 +387,7 @@ class FirebaseService {// implements OnInit {
         }
       }
       else { // singleUsersVocabLists exists.
+        _log.info("$runtimeType()::getSingleVocabList():: vocab list for $lang = ${learner.getVocabListForLang(lang)}");
         return singleUsersVocabLists.containsKey(lang) ? singleUsersVocabLists[lang] : {"": ""};
 //        if (singleUsersVocabLists.containsKey(lang)) => singleUsersVocabLists[lang];
 //        return singleUsersVocabLists[lang];

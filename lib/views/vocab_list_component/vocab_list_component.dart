@@ -41,6 +41,7 @@ class VocabListComponent { //implements OnInit {
 
   @Input()
   void set vocabList(Map vl) {
+    _log.info("$runtimeType()::@Input(vocabList) ==> ${vl}");
     if (_vocabList != vl) {
       _vocabList = vl;
       if (_vocabList != null && _vocabList.isNotEmpty) {
