@@ -1,1 +1,2 @@
-<span>{{langMsg}}</span>
+<span *ngIf="fbService?.selectedLanguage == null">No language Selected</span>
+<span *ngIf="fbService?.selectedLanguage != null">Currently viewing {{fbService.selectedLanguage}}</span>

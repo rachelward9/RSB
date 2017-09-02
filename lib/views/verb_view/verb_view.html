@@ -1,25 +1,25 @@
 <div>
-    Noun View
+    Verb conjugations! --Coming soon!
 </div>
 
-<div *ngIf="nounDataMap == null || nounDataMap.isEmpty" class="declensions">
+<div *ngIf="verbDataMap == null || verbDataMap.isEmpty" class="declensions">
     No Declensions! [empty?]
 </div>
 
-<div *ngIf="nounDataMap != null && nounDataMap.isNotEmpty">
-    <!--Noun Data Map not empty!-->
-    <div *ngIf="nounMetaMap['hasDeclensions'] == 'true' " class="declensions">
+<div *ngIf="verbDataMap != null && verbDataMap.isNotEmpty">
+    <!--verb Data Map not empty!-->
+    <div *ngIf="verbMetaMap['hasDeclensions'] == 'true' " class="declensions">
         <!--It has declensions!-->
-      <span *ngFor="let gender of nounDataMap.keys" class="span-by-gender">
-          <!--@@listsByGender@@ {{nounDataMap[gender]}}-->
+        <span *ngFor="let gender of verbDataMap.keys" class="span-by-gender">
+          <!--@@listsByGender@@ {{verbDataMap[gender]}}-->
           <span>
               <hr>
               {{gender}}
               <hr>
           </span>
 
-          <!--<span *ngFor="let nounMap of nounDataMap[gender]; let i of index">-->
-          <span *ngFor="let listItemMap of nounDataMap[gender]">
+            <!--<span *ngFor="let verbMap of verbDataMap[gender]; let i of index">-->
+          <span *ngFor="let listItemMap of verbDataMap[gender]">
               <!--@@listItemMap@@ {{listItemMap}}-->
               <table class="declension-table"> <!-- Buh... -->
                   <tr>
@@ -49,13 +49,13 @@
                       </div>
                   </tr>
                   <tr>
-                      <!--<div *ngFor="let smallerMap of nounMap">-->
-                          <!--<div *ngFor="let smallestMap of smallerMap">-->
-                              <!---->
-                          <!--</div>-->
-                          <!--&lt;!&ndash;<span>{{map[case]['word']}}</span>&ndash;&gt;-->
-                          <!--&lt;!&ndash;{{map[case]['singular']}}&ndash;&gt;-->
-                          <!--&lt;!&ndash;{{map[case]['plural']}}&ndash;&gt;-->
+                      <!--<div *ngFor="let smallerMap of verbMap">-->
+                      <!--<div *ngFor="let smallestMap of smallerMap">-->
+                      <!---->
+                      <!--</div>-->
+                      <!--&lt;!&ndash;<span>{{map[case]['word']}}</span>&ndash;&gt;-->
+                      <!--&lt;!&ndash;{{map[case]['singular']}}&ndash;&gt;-->
+                      <!--&lt;!&ndash;{{map[case]['plural']}}&ndash;&gt;-->
                       <!--</div>-->
                   </tr>
              </table>

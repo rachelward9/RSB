@@ -1,7 +1,7 @@
 
 //import 'dart:async';
 //import 'dart:collection'; // In case I use a SplayTreeMap
-import 'dart:async';
+//import 'dart:async';
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';
 //import 'package:RSB/services/vocab_list_service.dart';
@@ -41,13 +41,17 @@ class VocabListComponent { //implements OnInit {
 
   @Input()
   void set vocabList(Map vl) {
+    _log.info("$runtimeType()::@Input(vocabList) ==> ${vl}");
     if (_vocabList != vl) {
       _vocabList = vl;
-      if (_vocabList.isNotEmpty) {
+      if (_vocabList != null && _vocabList.isNotEmpty) {
         _vocabList.forEach((String word, String def) {
           wordList.add(word);
           defList.add(def);
         });
+      }
+      else {
+        // Do nothing. Remove this else?
       }
       _initMe();
     }

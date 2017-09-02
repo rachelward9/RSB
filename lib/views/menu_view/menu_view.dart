@@ -1,7 +1,7 @@
 
 //import 'dart:html';
 //import 'dart:async';
-import 'dart:async';
+//import 'dart:async';
 import'package:angular2/angular2.dart';
 //import 'package:firebase/firebase.dart' as firebase;
 //import 'package:firebase/src/assets/assets.dart';
@@ -23,7 +23,7 @@ class MenuView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
-  List _langList = [];
+  List<String> _langList = [];
   @Input()
   void set langList(List lm) {
     if (_langList != lm) {
@@ -33,31 +33,40 @@ class MenuView { //implements OnInit {
   }
   List get langList => _langList;
 
-  Map testFullLangMeta = {};
-  Map testFullLangData = {};
+  List<String> displayList = [];
+
+//  Map testFullLangMeta = {};
+//  Map testFullLangData = {};
 
   void _initMe() {
     if (langList == null) {
+      _log.info("$runtimeType()::_initMe() -- Fail!");
       return;
     }
-    _log.info("$runtimeType()::_initMe()");
+    displayList.addAll(langList.reversed);
+    _log.info("$runtimeType()::initMe():: fbService.learner = ${fbService.learner}");
+    _log.info("$runtimeType()::initMe():: fbService.learner.hasLanguages = ${fbService.learner.hasLanguages}");
+    if (fbService?.learner != null && fbService.learner.hasLanguages == true) {
+      displayList.forEach((String lang) {
+        if (fbService.learner.myLanguages.contains(lang)) {
+          displayList.remove(lang); // Only display languages that the user doesn't already have.
+          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
+        }
+      });
+    }
+    _log.info("$runtimeType()::_initMe() -- Success!");
   }
-
-//  @override
-//  Future<Null> ngOnInit() async {
-//    testFullLangData = await fbService.getAllLangData();
-//    testFullLangMeta = await fbService.getAllLangMeta();
-//    langList = await fbService.getLangList();
-//  }
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
+    _langList = fbService.getLangList();
   }
 
   void addLanguage(String lang) {
     _log.info("$runtimeType()::addLanguage($lang)");
-    if (fbService?.learner != null) {
+    if (fbService.learner != null) {
       fbService.learner.addLanguage(lang);
+      displayList.remove(lang); // Remove added language from display list!
     }
   }
 

@@ -1,0 +1,55 @@
+<div>
+    Adjective View
+</div>
+
+<div *ngIf="adjDataMap == null || adjDataMap.isEmpty" class="declensions">
+    No Declensions! [empty?]
+</div>
+
+<div *ngIf="adjDataMap != null && adjDataMap.isNotEmpty">
+    <!--Noun Data Map not empty!-->
+    <div *ngIf="adjMetaMap['hasDeclensions'] == 'true' " class="declensions">
+        <!--It has declensions!-->
+        <span *ngFor="let gender of adjDataMap.keys" class="span-by-gender">
+          <caption>
+              <span><b>{{gender}}</b></span>
+          </caption>
+          <span *ngFor="let listItemMap of adjDataMap[gender]">
+              <!--@@listItemMap@@ {{listItemMap}}-->
+              <table class="declension-table">
+                  <tbody>
+                      <tr>
+                          <td  rowspan="1"></td>
+                          <td  rowspan="8" colspan="5"></td>
+                          <td  colspan="1"><b>Singular</b></td>
+                          <td  rowspan="8" colspan="5"></td>
+                          <td  colspan="1"><b>Plural</b></td>
+                          <td  rowspan="8"></td>
+                      </tr>
+                      <tr *ngFor="let declension of decOrder">
+                          <td>{{declension}}</td>
+                          <td>{{listItemMap[declension]['singular']}}</td>
+                          <td>{{listItemMap[declension]['plural']}}</td>
+                      </tr>
+                      <!--<tr>-->
+                          <!--<div class="dec-tab-header">-->
+                              <!--<td>case</td>-->
+                              <!--<td>singular</td>-->
+                              <!--<td>plural</td>-->
+                          <!--</div>-->
+                      <!--</tr>-->
+                      <!--<tr *ngFor="let declension of decOrder">-->
+                          <!--<div class="dec-tab-header">-->
+                              <!--<td>{{declension}}</td>-->
+                              <!--<td>{{listItemMap[declension]['singular']}}</td>-->
+                              <!--<td>{{listItemMap[declension]['plural']}}</td>-->
+                          <!--</div>-->
+                      <!--</tr>-->
+                      <!--<tr>-->
+                      <!--</tr>-->
+                  </tbody>
+             </table>
+          </span>
+      </span>
+    </div>
+</div>

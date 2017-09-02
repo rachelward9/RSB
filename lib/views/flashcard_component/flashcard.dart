@@ -1,4 +1,4 @@
-import 'dart:async';
+//import 'dart:async';
 //import 'dart:collection'; // In case I use a SplayTreeMap
 import 'package:angular2/angular2.dart';
 import 'package:angular_components/angular_components.dart';

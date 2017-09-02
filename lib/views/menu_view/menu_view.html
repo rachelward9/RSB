@@ -2,12 +2,22 @@
     Menu View
 </div>
 
-<div *ngFor="let language of langList">
-    <div>
-        <material-button class="lang-btn" icon (trigger)="addLanguage(language)">
-            <glyph icon="add"></glyph>
-            {{language}}
-        </material-button>
+<material-tab-panel>
+    <material-tab *ngIf="displayList.isNotEmpty" class="mat-tab" label="Available Languages">
+        <div *ngFor="let language of displayList">
+            <div>
+                <material-button class="lang-btn" icon (trigger)="addLanguage(language)">
+                    <glyph icon="add"></glyph>
+                    {{language}}
+                </material-button>
 
-    </div>
-</div>
+            </div>
+        </div>
+    </material-tab>
+    <material-tab class="mat-tab" label="Change Language">
+
+    </material-tab>
+    <material-tab class="mat-tab" label="Settings?">
+
+    </material-tab>
+</material-tab-panel>
