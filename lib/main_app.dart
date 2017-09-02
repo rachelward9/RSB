@@ -114,6 +114,9 @@ class MainApp { // implements OnInit {
     fbService.getAllLangData();
     _log.info("$runtimeType()::defaultContructor()::fullLanguagedata = ${fbService.fullLanguageData}");
 
+    _log.info("$runtimeType()::defaultConstructor()::fbService.getVocabLists(${fbService?.learner?.uid}");
+    fbService.getVocabLists(fbService?.learner?.uid);
+    _log.info("$runtimeType()::defaultConstructor()::vocab for ${fbService?.learner?.uid}: ${fbService.learner.vocabLists}");
 //    if (fbService.learner != null && fbService.learner?.currentLanguage.isNotEmpty) {
 //      language = fbService.learner.currentLanguage;
 //    }
