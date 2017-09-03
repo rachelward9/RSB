@@ -91,18 +91,18 @@ class MainApp { // implements OnInit {
     fbService.fbLangList.onValue.listen((firebase.QueryEvent e) async {
       fbService.languages = await e.snapshot.val();
       _log.info("$runtimeType()::defaultConstructor():: languages ${fbService.languages}");
-      _log.info("$runtimeType()::defaultConstructor():: e.snapshot.val() ${e.snapshot.val()}");
-      _log.info("$runtimeType()::defaultConstructor():: e.snapshot.val().runtimeType ${e.snapshot.val().runtimeType}");
+      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val() ${e.snapshot.val()}");
+      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val().runtimeType ${e.snapshot.val().runtimeType}");
     });
     _log.info("$runtimeType()::defaultContructor()::languages = ${fbService.languages}");
 
 
-    _log.info("$runtimeType()::defaultContructor()::fbService.getUserMeta()");
-    fbService.getUserMeta();
-    _log.info("$runtimeType()::defaultContructor()::userMeta = ${fbService.umm}");
-    fbService.fbUserMeta.onChildAdded.listen((firebase.QueryEvent e) {
-      _log.info("$runtimeType()::fbUserMeta.onChildAdded.listen(): ${e.snapshot.val()}");
-    });
+//    _log.info("$runtimeType()::defaultContructor()::fbService.getUserMeta()");
+//    fbService.getUserMeta();
+//    _log.info("$runtimeType()::defaultContructor()::userMeta = ${fbService.umm}");
+//    fbService.fbUserMeta.onChildAdded.listen((firebase.QueryEvent e) {
+//      _log.info("$runtimeType()::fbUserMeta.onChildAdded.listen(): ${e.snapshot.val()}");
+//    });
 
 
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangMeta()");
@@ -114,9 +114,9 @@ class MainApp { // implements OnInit {
     fbService.getAllLangData();
     _log.info("$runtimeType()::defaultContructor()::fullLanguagedata = ${fbService.fullLanguageData}");
 
-    _log.info("$runtimeType()::defaultConstructor()::fbService.getVocabLists(${fbService?.learner?.uid}");
-    fbService.getVocabLists(fbService?.learner?.uid);
-    _log.info("$runtimeType()::defaultConstructor()::vocab for ${fbService?.learner?.uid}: ${fbService.learner.vocabLists}");
+//    _log.info("$runtimeType()::defaultConstructor()::fbService.getVocabLists(${fbService?.learner?.uid}");
+//    fbService.getVocabLists(fbService?.learner?.uid);
+//    _log.info("$runtimeType()::defaultConstructor()::vocab for ${fbService?.learner?.uid}: ${fbService.learner.vocabLists}");
 //    if (fbService.learner != null && fbService.learner?.currentLanguage.isNotEmpty) {
 //      language = fbService.learner.currentLanguage;
 //    }

@@ -12,13 +12,15 @@
         </adj-view>
     </material-tab>
     <material-tab class="mat-tab" label="Verbs">
-        <verb-view
-                [verbDataMap]="fbService?.getSingleLangData(fbService?.selectedLanguage)"
-                [verbMetaMap]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)">
-        </verb-view>
+        <!--<verb-view-->
+                <!--[verbDataMap]="fbService?.getSingleLangData(fbService?.selectedLanguage)"-->
+                <!--[verbMetaMap]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)">-->
+        <!--</verb-view>-->
     </material-tab>
     <material-tab class="mat-tab" label="Vocab">
         <!--<vocab-list [vocabList]="vocab" class="voc-view"></vocab-list>-->
-        <vocab-list [vocabList]="fbService?.getSingleVocabList(fbService?.fbUser?.uid, fbService?.selectedLanguage)"></vocab-list>
+        <vocab-list
+                [vocabList]="fbService?.getVocabListForLang(fbService?.fbUser?.uid, fbService?.selectedLanguage)">
+        </vocab-list>
     </material-tab>
 </material-tab-panel>

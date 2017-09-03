@@ -75,70 +75,56 @@ class NounView { //implements OnInit {
   Map<String, dynamic> get nounMetaMap => _nounMetaMap;
 
   void initializeMe() {
-    _log.info("$runtimeType()::initMe():: _nounMetaMap = ${_nounMetaMap}");
     _log.info("$runtimeType()::initMe():: nounMetaMap = ${nounMetaMap}");
-    if (_nounDataMap == null || _nounMetaMap == null) {
-      _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
+    if (_nounDataMap == null || _nounDataMap.isEmpty || _nounMetaMap == null || _nounMetaMap.isEmpty) {
+      _log.info("$runtimeType()::initializeMe()::--data inputs are null or empty!");
       return;
     }
     _log.info("$runtimeType()::initMe()::hasDeclensions == ${_nounMetaMap['hasDeclensions']}");
     _log.info("$runtimeType()::initMe()::declensions order...");
     decOrder = _nounMetaMap['declensionsOrderPreference'];
-//    if (_nounMetaMap['hasDeclensions'] == true) {
+
     if (_nounMetaMap.containsKey("hasDeclensions")) {
       _log.info("$runtimeType()::initMe()::metaMap.containsKey(hasDeclensions) = ${_nounMetaMap.containsKey('hasDeclensions')}");
       if (_nounMetaMap['hasDeclensions'] == true) {
         _log.info("DECLENSIONS == TRUE!!!");
       }
-//      _log.info("$runtimeType()::initMe()::nounDataMap = ${_nounDataMap}");
-//      _log.info("$runtimeType()::initMe()::nounDataMap['masculine'] = ${_nounDataMap['masculine']}");
-//      _log.info("$runtimeType()::initMe()::nounDataMap['feminine'] = ${_nounDataMap['feminine']}");
-//      _log.info("$runtimeType()::initMe()::nounDataMap['neuter'] = ${_nounDataMap['neuter']}");
-      _nounDataMap['masculine'][0].forEach((String decType, Map other) {
-        if (decType != 'type' && decType != 'word') { // don't add the example shits
-          declensionTypes.add(decType);
-          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
-        }
-//        mascMap = _nounDataMap['masculine'];
-        mascList = _nounDataMap['masculine'];
-        _log.info("$runtimeType()::initMe()::mascList = $mascList");
-//        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-//        femMap = _nounDataMap['feminine'];
-        femList = _nounDataMap['feminine'];
-        _log.info("$runtimeType()::initMe()::femList = $femList");
-//        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-        if (_nounDataMap.containsKey('neuter')) {
-//          neutMap = _nounDataMap['neuter'];
-          neutList = _nounDataMap['neuter'];
-          _log.info("$runtimeType()::initMe():: neutList = $neutList");
-//          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
-        }
-      });
-//      Map<String, Map<String, dynamic>> mascSingMap = {};
-//      Map<String, Map<String, dynamic>> mascPlMap = {};
-//      Map<String, Map<String, dynamic>> femSingMap = {};
-//      Map<String, Map<String, dynamic>> femPlMap = {};
-//      Map<String, Map<String, dynamic>> neutSingMap = {};
-//      Map<String, Map<String, dynamic>> neutPlMap = {};
-//      List<String> declensionTypes = [];
+
+      _log.info("$runtimeType()::initMe()::_nounDataMap['masculine'] == ${_nounDataMap['masculine']}");
+      _log.info("$runtimeType()::initMe()::_nounDataMap['masculine'][0] == ${_nounDataMap['masculine'][0]}");
+//      _nounDataMap['masculine'][0].forEach((String decType, Map nvOtherMap) {
+//        if (decType != 'type' && decType != 'word') { // don't add the example shits
+//          declensionTypes.add(decType);
+//          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
+//        }
+//        mascList = _nounDataMap['masculine'];
+//        femList = _nounDataMap['feminine'];
+//
+//        if (_nounDataMap.containsKey('neuter')) {
+//          neutList = _nounDataMap['neuter'];
+//          _log.info("$runtimeType()::initMe():: neutList = $neutList");
+//        }
+//      });
+      _log.info("$runtimeType()::initMe()::mascList = $mascList");
+      _log.info("$runtimeType()::initMe()::femList = $femList");
     }
     else {
       _log.info("$runtimeType()::initMe():: --No declensions for this language!");
     }
     /*** TEST ***/
-    mascList = _nounDataMap['masculine'];
-    _log.info("$runtimeType()::initMe()::mascList = $mascList");
-//        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-//        femMap = _nounDataMap['feminine'];
-    femList = _nounDataMap['feminine'];
-    _log.info("$runtimeType()::initMe()::femList = $femList");
-//        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-    if (_nounDataMap.containsKey('neuter')) {
-//          neutMap = _nounDataMap['neuter'];
-      neutList = _nounDataMap['neuter'];
-      _log.info("$runtimeType()::initMe():: neutList = $neutList");
-//          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
-    }
+//    mascList = _nounDataMap['masculine'];
+//    _log.info("$runtimeType()::initMe()::mascList = $mascList");
+////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
+////        femMap = _nounDataMap['feminine'];
+//    femList = _nounDataMap['feminine'];
+//    _log.info("$runtimeType()::initMe()::femList = $femList");
+////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
+//    if (_nounDataMap.containsKey('neuter')) {
+////          neutMap = _nounDataMap['neuter'];
+//      neutList = _nounDataMap['neuter'];
+//      _log.info("$runtimeType()::initMe():: neutList = $neutList");
+////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
+//    }
     /*** TEST ***/
     _log.info("$runtimeType()::initializeMe()::--success!");
   }
