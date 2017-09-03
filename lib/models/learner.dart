@@ -12,7 +12,7 @@ class Learner {
 //  bool _exists = false; // Exists in database
   bool hasLanguages = false;
 //  bool isComplete = false; // Has at least one language added to their ref sheet.
-  bool hasVocab = false; // May just be using app for reference!
+  bool hasVocabLists = false; // May just be using app for reference!
 
   // Language info
 //  int _numLanguages = 0; // Does this matter? Probably not.
@@ -39,7 +39,7 @@ class Learner {
 //  }
 
   // Old .fromMap constructor.
-  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocab"], map["vocabLists"]);
+  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocabLists"], map["vocabLists"]);
 
 
   Map toMap() {
@@ -51,7 +51,7 @@ class Learner {
       "hasLanguages": hasLanguages,
       "myLanguages": myLanguages.asMap(),
       "currentLanguage": currentLanguage,
-      "hasVocab": hasVocab,
+      "hasVocabLists": hasVocabLists,
       "myVocabLists": _myVocabLists
     };
   }
@@ -80,8 +80,8 @@ class Learner {
   }
 
   void addWord(String newWord, [String newDef = ""]) {
-
     currentVocabList[newWord] = newDef;
+    hasVocabLists = true;
   }
 
   void removeWord(String oldWord) {
@@ -99,6 +99,7 @@ class Learner {
     if (myLanguages.isEmpty) {
       currentLanguage = "";
       hasLanguages = false;
+      hasVocabLists = false;
     }
   }
 
@@ -112,6 +113,9 @@ class Learner {
   Map<String, Map<String, String>> get vocabLists => _myVocabLists;
   void set vocabLists(Map<String, Map<String, String>> allVocabLists) {
     _myVocabLists = allVocabLists;
+    if (_myVocabLists.isNotEmpty) {
+      hasVocabLists = true;
+    }
   }
 
   void addVocabListForLang(Map newVocabList, String lang) {
@@ -121,6 +125,7 @@ class Learner {
     else {
       _myVocabLists[lang] = newVocabList;
     }
+    hasVocabLists = true;
   }
 //
 //  // Custom vocabulary list creatable by the user.
